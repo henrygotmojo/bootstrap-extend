@@ -3,7 +3,7 @@ Extend JS & CSS features of Twitter Bootstrap
 
 
 ### Version
-- 3.0 (indicates that it works for Bootstrap 3.x)
+- 3.0.0 (The major version "3" indicates that it works for Bootstrap 3.x)
 
 
 ### Dependencies
