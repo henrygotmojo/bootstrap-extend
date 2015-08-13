@@ -101,7 +101,11 @@ $(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
  **/
 
 $(document).on('hidden.bs.modal', '[data-nocache]', function(evt){
-	$(this).removeData('bs.modal').find('.modal-body').html('<h1 class="text-muted text-center"><i class="fa fa-spinner fa-spin"></i></h1>');
+	$(this)
+		.removeData('bs.modal')
+		.find('.modal-body').html('<h1 class="text-muted text-center"><i class="fa fa-spinner fa-spin"></i></h1>').end()
+		.find('.modal-title').addClass('text-muted').html('Loading...').end()
+		.find('.modal-footer .btn:not([data-dismiss])').remove();
 });
 
 
