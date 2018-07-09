@@ -18,6 +18,7 @@
  *  - FORM-CONTROL @ INPUT-GROUP-CONTROL
  *  - VERTICAL TAB NAV
  *  - MULTI-LEVEL DROPDOWN
+ *  - CAROUSEL-FADE
  *
  */
 
@@ -494,4 +495,57 @@ select.input-xs { padding: 2px 5px; }
 .dropdown-submenu.pull-left>.dropdown-menu {
 	left: -100%;
 	margin-left: 10px;
+}
+
+
+
+
+/**
+ *
+ *  -------------
+ *  CAROUSEL-FADE
+ *  -------------
+ *
+ *
+ *  [Reference]
+ *  - https://codepen.io/Rowno/pen/Afykb
+ *
+ *
+ *  [Example]
+ *
+ *  <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+ *    <div class="carousel-inner">
+ *      <div class="carousel-item active">...</div>
+ *      ...
+ *    </div><!--/.carousel-inner-->
+ *  </div>
+ *
+ **/
+
+.carousel-fade .carousel-inner .item {
+	transition-property: opacity;
+}
+
+.carousel-fade .carousel-inner .item,
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+	opacity: 0;
+}
+
+.carousel-fade .carousel-inner .active,
+.carousel-fade .carousel-inner .next.left,
+.carousel-fade .carousel-inner .prev.right {
+	opacity: 1;
+}
+
+.carousel-fade .carousel-inner .next,
+.carousel-fade .carousel-inner .prev,
+.carousel-fade .carousel-inner .active.left,
+.carousel-fade .carousel-inner .active.right {
+	left: 0;
+	transform: translate3d(0, 0, 0);
+}
+
+.carousel-fade .carousel-control {
+	z-index: 2;
 }
