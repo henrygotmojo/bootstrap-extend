@@ -23,6 +23,24 @@
 
 
 /**
+ *  ---------
+ *  BG & TEXT
+ *  ---------
+ *
+ **/
+
+.bg-well {
+	background-color: #f5f5f5;
+}
+
+.text-white {
+	color: white;
+}
+
+
+
+
+/**
  *  ----------------
  *  CONTAINER NARROW
  *  ----------------
