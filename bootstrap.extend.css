@@ -9,6 +9,7 @@
  *  - Bootstrap 3.x
  *
  *  [Features]
+ *  - BG-WELL & TEXT-WHITE
  *  - CONTAINER-NARROW
  *  - MODAL-MAX
  *  - BTN-INVERSE
@@ -16,6 +17,7 @@
  *  - INPUT-XS / INPUT-GROUP-XS
  *  - FORM-CONTROL @ INPUT-GROUP-CONTROL
  *  - VERTICAL TAB NAV
+ *  - MULTI-LEVEL DROPDOWN
  *
  */
 
@@ -418,4 +420,78 @@ select.input-xs { padding: 2px 5px; }
 .tabs-right > .nav-tabs .active > a:focus {
 	border-color: #ddd #ddd #ddd transparent;
 	*border-left-color: #ffffff;
+}
+
+
+
+
+/****
+ *  --------------------------------
+ *  BOOTSTRAP : MULTI-LEVEL DROPDOWN
+ *  --------------------------------
+ *
+ *
+ *  [Reference]
+ *  - https://codepen.io/ajaypatelaj/pen/prHjD
+ *
+ *
+ *  [Example]
+ *
+ *  <ul class="nav navbar-nav">
+ *    <li class="dropdown">
+ *      <a class="dropdown-toggle" data-toggle="dropdown">1st Level</a>
+ *        <ul class="dropdown-menu">
+ *          <li class="dropdown-menu">
+ *            <a class="dropdown-toggle" data-toggle="dropdown">2nd Level</a>
+ *            <ul class="dropdown-menu">
+ *              <li><a>3rd Level</a></li>
+ *            </ul>
+ *          </li>
+ *        </ul>
+ *      </a>
+ *    </li>
+ *  </ul>
+ *
+ ****/
+
+.dropdown-submenu {
+	position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+	top: 0;
+	left: 100%;
+	margin-top: 0;
+	margin-left: -1px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+	display: block;
+}
+
+.dropdown-submenu>a:after {
+	display: block;
+	content: ' ';
+	float: right;
+	width: 0;
+	height: 0;
+	border-color: transparent;
+	border-style: solid;
+	border-width: 5px 0 5px 5px;
+	border-left-color: #fff;
+	margin-top: 4px;
+	margin-right: -5px;
+}
+
+.dropdown-submenu:hover>a:after {
+	border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+	float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+	left: -100%;
+	margin-left: 10px;
 }
