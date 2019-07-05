@@ -19,6 +19,7 @@
  *  - VERTICAL TAB NAV
  *  - MULTI-LEVEL DROPDOWN
  *  - CAROUSEL-FADE
+ *  - FIVE COLUMN GRID LAYOUT
  *
  */
 
@@ -548,4 +549,72 @@ select.input-xs { padding: 2px 5px; }
 
 .carousel-fade .carousel-control {
 	z-index: 2;
+}
+
+
+
+
+/**
+ *
+ *  -----------------------
+ *  FIVE COLUMN GRID LAYOUT
+ *  -----------------------
+ *
+ *
+ *  [Reference]
+ *  - https://codepen.io/Rowno/pen/Afykb
+ *
+ *
+ *  [Example]
+ *
+ *  <div class="row">
+ *    <div class="col-xs-12 col-sm-5-1">...</div>
+ *      ...
+ *  </div>
+ *
+ **/
+
+.col-xs-5-1,
+.col-xs-5-2,
+.col-xs-5-3,
+.col-xs-5-4,
+.col-sm-5-1,
+.col-sm-5-2,
+.col-sm-5-3,
+.col-sm-5-4,
+.col-md-5-1,
+.col-md-5-2,
+.col-md-5-3,
+.col-md-5-4,
+.col-lg-5-1,
+.col-lg-5-2,
+.col-lg-5-3,
+.col-lg-5-4 {
+	float: left;
+	min-height: 1px;
+	padding-right: 10px;
+	padding-left: 10px;
+	position: relative;
+}
+.col-xs-5-1 { width: 20%; }
+.col-xs-5-2 { width: 40%; }
+.col-xs-5-3 { width: 60%; }
+.col-xs-5-4 { width: 80%; }
+@media (min-width: 768px) {
+	.col-sm-5-1 { width: 20%; }
+	.col-sm-5-2 { width: 40%; }
+	.col-sm-5-3 { width: 60%; }
+	.col-sm-5-4 { width: 80%; }
+}
+@media (min-width: 992px) {
+	.col-md-5-1 { width: 20%; }
+	.col-md-5-2 { width: 40%; }
+	.col-md-5-3 { width: 60%; }
+	.col-md-5-4 { width: 80%; }
+}
+@media (min-width: 1200px) {
+	.col-lg-5-1 { width: 20%; }
+	.col-lg-5-2 { width: 40%; }
+	.col-lg-5-3 { width: 60%; }
+	.col-lg-5-4 { width: 80%; }
 }

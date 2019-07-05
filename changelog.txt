@@ -1,0 +1,16 @@
+- dynamic modal size [data-modal-size=narrow|normal|lg|max|full]
+===> remove (?)
+
+- modal [data-backdrop=static-shake]
+===> https://demos.creative-tim.com/login-register/index.html?_ga=2.169469222.662365939.1534219229-1942653668.1534219229
+===> https://css-tricks.com/snippets/css/shake-css-keyframe-animation/
+
+- modal transition effect
+===> https://tympanus.net/Development/ModalWindowEffects/
+
+- .modal-full  (for full screen modal)
+===> remove (?)
+
+- [data-toggle=ajax-load|ajax-submit][data-toggle-loading={custom-class}]
+
+- refresh url on push-state of [data-toggle=ajax-load|ajax-submit]
