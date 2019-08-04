@@ -3,7 +3,7 @@
  *
  *  [Description]
  *  - Extend javascript features of Twitter Bootstrap
- *  - Version 3.0 (indicates that it works for Bootstrap v3.x)
+ *  - Version 3.1 (indicates that it works for Bootstrap v3.x)
  *
  *  [Dependencies]
  *  - Bootstrap 3.x
