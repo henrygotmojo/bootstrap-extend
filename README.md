@@ -1,38 +1,27 @@
 # bootstrap-extend
-Extend JS & CSS features of Twitter Bootstrap
+Extend JS & CSS features of Twitter Bootstrap 4.x
 
 
 ### Version
-- 3.1 (The major version "3" indicates that it works for Bootstrap 3.x)
+- 4.0-alpha
 
 
 ### Dependencies
-- Bootstrap 3.x
-- jQuery 1.7+
-- jQuery-blockUI plugin (already included in [bootstrap.extend.js] file)
+- Bootstrap 4.x
+- jQuery 1.9+
 
 
 ### CSS Features
-- .container-narrow
-- .modal-max
-- .btn-inverse
-- tr.inverse / td.inverse
-- .input-xs / .input-group-xs
-- .form-control @ .input-group-control
-- vertical tab nav
+Modal Max
+Multi-Level Dropdown
+Left/Right/Bottom Tab
 
 
 ### JS Features
-- auto ajax error
-- modal no-cache
-- data-toggle : ajax-load / ajax-submit (popstate under construction)
-- data-toggle : input-value
+Auto AJAX-Error Alert
+Modal No-Cache
+AJAX-Load / AJAX-Submit
+Input Value Toggle
 
 
 ### Roadmap
-- dynamic modal size [data-modal-size=narrow|normal|lg|max|full]
-- modal [data-backdrop=static-shake]
-- .modal-full  (for full screen modal)
-- class for modal transition effect
-- [data-toggle=ajax-load|ajax-submit][data-toggle-loading={custom-class}]
-- refresh url on push-state of [data-toggle=ajax-load|ajax-submit]

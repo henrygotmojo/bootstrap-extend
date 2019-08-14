@@ -1,620 +1,114 @@
-/**
- *  ==================== BOOTSTRAP-EXTEND ====================
- *
- *  [Description]
- *  - Extend css features of Twitter Bootstrap
- *  - Version 3.1 (indicates that it works for Bootstrap v3.x)
- *
- *  [Dependencies]
- *  - Bootstrap 3.x
- *
- *  [Features]
- *  - BG-WELL & TEXT-WHITE
- *  - CONTAINER-NARROW
- *  - MODAL-MAX
- *  - BTN-INVERSE
- *  - TR.INVERSE / TD.INVERSE
- *  - INPUT-XS / INPUT-GROUP-XS
- *  - FORM-CONTROL @ INPUT-GROUP-CONTROL
- *  - VERTICAL TAB NAV
- *  - MULTI-LEVEL DROPDOWN
- *  - CAROUSEL-FADE
- *  - FIVE COLUMN GRID LAYOUT
- *
- */
+/*----------+
+| MODAL MAX |
++-----------+
 
+[Reference]
+https://bootstrapious.com/p/bootstrap-multilevel-dropdown
 
-
-
-/**
- *  ---------
- *  BG & TEXT
- *  ---------
- *
- **/
-
-.bg-well {
-	background-color: #f5f5f5;
-}
-
-.text-white {
-	color: white;
-}
-
-
-
-
-/**
- *  ----------------
- *  CONTAINER NARROW
- *  ----------------
- *
- *
- *  [Example]
- *
- *  <div class="container-narrow"> ... </div>
- *
- **/
-
-.container-narrow {
-	margin-right: auto;
-	margin-left: auto;
-}
-
-@media (max-width: 767px) {
-	.container-narrow {
-		padding-left: 15px;
-		padding-right: 15px;
-		width: 100%;  /* Must be percentage or pixels for horizontal alignment */
-	}
-}
-
-@media (min-width: 768px) {
-	.container-narrow {
-		width: 700px;
-	}
-}
-
-
-
-
-
-/**
- *  ---------
- *  MODAL MAX
- *  ---------
- *
- *
- *  [Example]
- *
- *  <div class="modal fade">
- *    <div class="modal-dialog modal-max">
- *      <div class="modal-content"> ... </div>
- *    </div>
- *  </div>
- *
- **/
+[Example]
+<div class="modal fade">
+	<div class="modal-dialog modal-max">
+		<div class="modal-content"> ... </div>
+	</div>
+</div>
+*/
 
 .modal .modal-dialog.modal-max {
-	width: 94%;
+	max-width: none;
+	width: calc(100% - 30px);
 }
 
 
 
 
-/**
- *  --------------
- *  BUTTON INVERSE
- *  --------------
- *
- *
- *  [Example]
- *
- *  <a class="btn btn-inverse" href="..."> ... </a>
- *
- *  <button class="btn btn-inverse"> ... </button>
- *
- **/
+/*--------------------+
+| MULTILEVEL DROPDOWN |
++---------------------+
 
-.btn-inverse {
-	color: #fff;
-	background-color: #444;
-	border-color: #080808;
-}
+[Reference]
+https://bootstrapious.com/p/bootstrap-multilevel-dropdown
 
-.btn-inverse:hover,
-.btn-inverse:focus,
-.btn-inverse:active,
-.btn-inverse.active,
-.open .dropdown-toggle.btn-inverse {
-	color: #fff;
-	background-color: #080808;
-	border-color: #444;
-}
+[Example]
+*/
 
-.btn-inverse:active,
-.btn-inverse.active,
-.open .dropdown-toggle.btn-inverse {
-	background-image: none;
-}
-
-.btn-inverse.disabled,
-.btn-inverse[disabled],
-fieldset[disabled] .btn-inverse,
-.btn-inverse.disabled:hover,
-.btn-inverse[disabled]:hover,
-fieldset[disabled] .btn-inverse:hover,
-.btn-inverse.disabled:focus,
-.btn-inverse[disabled]:focus,
-fieldset[disabled] .btn-inverse:focus,
-.btn-inverse.disabled:active,
-.btn-inverse[disabled]:active,
-fieldset[disabled] .btn-inverse:active,
-.btn-inverse.disabled.active,
-.btn-inverse[disabled].active,
-fieldset[disabled] .btn-inverse.active {
-	background-color: #444;
-	border-color: #080808;
-}
-
-.btn-inverse .badge {
-	color: #444;
-	background-color: #fff;
-}
-
-
-
-
-/**
- *  -------------
- *  TR/TD INVERSE
- *  -------------
- *
- *
- *  [Example : row]
- *
- *  <tr class="inverse"> ... </tr>
- *
- *
- *  [Example : cell]
- *
- *  <tr>
- *    <th class="inverse"> ... </th>
- *    <td class="inverse"> ... </td>
- *  </tr>
- *
- **/
-
-tr.inverse th,
-tr.inverse td,
-th.inverse,
-td.inverse {
-	color: #fff;
-	background-color: #444;
-	border-color: #080808;
-}
-
-
-
-
-/**
- *  --------
- *  INPUT-XS
- *  --------
- *
- *  [Reference]
- *  - https://coderwall.com/p/xpahmg
- *
- *
- *  [Example : input]
- *
- *  <input class="form-control input-xs" type="text" placeholder=".input-xs" />
- *
- *  <select class="form-control input-xs">...</select>
- *
- *
- *  [Example : input-group]
- *
- *  <div class="input-group input-group-xs">
- *    <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
- *    <input type="text" class="form-control" placeholder="Keyword" />
- *    <div class="input-group-btn"><button class="btn btn-default">Go</button></div>
- *  </div>
- *
- **/
-
-.input-xs {
-	height: 22px;
-	padding: 5px 5px;
-	font-size: 12px;
-	line-height: 1.5;
-	border-radius: 3px;
-}
-select.input-xs { padding: 2px 5px; }
-
-.input-group-xs>.form-control,
-.input-group-xs>.input-group-addon,
-.input-group-xs>.input-group-btn>.btn {
-	height: 22px;
-	padding: 1px 5px;
-	font-size: 12px;
-	line-height: 1.5;
-}
-
-
-
-
-/**
- *  -------------------
- *  INPUT-GROUP-CONTROL
- *  -------------------
- *
- *
- *  [Example]
- *
- *  <div class="input-group">
- *    <div class="input-group-control"><select class="form-control"> ... </select></div>
- *    <input type="text" class="form-control" />
- *    <div class="input-group-btn"><button class="btn btn-default">Go</button></div>
- *  </div>
- *
- **/
-
-.input-group .input-group-control {
-	display: table-cell;
-	width: 1%;
-}
-.input-group .input-group-control > .form-control {
-	display: block;
-}
-
-.input-group-control:first-child > .form-control {
-	border-bottom-left-radius: 4px;
-	border-top-left-radius: 4px;
-	border-right: 0;
-	width: auto;
-}
-
-.input-group-control:last-child > .form-control {
-	border-bottom-right-radius: 4px;
-	border-top-right-radius: 4px;
-	border-left: 0;
-	width: auto;
-}
-
-.input-group-control:not(:first-child):not(:last-child) > .form-control {
-	border-radius: 0;
-	border-left: 0;
-	width: auto;
-}
-
-
-
-
-/**
- *  ------------
- *  TAB VERTICAL
- *  ------------
- *
- *  Custom inclusion of right, left and below tabs
- *
- *
- *  [Reference]
- *  - http://stackoverflow.com/questions/18432577/stacked-tabs-in-bootstrap-3
- *
- *
- *  [Example]
- *
- *  <div class="tab-left">
- *    <ul class="nav nav-tabs"> ... </ul>
- *  </div>
- *
- *  <div class="tab-right">
- *    <ul class="nav nav-tabs"> ... </ul>
- *  </div>
- *
- *  <div class="tab-below">
- *    <ul class="nav nav-tabs"> ... </ul>
- *  </div>
- *
- **/
-
-.tabs-below > .nav-tabs,
-.tabs-right > .nav-tabs,
-.tabs-left > .nav-tabs {
-	border-bottom: 0;
-}
-
-.tab-content > .tab-pane,
-.pill-content > .pill-pane {
-	display: none;
-}
-
-.tab-content > .active,
-.pill-content > .active {
-	display: block;
-}
-
-.tabs-below > .nav-tabs {
-	border-top: 1px solid #ddd;
-}
-
-.tabs-below > .nav-tabs > li {
-	margin-top: -1px;
-	margin-bottom: 0;
-}
-
-.tabs-below > .nav-tabs > li > a {
-	-webkit-border-radius: 0 0 4px 4px;
-	-moz-border-radius: 0 0 4px 4px;
-	border-radius: 0 0 4px 4px;
-}
-
-.tabs-below > .nav-tabs > li > a:hover,
-.tabs-below > .nav-tabs > li > a:focus {
-	border-top-color: #ddd;
-	border-bottom-color: transparent;
-}
-
-.tabs-below > .nav-tabs > .active > a,
-.tabs-below > .nav-tabs > .active > a:hover,
-.tabs-below > .nav-tabs > .active > a:focus {
-	border-color: transparent #ddd #ddd #ddd;
-}
-
-.tabs-left > .nav-tabs > li,
-.tabs-right > .nav-tabs > li {
-	float: none;
-}
-
-.tabs-left > .nav-tabs > li > a,
-.tabs-right > .nav-tabs > li > a {
-	min-width: 74px;
-	margin-right: 0;
-	margin-bottom: 3px;
-}
-
-.tabs-left > .nav-tabs {
-	float: left;
-	margin-right: 19px;
-	border-right: 1px solid #ddd;
-}
-
-.tabs-left > .nav-tabs > li > a {
-	margin-right: -1px;
-	-webkit-border-radius: 4px 0 0 4px;
-	-moz-border-radius: 4px 0 0 4px;
-	border-radius: 4px 0 0 4px;
-}
-
-.tabs-left > .nav-tabs > li > a:hover,
-.tabs-left > .nav-tabs > li > a:focus {
-	border-color: #eeeeee #dddddd #eeeeee #eeeeee;
-}
-
-.tabs-left > .nav-tabs .active > a,
-.tabs-left > .nav-tabs .active > a:hover,
-.tabs-left > .nav-tabs .active > a:focus {
-	border-color: #ddd transparent #ddd #ddd;
-	*border-right-color: #ffffff;
-}
-
-.tabs-right > .nav-tabs {
-	float: right;
-	margin-left: 19px;
-	border-left: 1px solid #ddd;
-}
-
-.tabs-right > .nav-tabs > li > a {
-	margin-left: -1px;
-	-webkit-border-radius: 0 4px 4px 0;
-	-moz-border-radius: 0 4px 4px 0;
-	border-radius: 0 4px 4px 0;
-}
-
-.tabs-right > .nav-tabs > li > a:hover,
-.tabs-right > .nav-tabs > li > a:focus {
-	border-color: #eeeeee #eeeeee #eeeeee #dddddd;
-}
-
-.tabs-right > .nav-tabs .active > a,
-.tabs-right > .nav-tabs .active > a:hover,
-.tabs-right > .nav-tabs .active > a:focus {
-	border-color: #ddd #ddd #ddd transparent;
-	*border-left-color: #ffffff;
-}
-
-
-
-
-/****
- *  --------------------------------
- *  BOOTSTRAP : MULTI-LEVEL DROPDOWN
- *  --------------------------------
- *
- *
- *  [Reference]
- *  - https://codepen.io/ajaypatelaj/pen/prHjD
- *
- *
- *  [Example]
- *
- *  <ul class="nav navbar-nav">
- *    <li class="dropdown">
- *      <a class="dropdown-toggle" data-toggle="dropdown">1st Level</a>
- *        <ul class="dropdown-menu">
- *          <li class="dropdown-menu">
- *            <a class="dropdown-toggle" data-toggle="dropdown">2nd Level</a>
- *            <ul class="dropdown-menu">
- *              <li><a>3rd Level</a></li>
- *            </ul>
- *          </li>
- *        </ul>
- *      </a>
- *    </li>
- *  </ul>
- *
- ****/
-
-.dropdown-submenu {
-	position: relative;
-}
-
-.dropdown-submenu>.dropdown-menu {
-	top: 0;
-	left: 100%;
-	margin-top: 0;
-	margin-left: -1px;
-}
-
-.dropdown-submenu:hover>.dropdown-menu {
-	display: block;
-}
-
+.dropdown-submenu { position: relative; }
 .dropdown-submenu>a:after {
-	display: block;
-	content: ' ';
+	border: none;
+	content: "\f0da";
 	float: right;
-	width: 0;
-	height: 0;
-	border-color: transparent;
-	border-style: solid;
-	border-width: 5px 0 5px 5px;
-	border-left-color: #fff;
-	margin-top: 4px;
-	margin-right: -5px;
+	font-family: 'FontAwesome';
 }
-
-.dropdown-submenu:hover>a:after {
-	border-left-color: #fff;
-}
-
-.dropdown-submenu.pull-left {
-	float: none;
-}
-
-.dropdown-submenu.pull-left>.dropdown-menu {
-	left: -100%;
-	margin-left: 10px;
+.dropdown-submenu > .dropdown-menu {
+	left: 100%;
+	margin-left: 0px;
+	margin-top: 0px;
+	top: 0;
 }
 
 
 
 
-/**
- *
- *  -------------
- *  CAROUSEL-FADE
- *  -------------
- *
- *
- *  [Reference]
- *  - https://codepen.io/Rowno/pen/Afykb
- *
- *
- *  [Example]
- *
- *  <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
- *    <div class="carousel-inner">
- *      <div class="carousel-item active">...</div>
- *      ...
- *    </div><!--/.carousel-inner-->
- *  </div>
- *
- **/
+/*----------------------+
+| TAB VERTICAL & BOTTOM |
++-----------------------+
 
-.carousel-fade .carousel-inner .item {
-	transition-property: opacity;
+[Reference]
+https://codepen.io/jasongardner/pen/gxprVQ
+
+[Example]
+<!-- left / right -->
+<ul class="nav nav-tabs nav-tabs--{left|right} flex-column">
+	<li class="nav-item"><a class="nav-link" href="...">...</a></li>
+	<li class="nav-item"><a class="nav-link" href="...">...</a></li>
+</ul>
+<!-- bottom -->
+<ul class="nav nav-tabs nav-tabs--bottom">
+	<li class="nav-item"><a class="nav-link" href="...">...</a></li>
+	<li class="nav-item"><a class="nav-link" href="...">...</a></li>
+</ul>
+*/
+
+.nav-tabs--left,
+.nav-tabs--right,
+.nav-tabs--bottom { border-bottom: none; }
+.nav-tabs--left { border-right: 1px solid #dee2e6; }
+.nav-tabs--right { border-left: 1px solid #dee2e6; }
+.nav-tabs--bottom { border-top: 1px solid #dee2e6; }
+.nav-tabs--left .nav-link { margin-right: -1px; }
+.nav-tabs--right .nav-link { margin-left: -1px; }
+.nav-tabs--bottom .nav-link { margin-top: -1px; }
+.nav-tabs--left .nav-link:focus,
+.nav-tabs--left .nav-link:hover,
+.nav-tabs--left .nav-link.active {
+	border-bottom-color: #e9ecef;
+	border-right-color: #dee2e6;
+	border-bottom-left-radius: 0.25rem;
+	border-top-right-radius: 0;
+	border-right-color: transparent;
 }
-
-.carousel-fade .carousel-inner .item,
-.carousel-fade .carousel-inner .active.left,
-.carousel-fade .carousel-inner .active.right {
-	opacity: 0;
+.nav-tabs--right .nav-link:focus,
+.nav-tabs--right .nav-link:hover,
+.nav-tabs--right .nav-link.active {
+	border-bottom-color: #e9ecef;
+	border-left-color: #dee2e6;
+	border-bottom-right-radius: 0.25rem;
+	border-top-left-radius: 0;
+	border-left-color: transparent;
 }
-
-.carousel-fade .carousel-inner .active,
-.carousel-fade .carousel-inner .next.left,
-.carousel-fade .carousel-inner .prev.right {
-	opacity: 1;
+.nav-tabs--bottom .nav-link:focus,
+.nav-tabs--bottom .nav-link:hover,
+.nav-tabs--bottom .nav-link.active {
+	border-bottom-color: #e9ecef;
+	border-top-color: #dee2e6;
+	border-bottom-left-radius: 0.25rem;
+	border-bottom-right-radius: 0.25rem;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	border-top-color: transparent;
 }
-
-.carousel-fade .carousel-inner .next,
-.carousel-fade .carousel-inner .prev,
-.carousel-fade .carousel-inner .active.left,
-.carousel-fade .carousel-inner .active.right {
-	left: 0;
-	transform: translate3d(0, 0, 0);
-}
-
-.carousel-fade .carousel-control {
-	z-index: 2;
-}
-
-
-
-
-/**
- *
- *  -----------------------
- *  FIVE COLUMN GRID LAYOUT
- *  -----------------------
- *
- *
- *  [Reference]
- *  - https://codepen.io/Rowno/pen/Afykb
- *
- *
- *  [Example]
- *
- *  <div class="row">
- *    <div class="col-xs-12 col-sm-5-1">...</div>
- *      ...
- *  </div>
- *
- **/
-
-.col-xs-5-1,
-.col-xs-5-2,
-.col-xs-5-3,
-.col-xs-5-4,
-.col-sm-5-1,
-.col-sm-5-2,
-.col-sm-5-3,
-.col-sm-5-4,
-.col-md-5-1,
-.col-md-5-2,
-.col-md-5-3,
-.col-md-5-4,
-.col-lg-5-1,
-.col-lg-5-2,
-.col-lg-5-3,
-.col-lg-5-4 {
-	float: left;
-	min-height: 1px;
-	padding-right: 10px;
-	padding-left: 10px;
-	position: relative;
-}
-.col-xs-5-1 { width: 20%; }
-.col-xs-5-2 { width: 40%; }
-.col-xs-5-3 { width: 60%; }
-.col-xs-5-4 { width: 80%; }
-@media (min-width: 768px) {
-	.col-sm-5-1 { width: 20%; }
-	.col-sm-5-2 { width: 40%; }
-	.col-sm-5-3 { width: 60%; }
-	.col-sm-5-4 { width: 80%; }
-}
-@media (min-width: 992px) {
-	.col-md-5-1 { width: 20%; }
-	.col-md-5-2 { width: 40%; }
-	.col-md-5-3 { width: 60%; }
-	.col-md-5-4 { width: 80%; }
-}
-@media (min-width: 1200px) {
-	.col-lg-5-1 { width: 20%; }
-	.col-lg-5-2 { width: 40%; }
-	.col-lg-5-3 { width: 60%; }
-	.col-lg-5-4 { width: 80%; }
-}
+.nav-tabs--left .nav-link.active,
+.nav-tabs--right .nav-link.active, 
+.nav-tabs--bottom .nav-link.active { border-color: #dee2e6; }
+.nav-tabs--left .nav-link.active { border-right-color: #fff; }
+.nav-tabs--right .nav-link.active { border-left-color: #fff; }
+.nav-tabs--bottom .nav-link.active { border-top-color: #fff; }
