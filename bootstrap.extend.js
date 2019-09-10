@@ -51,7 +51,7 @@ $(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
 			}
 		// show message in alert
 		} else {
-			alert('[Error]\n'+ajaxSettings.url+'\n'+jqXHR.responseText);
+			alert('[ERROR]\n'+ajaxSettings.url+'\n'+jqXHR.responseText);
 		}
 	}
 });
@@ -59,26 +59,40 @@ $(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
 
 
 
-/*---------------+
-| MODAL NO-CACHE |
-+----------------+
+/*-------------+
+| MODAL REMOTE |
++--------------+
 
 [Usage]
-I allow clearing modal cache on-close by specifying [data-nocache] at .modal element
-===> avoid bootstrap default ajax-modal cache behavior
-===> otherwise, modal content will stay the same...
-===> http://stackoverflow.com/questions/12286332/twitter-bootstrap-remote-modal-shows-same-content-everytime
+Auto-load remote content into modal
 
 [Example]
-<div id="my-modal" class="modal" data-nocache> ... </div>
+<a href="foo.html" data-toggle="modal" data-target="#my-modal">...</div>
+<button data-href="bar.html" data-toggle="modal" data-target="#my-modal">...</button>
 */
 
-$(document).on('hidden.bs.modal', '[data-nocache]', function(evt){
-	$(this)
-		.removeData('bs.modal')
+$(document).on('click', '[href][data-target][data-toggle=modal],[data-href][data-target][data-toggle=modal]', function(evt){
+	evt.preventDefault();
+	var $btn = $(this);
+	var $modal = $( $btn.attr('data-target') );
+	// validation
+	if ( !$modal.length ) {
+		console.log('[ERROR] Target modal not found ('+$btn.attr('data-target')+')');
+		return false;
+	} else if ( !$modal.find('.modal-dialog').length ) {
+		console.log('[ERROR] Target modal has no <DIV.modal-dialog> element ('+$btn.attr('data-target')+')');
+	}
+	// create essential modal structure (when necessary)
+	if ( !$modal.find('.modal-content').length ) {
+		$modal.find('.modal-dialog').append('<div class="modal-content"></div>');
+	}
+	// clear modal content first (when necessary)
+	$modal
 		.find('.modal-body').html('<p>&nbsp;</p>').end()
 		.find('.modal-title').addClass('text-muted').html('<i class="fa fa-spinner fa-pulse"></i> Loading...').end()
 		.find('.modal-footer .btn:not([data-dismiss=modal])').remove();
+	// load content remotely
+	$modal.find('.modal-content').load( $btn.attr( $btn.is('[href]') ? 'href' : 'data-href' ) );
 });
 
 
