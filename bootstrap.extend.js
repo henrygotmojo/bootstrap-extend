@@ -51,7 +51,7 @@ $(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
 			}
 		// show message in alert
 		} else {
-			alert('[ERROR]\n'+ajaxSettings.url+'\n'+jqXHR.responseText);
+			alert('[Error]\n'+ajaxSettings.url+'\n'+jqXHR.responseText);
 		}
 	}
 });
@@ -87,10 +87,17 @@ $(document).on('click', '[href][data-target][data-toggle=modal],[data-href][data
 		$modal.find('.modal-dialog').append('<div class="modal-content"></div>');
 	}
 	// clear modal content first (when necessary)
-	$modal
-		.find('.modal-body').html('<p>&nbsp;</p>').end()
-		.find('.modal-title').addClass('text-muted').html('<i class="fa fa-spinner fa-pulse"></i> Loading...').end()
-		.find('.modal-footer .btn:not([data-dismiss=modal])').remove();
+		$modal.find('.modal-content').html(`
+			<div class="modal-header">
+				<div class="modal-title text-muted"><i class="fa fa-spinner fa-pulse"></i><span class="ml-2">Loading...</span></div>
+			</div>
+			<div class="modal-body">
+				<div class="py-4 my-4"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+			</div>
+		`);
 	// load content remotely
 	$modal.find('.modal-content').load( $btn.attr( $btn.is('[href]') ? 'href' : 'data-href' ) );
 });
