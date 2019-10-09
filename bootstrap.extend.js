@@ -21,18 +21,18 @@ $(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
 		var mode = $('body').attr('data-ajax-error').length ? $('body').attr('data-ajax-error') : 'modal';
 		// show message in modal, or...
 		if ( mode == 'modal' ) {
-			var errMsg = '<h3 class="mt-0" title="'+ajaxSettings.url+'">Error</h3><pre>'+jqXHR.responseText+'</pre>';
+			var errMsg = '<h3 class="mt-0 text-white" title="'+ajaxSettings.url+'">Error</h3><pre>'+jqXHR.responseText+'</pre>';
 			// show message in already opened modal, or...
 			var visibleModal = $('.modal:visible .modal-body');
 			if ( $(visibleModal).length ) {
-				var errAlert = $('#bsx-error-alert');
+				var $errAlert = $('#bsx-error-alert');
 				// create new alert box (when necessary)
-				if ( !$(errAlert).length ) {
-					errAlert = $('<div id="bsx-error-alert" class="alert alert-danger" role="alert"></div>');
-					$(errAlert).prependTo(visibleModal).hide();
+				if ( !$errAlert.length ) {
+					$errAlert = $('<div id="bsx-error-alert" class="alert alert-danger" role="alert"></div>');
+					$errAlert.prependTo(visibleModal).hide();
 				}
 				// show alert box in modal
-				$(errAlert)
+				$errAlert
 					.html(errMsg)
 					.filter(':visible').hide().fadeIn().end()
 					.filter(':hidden').slideDown().end()
@@ -40,14 +40,21 @@ $(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
 					.on('click', function(){ $(errAlert).slideUp(); });
 			// create new modal window and show message
 			} else {
-				var errModal = $('#bsx-error-modal');
+				var $errModal = $('#bsx-error-modal');
 				// create hidden dialog (when necessary)
-				if ( !$(errModal).length ) {
-					errModal = $('<div id="bsx-error-modal" class="modal" tabindex="-1" role="dialog" data-nocache><div class="modal-dialog"><div class="modal-content bg-danger text-white"><div class="modal-body"></div></div></div></div>');
-					$(errModal).appendTo('body');
+				if ( !$errModal.length ) {
+					$errModal = $(`
+						<div id="bsx-error-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bsx-error-modal" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content bg-danger">
+									<div class="modal-body"></div>
+								</div>
+							</div>
+						</div>
+					`).appendTo('body');
 				}
 				// show message in modal
-				$(errModal).find('.modal-body').html(errMsg).end().modal('show');
+				$errModal.find('.modal-body').html(errMsg).end().modal('show');
 			}
 		// show message in alert
 		} else {
