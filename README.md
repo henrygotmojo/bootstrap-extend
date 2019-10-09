@@ -3,7 +3,7 @@ Extend JS & CSS features of Twitter Bootstrap 4.x
 
 
 ### Version
-- 4.0-alpha
+- 4.0
 
 
 ### Dependencies
