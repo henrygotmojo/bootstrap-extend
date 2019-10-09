@@ -6,60 +6,67 @@ $(function(){
 +-----------------------+
 
 [Usage]
-I show error modal dialog whenever there is server error
-===> body[data-ajax-error] = {modal*|alert}
+I show error dialog whenever there is an ajax error
+===> default showing as modal
 ===> simply die() in server-script and error message will auto-show in modal
-===> default open dialog when ajax-error
 ===> applicable to whole site
 
 [Example]
-<body data-ajax-error="{modal|~empty~}"> ... </body>
+<body data-ajax-error="{modal|alert|console}"> ... </body>
 */
 
 $(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
-	if ( $('body').is('[data-ajax-error]') ) {
-		var mode = $('body').attr('data-ajax-error').length ? $('body').attr('data-ajax-error') : 'modal';
-		// show message in modal, or...
-		if ( mode == 'modal' ) {
-			var errMsg = '<h3 class="mt-0 text-white" title="'+ajaxSettings.url+'">Error</h3><pre>'+jqXHR.responseText+'</pre>';
-			// show message in already opened modal, or...
-			var visibleModal = $('.modal:visible .modal-body');
-			if ( $(visibleModal).length ) {
-				var $errAlert = $('#bsx-error-alert');
-				// create new alert box (when necessary)
-				if ( !$errAlert.length ) {
-					$errAlert = $('<div id="bsx-error-alert" class="alert alert-danger" role="alert"></div>');
-					$errAlert.prependTo(visibleModal).hide();
-				}
-				// show alert box in modal
-				$errAlert
-					.html(errMsg)
-					.filter(':visible').hide().fadeIn().end()
-					.filter(':hidden').slideDown().end()
-					.off('click')
-					.on('click', function(){ $(errAlert).slideUp(); });
-			// create new modal window and show message
-			} else {
-				var $errModal = $('#bsx-error-modal');
-				// create hidden dialog (when necessary)
-				if ( !$errModal.length ) {
-					$errModal = $(`
-						<div id="bsx-error-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bsx-error-modal" aria-hidden="true">
-							<div class="modal-dialog">
-								<div class="modal-content bg-danger">
-									<div class="modal-body"></div>
-								</div>
-							</div>
-						</div>
-					`).appendTo('body');
-				}
-				// show message in modal
-				$errModal.find('.modal-body').html(errMsg).end().modal('show');
-			}
-		// show message in alert
-		} else {
-			alert('[Error]\n'+ajaxSettings.url+'\n'+jqXHR.responseText);
+	// set default mode
+	if ( !$('body[data-ajax-error]').length || !$('body').attr('data-ajax-error').length ) {
+		$('body').attr('data-ajax-error', 'modal');
+	}
+	// display error as modal
+	if ( $('body').attr('data-ajax-error') == 'modal' && $('body.modal-open').length ) {
+		var $modalVisible = $('.modal.show');
+		// create alert box (when necessary)
+		if ( !$('#bsx-error-alert').length ) {
+			$('<div id="bsx-error-alert" class="alert alert-danger" role="alert"></div>')
+				.prependTo( $modalVisible.find('.modal-body') )
+				.on('click', function(){ $(this).slideUp(); })
+				.hide();
 		}
+		// show message
+		$('#bsx-error-alert')
+			.html('')
+			.append('<h3 class="mt-0 text-danger">Error</h3>')
+			.append('<pre>'+jqXHR.responseText+'</pre>')
+			.append('<small><em class="text-danger">'+ajaxSettings.url+'</em></small>')
+			.filter(':visible').hide().fadeIn().end()
+			.filter(':hidden').slideDown();
+		// scroll to message
+		$modalVisible.animate({ scrollTop : 0 });
+	// display error as alert box in modal
+	} else if ( $('body').attr('data-ajax-error') == 'modal' ) {
+		// create modal (when necessary)
+		if ( !$('#bsx-error-modal').length ) {
+			$('body').append(`
+				<div id="bsx-error-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bsx-error-modal" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content bg-danger">
+							<div class="modal-body"></div>
+						</div>
+					</div>
+				</div>
+			`);
+		}
+		// show message
+		$('#bsx-error-modal')
+			.modal('show')
+			.find('.modal-body').html('')
+			.append('<h3 class="mt-0 text-white">Error</h3>')
+			.append('<pre>'+jqXHR.responseText+'</pre>')
+			.append('<small><em class="text-warning">'+ajaxSettings.url+'</em></small>');
+	// display error as browser alert
+	} else if ( $('body').attr('data-ajax-error') == 'alert' ) {
+		alert('[Error]\n'+jqXHR.responseText+'\n\n'+ajaxSettings.url);
+	// display error as console log
+	} else {
+		console.log('[Error] '+jqXHR.responseText+' ('+ajaxSettings.url+')');
 	}
 });
 
