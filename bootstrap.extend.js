@@ -73,19 +73,19 @@ $(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
 
 
 
-/*-------------+
-| MODAL REMOTE |
-+--------------+
+/*-------------------------+
+| DATA-TOGGLE : AJAX-MODAL |
++--------------------------+
 
 [Usage]
 Auto-load remote content into modal
 
 [Example]
-<a href="foo.html" data-toggle="modal" data-target="#my-modal">...</div>
-<button data-href="bar.html" data-toggle="modal" data-target="#my-modal">...</button>
+<a href="foo.html" data-toggle="ajax-modal" data-target="#my-modal">...</div>
+<button data-href="bar.html" data-toggle="ajax-modal" data-target="#my-modal">...</button>
 */
 
-$(document).on('click', '[href][data-target][data-toggle=modal],[data-href][data-target][data-toggle=modal]', function(evt){
+$(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href][data-target][data-toggle=ajax-modal]', function(evt){
 	evt.preventDefault();
 	var $btn = $(this);
 	var $modal = $( $btn.attr('data-target') );

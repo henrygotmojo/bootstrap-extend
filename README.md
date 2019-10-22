@@ -21,5 +21,5 @@ Tab Vertical & Tab Bottom
 
 ### JS Features
 Auto AJAX-Error Alert
-Modal Remote
+AJAX-Modal
 AJAX-Load / AJAX-Submit
