@@ -84,7 +84,6 @@ Auto-load remote content into modal
 <a href="foo.html" data-toggle="ajax-modal" data-target="#my-modal">...</div>
 <button data-href="bar.html" data-toggle="ajax-modal" data-target="#my-modal">...</button>
 */
-
 $(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href][data-target][data-toggle=ajax-modal]', function(evt){
 	evt.preventDefault();
 	var $btn = $(this);
@@ -101,17 +100,19 @@ $(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href]
 		$modal.find('.modal-dialog').append('<div class="modal-content"></div>');
 	}
 	// clear modal content first (when necessary)
-		$modal.find('.modal-content').html(`
-			<div class="modal-header">
-				<div class="modal-title text-muted"><i class="fa fa-spinner fa-pulse"></i><span class="ml-2">Loading...</span></div>
-			</div>
-			<div class="modal-body">
-				<div class="py-4 my-4"></div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-			</div>
-		`);
+	$modal.find('.modal-content').html(`
+		<div class="modal-header">
+			<div class="modal-title text-muted"><i class="fa fa-spinner fa-pulse"></i><span class="ml-2">Loading...</span></div>
+		</div>
+		<div class="modal-body">
+			<div class="py-4 my-4"></div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+		</div>
+	`);
+	// show modal
+	$modal.modal('show');
 	// load content remotely
 	$modal.find('.modal-content').load( $btn.attr( $btn.is('[href]') ? 'href' : 'data-href' ) );
 });
