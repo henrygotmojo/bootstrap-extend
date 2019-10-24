@@ -112,3 +112,32 @@ https://codepen.io/jasongardner/pen/gxprVQ
 .nav-tabs--left .nav-link.active { border-right-color: #fff; }
 .nav-tabs--right .nav-link.active { border-left-color: #fff; }
 .nav-tabs--bottom .nav-link.active { border-top-color: #fff; }
+
+
+
+
+/*-------------------------------+
+| ADDITIONAL CLASSES FOR STYLING |
++-------------------------------*/
+
+.del { text-decoration: line-through; }
+.op-100 { opacity: 100; }
+.op-90  { opacity:  90; }
+.op-80  { opacity:  80; }
+.op-70  { opacity:  70; }
+.op-60  { opacity:  60; }
+.op-50  { opacity:  50; }
+.op-40  { opacity:  40; }
+.op-30  { opacity:  30; }
+.op-20  { opacity:  20; }
+.op-10  { opacity:  10; }
+.op-0   { opacity:   0; }
+.w-90 { width: 90%; }
+.w-80 { width: 80%; }
+.w-75 { width: 75%; }
+.w-70 { width: 70%; }
+.w-60 { width: 60%; }
+.w-40 { width: 40%; }
+.w-30 { width: 30%; }
+.w-20 { width: 20%; }
+.w-10 { width: 10%; }
