@@ -5,7 +5,7 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 
 
 ### Version
-- 4.0
+- 4.0.3
 
 
 ### Dependencies
@@ -14,12 +14,18 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 
 
 ### CSS Features
-Modal Max
-Multi-Level Dropdown
-Tab Vertical & Tab Bottom
+- Modal Max
+- Multi-Level Dropdown
+- Vertical Tab & Bottom Tab
+- Additional Class for Styling (Opacity, Width, etc.)
 
 
 ### JS Features
-Auto AJAX-Error Alert
-AJAX-Modal
-AJAX-Load / AJAX-Submit
+- Auto AJAX-Error Alert
+- AJAX-Modal
+- AJAX-Load / AJAX-Submit
+
+
+### CDN
+- https://bbcdn.githack.com/henrygotmojo/bootstrap-extend/raw/{VERSION}/bootstrap.extend.css
+- https://bbcdn.githack.com/henrygotmojo/bootstrap-extend/raw/{VERSION}/bootstrap.extend.js
