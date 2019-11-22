@@ -144,25 +144,31 @@ I use jquery-blockui plugin (if available)
 <form method="post" action="/url/to/go" data-toggle="ajax-submit" data-target="#element"> ... </form>
 */
 
-$(document)
-	// remote load
-	.on('click', '[data-toggle=ajax-load]', function(evt){
-		evt.preventDefault();
-		$(this).trigger('ajaxLoad.bsx');
-	})
-	// remote submit
-	.on('submit', '[data-toggle=ajax-submit]', function(evt){
-		evt.preventDefault();
-		// BUG : when pass to custom event
-		// ===> element becomes BUTTON (instead of FORM)
-		// ===> use closest() as dirty fix
-		$(this).closest('form').trigger('ajaxSubmit.bsx');
-	});
+// remote load
+$(document).on('click', '[data-toggle=ajax-load]', function(evt){
+	evt.preventDefault();
+	ajaxLoadOrSubmit(this);
+});
+// remote submit
+$(document).on('submit', '[data-toggle=ajax-submit]', function(evt){
+	evt.preventDefault();
+	// BUG : when pass to custom event
+	// ===> element becomes BUTTON (instead of FORM)
+	// ===> use closest() as dirty fix
+	ajaxLoadOrSubmit( $(this).closest('form') );
+});
 
 
-// remote load or submit
-$(document).on('ajaxLoad.bsx ajaxSubmit.bsx', '[data-toggle=ajax-load],[data-toggle=ajax-submit]', function(evt){
-	var $triggerElement = $(this);
+// actual behavior of ajax load or submit
+var ajaxLoadOrSubmit = function(triggerElement) {
+	var $triggerElement = $(triggerElement);
+	// determine event type (by camelize [data-toggle] attribute)
+	var eventType = $triggerElement.attr('data-toggle').split('-').map(function(word,index){
+		if(index == 0) return word.toLowerCase();
+		return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+	}).join('');
+	// fire event
+	$triggerElement.trigger(eventType+'.bsx');
 	// confirmation
 	if ( $triggerElement.is('[data-confirm]') ) {
 		var msg = $triggerElement.attr('data-confirm').length ? $triggerElement.attr('data-confirm') : 'Are you sure?';
@@ -220,17 +226,17 @@ $(document).on('ajaxLoad.bsx ajaxSubmit.bsx', '[data-toggle=ajax-load],[data-tog
 	// when callback event was fired
 	// ===> run the callback function
 	// ===> there is no [this] variable available in callback function, because the original trigger element was already been replaced...
-	$(document).on(evt.type+'Callback.bsx', toggleCallbackFunc);
+	$(document).on(eventType+'Callback.bsx', toggleCallbackFunc);
 	// check target
 	if ( !targetSelector ) {
-		console.log('[Error] '+evt.type+'.'+evt.namespace+' - attribute [data-target] was not specified');
+		console.log('[Error] '+eventType+'.bsx - attribute [data-target] was not specified');
 	} else if ( !$(targetSelector).length ) {
-		console.log('[Error] '+evt.type+'.'+evt.namespace+' - target not found ('+targetSelector+')');
+		console.log('[Error] '+eventType+'.bsx - target not found ('+targetSelector+')');
 	}
 	// normal redirect or submit when target element was not properly specified
 	if ( !targetSelector || !$(targetSelector).length ) {
 		$triggerElement.removeAttr('data-toggle');
-		if ( evt.type == 'ajaxSubmit' ) {
+		if ( eventType == 'ajaxSubmit' ) {
 			$triggerElement.submit();
 		} else {
 			document.location.href = $triggerElement.is('[href]') ? $triggerElement.attr('href') : $triggerElement.attr('data-href');
@@ -246,7 +252,7 @@ $(document).on('ajaxLoad.bsx ajaxSubmit.bsx', '[data-toggle=ajax-load],[data-tog
 		} else if ( $triggerElement.is('a') ) {
 			url = $triggerElement.attr('href');
 		} else {
-			console.log('[Error] '+evt.type+'.'+evt.namespace+' - type of trigger element not support');
+			console.log('[Error] '+eventType+'.bsx - type of trigger element not support');
 		}
 		var param = $triggerElement.is('form') ? $triggerElement.serialize() : {};
 		// block
@@ -282,8 +288,8 @@ $(document).on('ajaxLoad.bsx ajaxSubmit.bsx', '[data-toggle=ajax-load],[data-tog
 					$newElement.insertAfter( $targetElement );
 				}
 				// show new element with effect
-				// ===> callback after new element shown
-				var callbackEvent = evt.type + 'Callback.bsx';
+				// ===> fire event after new element shown
+				var callbackEvent = eventType + 'Callback.bsx';
 				if ( toggleTransition == 'fade' ) {
 					$newElement.hide().fadeIn(400, function(){
 						$triggerElement.trigger(callbackEvent);
@@ -331,7 +337,7 @@ $(document).on('ajaxLoad.bsx ajaxSubmit.bsx', '[data-toggle=ajax-load],[data-tog
 			}
 		});
 	}
-});
+}; // ajaxLoadOrSubmit
 
 
 // listen popstate event
