@@ -148,8 +148,7 @@ $(document)
 	// remote load
 	.on('click', '[data-toggle=ajax-load]', function(evt){
 		evt.preventDefault();
-		var btn = this;
-		$(document).trigger('ajaxLoad.bsx', btn);
+		$(this).trigger('ajaxLoad.bsx');
 	})
 	// remote submit
 	.on('submit', '[data-toggle=ajax-submit]', function(evt){
@@ -157,182 +156,182 @@ $(document)
 		// BUG : when pass to custom event
 		// ===> element becomes BUTTON (instead of FORM)
 		// ===> use closest() as dirty fix
-		var f = $(this).closest('form');
-		$(document).trigger('ajaxSubmit.bsx', f);
-	})
-	// remote load/submit
-	.on('ajaxLoad.bsx ajaxSubmit.bsx', function(evt, triggerElement){
-		// confirmation
-		if ( $(triggerElement).is('[data-confirm]') ) {
-			var msg = $(triggerElement).attr('data-confirm').length ? $(triggerElement).attr('data-confirm') : 'Are you sure?';
-			if ( !confirm(msg) ) return false;
-		}
-		// options
-		var targetSelector   = $(triggerElement).attr('data-target');
-		var toggleMode       = $(triggerElement).is('[data-toggle-mode]')       ? $(triggerElement).attr('data-toggle-mode') : 'replace';
-		var toggleTransition = $(triggerElement).is('[data-toggle-transition]') ? $(triggerElement).attr('data-toggle-transition') : 'slide';
-		var toggleCallback   = $(triggerElement).is('[data-toggle-callback]')   ? $(triggerElement).attr('data-toggle-callback') : '';
-		var toggleLoading    = $(triggerElement).is('[data-toggle-loading]')    ? $(triggerElement).attr('data-toggle-loading') : 'progress';
-		var togglePushState  = $(triggerElement).is('[data-toggle-pushstate]')  ? true : false;
-		// apply block-ui when ajax load (if any)
-		var configBlockUI;
-		if ( $.fn.block ) {
-			// default loading style (progress)
-			configBlockUI = {
-				'message' : false,
-				'css' : {
-					'backgroundColor' : 'none',
-					'border' : 'none'
-				},
-				'fadeIn' : 0,
-				'showOverlay' : true
-			};
-			// loading style : none
-			if ( toggleLoading == 'none' ) {
-				configBlockUI['overlayCSS'] = { 'background-color' : 'white', 'opacity' : 0 };
-			// loading style : spinner
-			} else if ( toggleLoading == 'spinner' || toggleLoading == 'spinner-large' ) {
-				configBlockUI['message'] = ( toggleLoading == 'spinner-large' ) ? '<i class="fa fa-spin fa-spinner fa-4x text-muted"></i>' : '<i class="fa fa-spin fa-spinner text-muted"></i>';
-				configBlockUI['overlayCSS'] = { 'background-color'  : 'gray', 'opacity' : .1 };
-			// loading style : overlay
-			} else if ( toggleLoading == 'overlay' ) {
-				configBlockUI['overlayCSS'] = { 'background-color'  : 'gray', 'opacity' : .1 };
-			// loading style : progress (default)
-			} else {
-				configBlockUI['overlayCSS'] = {
-					'-webkit-animation' : 'progress-bar-stripes 2s linear infinite',
-					'animation'         : 'progress-bar-stripes 2s linear infinite',
-					'background-color'  : '#bbb',
-					'background-image'  : '-webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent)',
-					'background-image'  : 'linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent)',
-					'background-size'   : '40px 40px',
-				};
-			}
-		}
-		// callback can be either function or event name
-		// ===> trigger custom event so that {this} scope is available in callback function
-		var toggleCallback = $(triggerElement).is('[data-toggle-callback]') ? $(triggerElement).attr('data-toggle-callback') : '';
-		var toggleCallbackFunc = function(){};
-		if ( toggleCallback.length ) {
-			eval('toggleCallbackFunc = '+toggleCallback+';');
-		}
-		// when callback event was fired
-		// ===> run the callback function
-		// ===> there is no [this] variable available in callback function, because the original trigger element was already been replaced...
-		$(document).on(evt.type+'Callback.bsx', toggleCallbackFunc);
-		// check target
-		if ( !targetSelector ) {
-			console.log('[Error] '+evt.type+'.'+evt.namespace+' - attribute [data-target] was not specified');
-		} else if ( !$(targetSelector).length ) {
-			console.log('[Error] '+evt.type+'.'+evt.namespace+' - target not found ('+targetSelector+')');
-		}
-		// normal redirect or submit when target element was not properly specified
-		if ( !targetSelector || !$(targetSelector).length ) {
-			$(triggerElement).removeAttr('data-toggle');
-			if ( evt.type == 'ajaxSubmit' ) {
-				$(triggerElement).submit();
-			} else {
-				document.location.href = $(triggerElement).is('[href]') ? $(triggerElement).attr('href') : $(triggerElement).attr('data-href');
-			}
-		// proceed...
-		} else {
-			var targetElement = $(targetSelector);
-			var url;
-			if ( $(triggerElement).is('form') ) {
-				url = $(triggerElement).attr('action');
-			} else if ( $(triggerElement).is('[type=button]') ) {
-				url = $(triggerElement).is('[href]') ? $(triggerElement).attr('href') : $(triggerElement).attr('data-href');
-			} else if ( $(triggerElement).is('a') ) {
-				url = $(triggerElement).attr('href');
-			} else {
-				console.log('[Error] '+evt.type+'.'+evt.namespace+' - type of trigger element not support');
-			}
-			var param = $(triggerElement).is('form') ? $(triggerElement).serialize() : {};
-			// block
-			if ( $(triggerElement).is('form') ) {
-				if ( configBlockUI ) {
-					$(triggerElement).block( configBlockUI );
-				}
-				$(triggerElement).find('[type=submit]').attr('disabled', true);
-			} else {
-				$(triggerElement).attr('disabled', true);
-			}
-			if ( configBlockUI ) {
-				$(targetElement).block( configBlockUI );
-			}
-			// load result remotely
-			$.ajax({
-				'url' : url,
-				'data' : param,
-				'cache' : false,
-				'method' : $(triggerElement).is('form[method]') ? $(triggerElement).attr('method') : 'get',
-				'success' : function(data, textStatus, jqXHR){
-					var newElement;
-					// wrap by something if response text is not html
-					if ( !$(data).length ) {
-						data = '<div>'+data+'</div>';
-					}
-					// determine position of new element
-					if ( toggleMode == 'prepend' ) {
-						newElement = $(data).prependTo(targetElement);
-					} else if ( toggleMode == 'append' ) {
-						newElement = $(data).appendTo(targetElement);
-					} else if ( toggleMode == 'before' ) {
-						newElement = $(data).insertBefore(targetElement);
-					} else {
-						newElement = $(data).insertAfter(targetElement);
-					}
-					// show new element with effect
-					// ===> callback after new element shown
-					if ( toggleTransition == 'fade' ) {
-						$(newElement).hide().fadeIn('normal', function(){
-							$(document).trigger(evt.type+'Callback.bsx').off(evt.type+'Callback.bsx');
-						});
-					} else if ( toggleTransition == 'slide' ) {
-						$(newElement).hide().slideDown('normal', function(){
-							$(document).trigger(evt.type+'Callback.bsx').off(evt.type+'Callback.bsx');
-						});
-					} else {
-						$(newElement).hide().show();
-						$(document).trigger(evt.type+'Callback.bsx').off(evt.type+'Callback.bsx');
-					}
-					// hide current element (when necessary)
-					if ( toggleMode == 'replace' ) {
-						if ( toggleTransition == 'slide' ) {
-							$(targetElement).slideUp('normal', function(){
-								$(targetElement).remove();
-							});
-						} else {
-							$(targetElement).hide().remove();
-						}
-					}
-					// push state (when necessary)
-					if ( history.pushState && togglePushState ) {
-						history.pushState({
-							'pushState.bsx' : {
-								'targetSelector'   : targetSelector,
-								'toggleMode'       : toggleMode,
-								'toggleTransition' : toggleTransition,
-								'toggleCallback'   : toggleCallback,
-								'toggleLoading'    : toggleLoading
-							}
-						}, '', url);
-					}
-				},
-				'complete' : function(){
-					// unblock trigger element
-					if ( $(triggerElement).is('form') ) {
-						if ( configBlockUI ) $(triggerElement).unblock();
-						$(triggerElement).find('[type=submit]').attr('disabled', false);
-					} else {
-						$(triggerElement).attr('disabled', false);
-					}
-					// unblock old element
-					if ( configBlockUI ) $(targetElement).unblock();
-				}
-			});
-		}
+		$(this).closest('form').trigger('ajaxSubmit.bsx');
 	});
+
+
+// remote load or submit
+$(document).on('ajaxLoad.bsx ajaxSubmit.bsx', '[data-toggle=ajax-load],[data-toggle=ajax-submit]', function(evt){
+	var $triggerElement = $(this);
+	// confirmation
+	if ( $triggerElement.is('[data-confirm]') ) {
+		var msg = $triggerElement.attr('data-confirm').length ? $triggerElement.attr('data-confirm') : 'Are you sure?';
+		if ( !confirm(msg) ) return false;
+	}
+	// options
+	var targetSelector   = $triggerElement.attr('data-target');
+	var toggleMode       = $triggerElement.is('[data-toggle-mode]')       ? $triggerElement.attr('data-toggle-mode') : 'replace';
+	var toggleTransition = $triggerElement.is('[data-toggle-transition]') ? $triggerElement.attr('data-toggle-transition') : 'slide';
+	var toggleCallback   = $triggerElement.is('[data-toggle-callback]')   ? $triggerElement.attr('data-toggle-callback') : '';
+	var toggleLoading    = $triggerElement.is('[data-toggle-loading]')    ? $triggerElement.attr('data-toggle-loading') : 'progress';
+	var togglePushState  = $triggerElement.is('[data-toggle-pushstate]')  ? true : false;
+	// apply block-ui when ajax load (if any)
+	var configBlockUI;
+	if ( $.fn.block ) {
+		// default loading style (progress)
+		configBlockUI = {
+			'message' : false,
+			'css' : {
+				'backgroundColor' : 'none',
+				'border' : 'none'
+			},
+			'fadeIn' : 0,
+			'showOverlay' : true
+		};
+		// loading style : none
+		if ( toggleLoading == 'none' ) {
+			configBlockUI['overlayCSS'] = { 'background-color' : 'white', 'opacity' : 0 };
+		// loading style : spinner
+		} else if ( toggleLoading == 'spinner' || toggleLoading == 'spinner-large' ) {
+			configBlockUI['message'] = ( toggleLoading == 'spinner-large' ) ? '<i class="fa fa-spin fa-spinner fa-4x text-muted"></i>' : '<i class="fa fa-spin fa-spinner text-muted"></i>';
+			configBlockUI['overlayCSS'] = { 'background-color'  : 'gray', 'opacity' : .1 };
+		// loading style : overlay
+		} else if ( toggleLoading == 'overlay' ) {
+			configBlockUI['overlayCSS'] = { 'background-color'  : 'gray', 'opacity' : .1 };
+		// loading style : progress (default)
+		} else {
+			configBlockUI['overlayCSS'] = {
+				'-webkit-animation' : 'progress-bar-stripes 2s linear infinite',
+				'animation'         : 'progress-bar-stripes 2s linear infinite',
+				'background-color'  : '#bbb',
+				'background-image'  : '-webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent)',
+				'background-image'  : 'linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent)',
+				'background-size'   : '40px 40px',
+			};
+		}
+	}
+	// callback can be either function or event name
+	// ===> trigger custom event so that {this} scope is available in callback function
+	var toggleCallback = $triggerElement.is('[data-toggle-callback]') ? $triggerElement.attr('data-toggle-callback') : '';
+	var toggleCallbackFunc = function(){};
+	if ( toggleCallback.length ) {
+		eval('toggleCallbackFunc = '+toggleCallback+';');
+	}
+	// when callback event was fired
+	// ===> run the callback function
+	// ===> there is no [this] variable available in callback function, because the original trigger element was already been replaced...
+	$(document).on(evt.type+'Callback.bsx', toggleCallbackFunc);
+	// check target
+	if ( !targetSelector ) {
+		console.log('[Error] '+evt.type+'.'+evt.namespace+' - attribute [data-target] was not specified');
+	} else if ( !$(targetSelector).length ) {
+		console.log('[Error] '+evt.type+'.'+evt.namespace+' - target not found ('+targetSelector+')');
+	}
+	// normal redirect or submit when target element was not properly specified
+	if ( !targetSelector || !$(targetSelector).length ) {
+		$triggerElement.removeAttr('data-toggle');
+		if ( evt.type == 'ajaxSubmit' ) {
+			$triggerElement.submit();
+		} else {
+			document.location.href = $triggerElement.is('[href]') ? $triggerElement.attr('href') : $triggerElement.attr('data-href');
+		}
+	// proceed...
+	} else {
+		var $targetElement = $(targetSelector);
+		var url;
+		if ( $triggerElement.is('form') ) {
+			url = $triggerElement.attr('action');
+		} else if ( $triggerElement.is('[type=button]') ) {
+			url = $triggerElement.is('[href]') ? $triggerElement.attr('href') : $triggerElement.attr('data-href');
+		} else if ( $triggerElement.is('a') ) {
+			url = $triggerElement.attr('href');
+		} else {
+			console.log('[Error] '+evt.type+'.'+evt.namespace+' - type of trigger element not support');
+		}
+		var param = $triggerElement.is('form') ? $triggerElement.serialize() : {};
+		// block
+		if ( $triggerElement.is('form') ) {
+			if ( configBlockUI ) {
+				$triggerElement.block( configBlockUI );
+			}
+			$triggerElement.find('[type=submit]').attr('disabled', true);
+		} else {
+			$triggerElement.attr('disabled', true);
+		}
+		if ( configBlockUI ) {
+			$targetElement.block( configBlockUI );
+		}
+		// load result remotely
+		$.ajax({
+			'url' : url,
+			'data' : param,
+			'cache' : false,
+			'method' : $triggerElement.is('form[method]') ? $triggerElement.attr('method') : 'get',
+			'success' : function(data, textStatus, jqXHR){
+				// wrap by something if response text is not html
+				if ( !$(data).length ) data = '<div>'+data+'</div>';
+				// determine position of new element
+				var $newElement = $(data);
+				if ( toggleMode == 'prepend' ) {
+					$newElement.prependTo( $targetElement );
+				} else if ( toggleMode == 'append' ) {
+					$newElement.appendTo( $targetElement );
+				} else if ( toggleMode == 'before' ) {
+					$newElement.insertBefore( $targetElement );
+				} else {
+					$newElement.insertAfter( $targetElement );
+				}
+				// show new element with effect
+				// ===> callback after new element shown
+				var callbackEvent = evt.type + 'Callback.bsx';
+				if ( toggleTransition == 'fade' ) {
+					$newElement.hide().fadeIn(400, function(){
+						$triggerElement.trigger(callbackEvent);
+					});
+				} else if ( toggleTransition == 'slide' ) {
+					$newElement.hide().slideDown(400, function(){
+						$triggerElement.trigger(callbackEvent);
+					});
+				} else {
+					$newElement.hide().show();
+					$triggerElement.trigger(callbackEvent);
+				}
+				// hide current element (when necessary)
+				if ( toggleMode == 'replace' ) {
+					if ( toggleTransition == 'slide' ) {
+						// make sure element totally removed (tiny bit) later than callback fired
+						$targetElement.slideUp(401, function(){ $targetElement.remove(); });
+					} else {
+						$targetElement.hide().remove();
+					}
+				}
+				// push state (when necessary)
+				if ( history.pushState && togglePushState ) {
+					history.pushState({
+						'pushState.bsx' : {
+							'targetSelector'   : targetSelector,
+							'toggleMode'       : toggleMode,
+							'toggleTransition' : toggleTransition,
+							'toggleCallback'   : toggleCallback,
+							'toggleLoading'    : toggleLoading
+						}
+					}, '', url);
+				}
+			},
+			'complete' : function(){
+				// unblock trigger element
+				if ( $triggerElement.is('form') ) {
+					if ( configBlockUI ) $triggerElement.unblock();
+					$triggerElement.find('[type=submit]').attr('disabled', false);
+				} else {
+					$triggerElement.attr('disabled', false);
+				}
+				// unblock old element
+				if ( configBlockUI ) $targetElement.unblock();
+			}
+		});
+	}
+});
 
 
 // listen popstate event
