@@ -27,5 +27,5 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 
 
 ### CDN
-- https://bbcdn.githack.com/henrygotmojo/bootstrap-extend/raw/{VERSION}/bootstrap.extend.css
-- https://bbcdn.githack.com/henrygotmojo/bootstrap-extend/raw/{VERSION}/bootstrap.extend.js
+- https://cdn.statically.io/bb/henrygotmojo/bootstrap-extend/{VERSION}/bootstrap.extend.css
+- https://cdn.statically.io/bb/henrygotmojo/bootstrap-extend/{VERSION}/bootstrap.extend.js
