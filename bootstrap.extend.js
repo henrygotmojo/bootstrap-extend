@@ -131,6 +131,7 @@ I allow ajax-load/ajax-submit content to specific element by defining data attri
 ===> data-toggle-mode = {replace*|prepend|append|before|after}
 ===> data-toggle-loading = {progress*|spinner|spinner-large|overlay|none}
 ===> data-toggle-transition = {slide*|fade|none}
+===> data-toggle-callback = ~function|function-name~
 ===> data-toggle-pushstate
 
 I use jquery-blockui plugin (if available)
@@ -177,6 +178,7 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 	var targetSelector   = $triggerElement.attr('data-target');
 	var toggleMode       = $triggerElement.is('[data-toggle-mode]')       ? $triggerElement.attr('data-toggle-mode') : 'replace';
 	var toggleTransition = $triggerElement.is('[data-toggle-transition]') ? $triggerElement.attr('data-toggle-transition') : 'slide';
+	var toggleCallback   = $triggerElement.is('[data-toggle-callback]')   ? $triggerElement.attr('data-toggle-callback') : '';
 	var toggleLoading    = $triggerElement.is('[data-toggle-loading]')    ? $triggerElement.attr('data-toggle-loading') : 'progress';
 	var togglePushState  = $triggerElement.is('[data-toggle-pushstate]')  ? true : false;
 	// apply block-ui when ajax load (if any)
@@ -214,6 +216,17 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 			};
 		}
 	}
+	// callback can be either function or event name
+	// ===> trigger custom event so that {this} scope is available in callback function
+	var toggleCallback = $triggerElement.is('[data-toggle-callback]') ? $triggerElement.attr('data-toggle-callback') : '';
+	var toggleCallbackFunc = function(){};
+	if ( toggleCallback.length ) {
+		eval('toggleCallbackFunc = '+toggleCallback+';');
+	}
+	// when callback event was fired
+	// ===> run the callback function
+	// ===> there is no [this] variable available in callback function, because the original trigger element was already been replaced...
+	$(document).on(eventType+'Callback.bsx', toggleCallbackFunc);
 	// check target
 	if ( !targetSelector ) {
 		console.log('[Error] '+eventType+'.bsx - attribute [data-target] was not specified');
