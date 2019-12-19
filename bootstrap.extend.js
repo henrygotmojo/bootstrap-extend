@@ -176,10 +176,10 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 	}
 	// options
 	var targetSelector   = $triggerElement.attr('data-target');
-	var toggleMode       = $triggerElement.is('[data-toggle-mode]')       ? $triggerElement.attr('data-toggle-mode') : 'replace';
+	var toggleMode       = $triggerElement.is('[data-toggle-mode]')       ? $triggerElement.attr('data-toggle-mode')       : 'replace';
 	var toggleTransition = $triggerElement.is('[data-toggle-transition]') ? $triggerElement.attr('data-toggle-transition') : 'slide';
-	var toggleCallback   = $triggerElement.is('[data-toggle-callback]')   ? $triggerElement.attr('data-toggle-callback') : '';
-	var toggleLoading    = $triggerElement.is('[data-toggle-loading]')    ? $triggerElement.attr('data-toggle-loading') : 'progress';
+	var toggleCallback   = $triggerElement.is('[data-toggle-callback]')   ? $triggerElement.attr('data-toggle-callback')   : '';
+	var toggleLoading    = $triggerElement.is('[data-toggle-loading]')    ? $triggerElement.attr('data-toggle-loading')    : 'progress';
 	var togglePushState  = $triggerElement.is('[data-toggle-pushstate]')  ? true : false;
 	// apply block-ui when ajax load (if any)
 	var configBlockUI;
@@ -216,17 +216,6 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 			};
 		}
 	}
-	// callback can be either function or event name
-	// ===> trigger custom event so that {this} scope is available in callback function
-	var toggleCallback = $triggerElement.is('[data-toggle-callback]') ? $triggerElement.attr('data-toggle-callback') : '';
-	var toggleCallbackFunc = function(){};
-	if ( toggleCallback.length ) {
-		eval('toggleCallbackFunc = '+toggleCallback+';');
-	}
-	// when callback event was fired
-	// ===> run the callback function
-	// ===> there is no [this] variable available in callback function, because the original trigger element was already been replaced...
-	$(document).on(eventType+'Callback.bsx', toggleCallbackFunc);
 	// check target
 	if ( !targetSelector ) {
 		console.log('[Error] '+eventType+'.bsx - attribute [data-target] was not specified');
@@ -287,19 +276,39 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 				} else {
 					$newElement.insertAfter( $targetElement );
 				}
+				// turn toggle-callback attribute to function
+				if ( toggleCallback.trim() == '' ) {
+					// empty...
+					var callbackFunc = function(){};
+				} else if ( toggleCallback.trim().replace(/[\W_]+/g, '') == '' ) {
+					// function name...
+					eval('var callbackFunc = '+toggleCallback+'();');
+				} else if ( toggleCallback.trim().indexOf('function') == 0 ) {
+					// anonymous function...
+					eval('var callbackFunc = '+toggleCallback+';');
+				} else {
+					// function content...
+					eval('var callbackFunc = function(){ '+toggleCallback+' };');
+				}
 				// show new element with effect
 				// ===> fire event after new element shown
 				var callbackEvent = eventType + 'Callback.bsx';
 				if ( toggleTransition == 'fade' ) {
+					// fade effect...
 					$newElement.hide().fadeIn(400, function(){
+						callbackFunc();
 						$triggerElement.trigger(callbackEvent);
 					});
 				} else if ( toggleTransition == 'slide' ) {
+					// slide effect...
 					$newElement.hide().slideDown(400, function(){
+						callbackFunc();
 						$triggerElement.trigger(callbackEvent);
 					});
 				} else {
+					// no effect...
 					$newElement.hide().show();
+					callbackFunc();
 					$triggerElement.trigger(callbackEvent);
 				}
 				// hide current element (when necessary)
