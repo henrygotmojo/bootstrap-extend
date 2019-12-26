@@ -132,7 +132,6 @@ I allow ajax-load/ajax-submit content to specific element by defining data attri
 ===> data-toggle-loading = {progress*|spinner|spinner-large|overlay|none}
 ===> data-toggle-transition = {slide*|fade|none}
 ===> data-toggle-callback = ~function|function-name~
-===> data-toggle-pushstate
 
 I use jquery-blockui plugin (if available)
 ===> when ajax-load or ajax-submit
@@ -180,7 +179,6 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 	var toggleTransition = $triggerElement.is('[data-toggle-transition]') ? $triggerElement.attr('data-toggle-transition') : 'slide';
 	var toggleCallback   = $triggerElement.is('[data-toggle-callback]')   ? $triggerElement.attr('data-toggle-callback')   : '';
 	var toggleLoading    = $triggerElement.is('[data-toggle-loading]')    ? $triggerElement.attr('data-toggle-loading')    : 'progress';
-	var togglePushState  = $triggerElement.is('[data-toggle-pushstate]')  ? true : false;
 	// apply block-ui when ajax load (if any)
 	var configBlockUI;
 	if ( $.fn.block ) {
@@ -320,18 +318,6 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 						$targetElement.hide().remove();
 					}
 				}
-				// push state (when necessary)
-				if ( history.pushState && togglePushState ) {
-					history.pushState({
-						'pushState.bsx' : {
-							'targetSelector'   : targetSelector,
-							'toggleMode'       : toggleMode,
-							'toggleTransition' : toggleTransition,
-							'toggleCallback'   : toggleCallback,
-							'toggleLoading'    : toggleLoading
-						}
-					}, '', url);
-				}
 			},
 			'complete' : function(){
 				// unblock trigger element
@@ -347,24 +333,6 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 		});
 	}
 }; // ajaxLoadOrSubmit
-
-
-// listen popstate event
-// ===> manipulate page by pushstate object created by ajax-load/ajax-submit
-$(window).on('popstate', function(evt){
-/*
-	// ========== UNDER CONSTRUCTION ==========
-	// state data available
-	// ===> update the page with state data
-	if ( evt.originalEvent.state !== null && evt.originalEvent.state.hasOwnProperty('pushState.bsx') ) {
-		console.log('UNDER CONSTRUCTION', evt.originalEvent.state['pushState.bsx']);
-	// init page has no state data available
-	// ===> reload browser to update the page
-	} else {
-		document.location.reload();
-	}
-*/
-});
 
 
 }); // $-function
