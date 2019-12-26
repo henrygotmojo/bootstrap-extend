@@ -128,10 +128,10 @@ $(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href]
 I allow ajax-load/ajax-submit content to specific element by defining data attributes
 ===> data-target = ~selector~
 ===> data-toggle = {ajax-load|ajax-submit}
-===> data-toggle-mode = {replace*|prepend|append|before|after}
-===> data-toggle-loading = {progress*|spinner|spinner-large|overlay|none}
-===> data-toggle-transition = {slide*|fade|none}
-===> data-toggle-callback = ~function|function-name~
+===> data-(toggle-)mode = {replace*|prepend|append|before|after}
+===> data-(toggle-)loading = {progress*|spinner|spinner-large|overlay|none}
+===> data-(toggle-)transition = {slide*|fade|none}
+===> data-(toggle-)callback = ~function|function-name~
 
 I use jquery-blockui plugin (if available)
 ===> when ajax-load or ajax-submit
@@ -174,22 +174,35 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 		if ( !confirm(msg) ) return false;
 	}
 	// options
-	var targetSelector   = $triggerElement.attr('data-target');
-	var toggleMode       = $triggerElement.is('[data-toggle-mode]')       ? $triggerElement.attr('data-toggle-mode')       : 'replace';
-	var toggleTransition = $triggerElement.is('[data-toggle-transition]') ? $triggerElement.attr('data-toggle-transition') : 'slide';
-	var toggleCallback   = $triggerElement.is('[data-toggle-callback]')   ? $triggerElement.attr('data-toggle-callback')   : '';
-	var toggleLoading    = $triggerElement.is('[data-toggle-loading]')    ? $triggerElement.attr('data-toggle-loading')    : 'progress';
+	var targetSelector = $triggerElement.attr('data-target');
+	var toggleMode = function(){
+		if      ( $triggerElement.is('[data-toggle-mode]') ) return $triggerElement.attr('data-toggle-mode');
+		else if ( $triggerElement.is('[data-mode]'       ) ) return $triggerElement.attr('data-mode');
+		else return 'replace';
+	}();
+	var toggleTransition = function(){
+		if      ( $triggerElement.is('[data-toggle-transition]') ) return $triggerElement.attr('data-toggle-transition');
+		else if ( $triggerElement.is('[data-transition]'       ) ) return $triggerElement.attr('data-transition');
+		else return 'slide';
+	}();
+	var toggleCallback = function(){
+		if      ( $triggerElement.is('[data-toggle-callback]') ) return $triggerElement.attr('data-toggle-callback');
+		else if ( $triggerElement.is('[data-callback]'       ) ) return $triggerElement.attr('data-callback');
+		else return '';
+	}();
+	var toggleLoading = function(){
+		if      ( $triggerElement.is('[data-toggle-loading]') ) return $triggerElement.attr('data-toggle-loading');
+		else if ( $triggerElement.is('[data-loading]'       ) ) return $triggerElement.attr('data-loading');
+		else return 'progress';
+	}();
 	// apply block-ui when ajax load (if any)
 	var configBlockUI;
 	if ( $.fn.block ) {
 		// default loading style (progress)
 		configBlockUI = {
-			'message' : false,
-			'css' : {
-				'backgroundColor' : 'none',
-				'border' : 'none'
-			},
-			'fadeIn' : 0,
+			'message'     : false,
+			'css'         : { 'backgroundColor' : 'none', 'border' : 'none' },
+			'fadeIn'      : 0,
 			'showOverlay' : true
 		};
 		// loading style : none
