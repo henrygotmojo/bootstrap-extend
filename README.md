@@ -23,6 +23,7 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 ### JS Features
 - Auto AJAX-Error Alert
 - AJAX-Modal
+- AJAX-Dropdown
 - AJAX-Load / AJAX-Submit
 
 

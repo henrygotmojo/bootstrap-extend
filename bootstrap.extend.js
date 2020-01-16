@@ -120,6 +120,38 @@ $(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href]
 
 
 
+/*----------------------------+
+| DATA-TOGGLE : AJAX-DROPDOWN |
++-----------------------------+
+
+[Usage]
+Auto-load remote content into dropdown (load-once-and-keep)
+
+[Example]
+<div class="dropdown">
+	<a href="my/dropdown/menu.php" class="dropdown-toggle" data-toggle="ajax-dropdown">...</a>
+	<div class="dropdown-menu"></div>
+</div>
+*/
+$(document).on('click', '[href][data-toggle=ajax-dropdown],[data-href][data-toggle=ajax-dropdown]', function(evt){
+	evt.preventDefault();
+	var $btn = $(this);
+	var $parent = $btn.closest('.dropdown,.dropup,.dropleft,.dropright');
+	var $target = $parent.find('.dropdown-menu').length ? $parent.find('.dropdown-menu:first') : $('<div class="dropdown-menu"></div>').insertAfter($btn);
+	// show loading message
+	$target.html('<div class="dropdown-item text-muted"><i class="fa fa-spinner fa-pulse"></i><em class="ml-2">Loading</em></div>');
+	// load content remotely
+	var url = $btn.attr( $btn.is('[href]') ? 'href' : 'data-href' );
+	$target.load(url, function(data){ $btn.dropdown('update'); });
+	// transform to standard bootstrap-dropdown
+	$btn.attr('data-toggle', 'dropdown');
+	// show dropdown (after dropdown constructed)
+	window.setTimeout(function(){ $btn.click(); }, 0);
+});
+
+
+
+
 /*--------------------------------------+
 | DATA-TOGGLE : AJAX-LOAD / AJAX-SUBMIT |
 +---------------------------------------+
