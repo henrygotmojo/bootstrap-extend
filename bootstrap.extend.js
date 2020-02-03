@@ -34,7 +34,7 @@ $(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
 		$('#bsx-error-alert')
 			.html('')
 			.append('<h3 class="mt-0 text-danger">Error</h3>')
-			.append('<pre>'+jqXHR.responseText+'</pre>')
+			.append('<code class="d-block text-dark mb-4">'+jqXHR.responseText+'</code>')
 			.append('<small><em class="text-danger">'+ajaxSettings.url+'</em></small>')
 			.filter(':visible').hide().fadeIn().end()
 			.filter(':hidden').slideDown();
