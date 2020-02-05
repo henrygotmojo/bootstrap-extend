@@ -46,7 +46,7 @@ $(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
 		if ( !$('#bsx-error-modal').length ) {
 			$('body').append(`
 				<div id="bsx-error-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bsx-error-modal" aria-hidden="true">
-					<div class="modal-dialog">
+					<div class="modal-dialog modal-lg">
 						<div class="modal-content bg-danger">
 							<div class="modal-body"></div>
 						</div>
