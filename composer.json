@@ -1,6 +1,6 @@
 {
-	"name": "henrygotmojo/bootstrap-extend",
-	"description": "Extend CSS & JS Features of Twitter Bootstrap",
+	"name": "fuseboxy/bootstrap-extend",
+	"description": "Bootstrap Extend - More Bootstrap JS and CSS Features",
 	"license": "MIT",
 	"require": {}
 }
