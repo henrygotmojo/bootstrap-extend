@@ -125,20 +125,16 @@ https://codepen.io/jasongardner/pen/gxprVQ
 .strong { font-weight: bolder; }
 /* border (additive) */
 .b-1  { border: 1px solid #dee2e6 !important; }
-.bt-1 { border-top: 1px solid #dee2e6 !important; }
-.br-1 { border-right: 1px solid #dee2e6 !important; }
-.bb-1 { border-bottom: 1px solid #dee2e6 !important; }
-.bl-1 { border-left: 1px solid #dee2e6 !important; }
-.bx-1 { border-left: 1px solid #dee2e6 !important; border-right: 1px solid #dee2e6 !important; }
-.by-1 { border-top: 1px solid #dee2e6 !important; border-bottom: 1px solid #dee2e6 !important; }
+.bt-1, .by-1 { border-top: 1px solid #dee2e6 !important; }
+.bb-1, .by-1 { border-bottom: 1px solid #dee2e6 !important; }
+.bl-1, .bx-1 { border-left: 1px solid #dee2e6 !important; }
+.br-1, .bx-1 { border-right: 1px solid #dee2e6 !important; }
 /* border (subtractive) */
 .b-0  { border: 0 !important; }
-.bt-0 { border-top: 0 !important; }
-.br-0 { border-right: 0 !important; }
-.bb-0 { border-bottom: 0 !important; }
-.bl-0 { border-left: 0 !important; }
-.bx-0 { border-left: 0 !important; border-right: 0 !important; }
-.by-0 { border-top: 0 !important; border-bottom: 0 !important; }
+.bt-0, .by-0 { border-top: 0 !important; }
+.bb-0, .by-0 { border-bottom: 0 !important; }
+.bl-0, .bx-0 { border-left: 0 !important; }
+.br-0, .bx-0 { border-right: 0 !important; }
 /* opacity */
 .op-100 { opacity:  1; }
 .op-90  { opacity: .9; }
