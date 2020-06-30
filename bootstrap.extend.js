@@ -286,7 +286,15 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 		} else {
 			console.log('[Error] '+eventType+'.bsx - type of trigger element not support');
 		}
-		var param = $triggerElement.is('form') ? $triggerElement.serialize() : {};
+		// serialize form data (when necessary)
+		var formData;
+		if ( $triggerElement.is('form') && $triggerElement.attr('enctype') == 'multipart/form-data' ) {
+			formData = new FormData( $triggerElement[0] );
+		} else if ( $triggerElement.is('form') ) {
+			formData = $triggerElement.serialize();
+		} else {
+			formData = {};
+		}
 		// block
 		if ( $triggerElement.is('form') ) {
 			if ( configBlockUI ) {
@@ -302,8 +310,10 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 		// load result remotely
 		$.ajax({
 			'url' : url,
-			'data' : param,
+			'data' : formData,
 			'cache' : false,
+			'processData' : ( $triggerElement.attr('enctype') != 'multipart/form-data' ),
+			'contentType' : ( $triggerElement.attr('enctype') != 'multipart/form-data' ) ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
 			'method' : $triggerElement.is('form[method]') ? $triggerElement.attr('method') : 'get',
 			'success' : function(data, textStatus, jqXHR){
 				// wrap by something if response text is not html
