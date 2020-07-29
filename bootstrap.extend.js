@@ -86,8 +86,16 @@ Auto-load remote content into modal
 */
 $(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href][data-target][data-toggle=ajax-modal]', function(evt){
 	evt.preventDefault();
+	// useful variables
 	var $btn = $(this);
 	var $modal = $( $btn.attr('data-target') );
+	var url = $btn.attr( $btn.is('[href]') ? 'href' : 'data-href' );
+	// options
+	var toggleSelector = function(){
+		if      ( $btn.is('[data-toggle-selector]') ) return $btn.attr('data-toggle-selector');
+		else if ( $btn.is('[data-selector]'       ) ) return $btn.attr('data-selector');
+		else return '';
+	}();
 	// validation
 	if ( !$modal.length ) {
 		console.log('[ERROR] Target modal not found ('+$btn.attr('data-target')+')');
@@ -104,17 +112,27 @@ $(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href]
 		<div class="modal-header">
 			<div class="modal-title text-muted"><i class="fa fa-spinner fa-pulse"></i><span class="ml-2">Loading...</span></div>
 		</div>
-		<div class="modal-body">
-			<div class="py-4 my-4"></div>
-		</div>
-		<div class="modal-footer">
+		<div class="modal-footer border-top-0">
 			<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 		</div>
 	`);
 	// show modal
 	$modal.modal('show');
 	// load content remotely
-	$modal.find('.modal-content').load( $btn.attr( $btn.is('[href]') ? 'href' : 'data-href' ) );
+	$.ajax({
+		'url' : url,
+		'cache' : false,
+		'method' : 'get',
+		'success' : function(data, textStatus, jqXHR){
+			// wrap by dummy element (when necessary)
+			// ===> avoid multiple elements
+			// ===> avoid response is plain text
+			// ===> avoid selector find against base element
+			if ( $(data).length != 1 || toggleSelector ) data = '<div>'+data+'</div>';
+			// show full response or specific element only
+			$modal.find('.modal-content').html( toggleSelector ? $(data).find(toggleSelector) : data );
+		},
+	});
 });
 
 
@@ -206,7 +224,7 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 		if ( !confirm(msg) ) return false;
 	}
 	// options
-	var targetSelector = $triggerElement.attr('data-target');
+	var toggleTarget = $triggerElement.attr('data-target');
 	var toggleMode = function(){
 		if      ( $triggerElement.is('[data-toggle-mode]') ) return $triggerElement.attr('data-toggle-mode');
 		else if ( $triggerElement.is('[data-mode]'       ) ) return $triggerElement.attr('data-mode');
@@ -226,6 +244,11 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 		if      ( $triggerElement.is('[data-toggle-loading]') ) return $triggerElement.attr('data-toggle-loading');
 		else if ( $triggerElement.is('[data-loading]'       ) ) return $triggerElement.attr('data-loading');
 		else return 'progress';
+	}();
+	var toggleSelector = function(){
+		if      ( $triggerElement.is('[data-toggle-selector]') ) return $triggerElement.attr('data-toggle-selector');
+		else if ( $triggerElement.is('[data-selector]'       ) ) return $triggerElement.attr('data-selector');
+		else return '';
 	}();
 	// apply block-ui when ajax load (if any)
 	var configBlockUI;
@@ -260,13 +283,13 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 		}
 	}
 	// check target
-	if ( !targetSelector ) {
+	if ( !toggleTarget ) {
 		console.log('[Error] '+eventType+'.bsx - attribute [data-target] was not specified');
-	} else if ( !$(targetSelector).length ) {
-		console.log('[Error] '+eventType+'.bsx - target not found ('+targetSelector+')');
+	} else if ( !$(toggleTarget).length ) {
+		console.log('[Error] '+eventType+'.bsx - target not found ('+toggleTarget+')');
 	}
 	// normal redirect or submit when target element was not properly specified
-	if ( !targetSelector || !$(targetSelector).length ) {
+	if ( !toggleTarget || !$(toggleTarget).length ) {
 		$triggerElement.removeAttr('data-toggle');
 		if ( eventType == 'ajaxSubmit' ) {
 			$triggerElement.submit();
@@ -275,7 +298,7 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 		}
 	// proceed...
 	} else {
-		var $targetElement = $(targetSelector);
+		var $targetElement = $(toggleTarget);
 		var url;
 		if ( $triggerElement.is('form') ) {
 			url = $triggerElement.attr('action');
@@ -316,10 +339,14 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 			'contentType' : ( $triggerElement.attr('enctype') != 'multipart/form-data' ) ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
 			'method' : $triggerElement.is('form[method]') ? $triggerElement.attr('method') : 'get',
 			'success' : function(data, textStatus, jqXHR){
-				// wrap by something if response text is not html
-				if ( !$(data).length ) data = '<div>'+data+'</div>';
+				// wrap by dummy element (when necessary)
+				// ===> avoid multiple elements
+				// ===> avoid response is plain text
+				// ===> avoid selector find against base element
+				if ( $(data).length != 1 || toggleSelector ) data = '<div>'+data+'</div>';
+				// show full response or specific element only
+				var $newElement = toggleSelector ? $(data).find(toggleSelector) : $(data);
 				// determine position of new element
-				var $newElement = $(data);
 				if ( toggleMode == 'prepend' ) {
 					$newElement.prependTo( $targetElement );
 				} else if ( toggleMode == 'append' ) {
