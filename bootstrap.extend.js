@@ -14,8 +14,7 @@ I show error dialog whenever there is an ajax error
 [Example]
 <body data-ajax-error="{modal|alert|console}"> ... </body>
 */
-
-$(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
+var ajaxErrorHandler = function(evt, jqXHR, ajaxSettings, errorThrown){
 	// set default mode
 	if ( !$('body[data-ajax-error]').length || !$('body').attr('data-ajax-error').length ) {
 		$('body').attr('data-ajax-error', 'modal');
@@ -59,8 +58,8 @@ $(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
 			.modal('show')
 			.find('.modal-body').html('')
 			.append('<h3 class="mt-0 text-white">Error</h3>')
-			.append('<pre>'+jqXHR.responseText+'</pre>')
-			.append('<small><em class="text-warning">'+ajaxSettings.url+'</em></small>');
+			.append('<pre>'+jqXHR.responseText+'</pre>');
+//			.append('<small><em class="text-warning">'+ajaxSettings.url+'</em></small>');
 	// display error as browser alert
 	} else if ( $('body').attr('data-ajax-error') == 'alert' ) {
 		alert('[Error]\n'+jqXHR.responseText+'\n\n'+ajaxSettings.url);
@@ -68,7 +67,9 @@ $(document).ajaxError(function(evt, jqXHR, ajaxSettings, thrownError){
 	} else {
 		console.log('[Error] '+jqXHR.responseText+' ('+ajaxSettings.url+')');
 	}
-});
+};
+// apply to document
+$(document).ajaxError(ajaxErrorHandler);
 
 
 
@@ -112,7 +113,9 @@ $(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href]
 		<div class="modal-header">
 			<div class="modal-title text-muted"><i class="fa fa-spinner fa-pulse"></i><span class="ml-2">Loading...</span></div>
 		</div>
-		<div class="modal-footer border-top-0">
+		<div class="modal-body">
+		</div>
+		<div class="modal-footer">
 			<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 		</div>
 	`);
@@ -123,6 +126,11 @@ $(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href]
 		'url' : url,
 		'cache' : false,
 		'method' : 'get',
+		'error' : function(jqXHR, textStatus, errorThrown) {
+			window.setTimeout(function(){
+				ajaxErrorHandler(null, jqXHR, { url : url }, errorThrown);
+			}, 1000);
+		},
 		'success' : function(data, textStatus, jqXHR){
 			// wrap by dummy element (when necessary)
 			// ===> avoid multiple elements
