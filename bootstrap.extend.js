@@ -59,7 +59,7 @@ var ajaxErrorHandler = function(evt, jqXHR, ajaxSettings, errorThrown){
 			.find('.modal-body').html('')
 			.append('<h3 class="mt-0 text-white">Error</h3>')
 			.append('<pre>'+jqXHR.responseText+'</pre>');
-//			.append('<small><em class="text-warning">'+ajaxSettings.url+'</em></small>');
+			.append('<small><em class="text-warning">'+ajaxSettings.url+'</em></small>');
 	// display error as browser alert
 	} else if ( $('body').attr('data-ajax-error') == 'alert' ) {
 		alert('[Error]\n'+jqXHR.responseText+'\n\n'+ajaxSettings.url);
@@ -70,6 +70,27 @@ var ajaxErrorHandler = function(evt, jqXHR, ajaxSettings, errorThrown){
 };
 // apply to document
 $(document).ajaxError(ajaxErrorHandler);
+
+
+
+
+/*------------------------+
+| MULTIPLE MODALS OVERLAY |
++-------------------------+
+
+[Usage]
+fix overlay order when multiple modals launched
+
+[Reference]
+https://stackoverflow.com/questions/19305821/multiple-modals-overlay
+*/
+$(document).on('show.bs.modal', '.modal', function (event) {
+	var zIndex = 1040 + (10 * $('.modal:visible').length);
+	$(this).css('z-index', zIndex);
+	setTimeout(function() {
+		$('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+	}, 0);
+});
 
 
 
