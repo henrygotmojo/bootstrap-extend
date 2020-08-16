@@ -79,7 +79,7 @@ $(document).ajaxError(ajaxErrorHandler);
 +-------------------------+
 
 [Usage]
-fix overlay order when multiple modals launched
+Fix overlay order when multiple modals launched
 
 [Reference]
 https://stackoverflow.com/questions/19305821/multiple-modals-overlay
@@ -205,12 +205,13 @@ $(document).on('click', '[href][data-toggle=ajax-dropdown],[data-href][data-togg
 
 [Usage]
 I allow ajax-load/ajax-submit content to specific element by defining data attributes
-===> data-target = ~selector~
+===> data-target = ~selectorForDocument~
 ===> data-toggle = {ajax-load|ajax-submit}
 ===> data-(toggle-)mode = {replace*|prepend|append|before|after}
 ===> data-(toggle-)loading = {progress*|spinner|spinner-large|overlay|none}
 ===> data-(toggle-)transition = {slide*|fade|none}
 ===> data-(toggle-)callback = ~function|function-name~
+===> data-(toggle-)selector = ~selectorForResponse~
 
 I use jquery-blockui plugin (if available)
 ===> when ajax-load or ajax-submit
