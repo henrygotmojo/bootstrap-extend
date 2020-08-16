@@ -58,7 +58,7 @@ var ajaxErrorHandler = function(evt, jqXHR, ajaxSettings, errorThrown){
 			.modal('show')
 			.find('.modal-body').html('')
 			.append('<h3 class="mt-0 text-white">Error</h3>')
-			.append('<pre>'+jqXHR.responseText+'</pre>');
+			.append('<pre>'+jqXHR.responseText+'</pre>')
 			.append('<small><em class="text-warning">'+ajaxSettings.url+'</em></small>');
 	// display error as browser alert
 	} else if ( $('body').attr('data-ajax-error') == 'alert' ) {
