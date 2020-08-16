@@ -69,26 +69,28 @@ https://bootstrapious.com/p/bootstrap-multilevel-dropdown
 https://bootstrapious.com/p/bootstrap-multilevel-dropdown
 
 [Example]
-<ul class="navbar-nav">
-	<li class="nav-item dropdown">
-		<a  href="#" data-toggle="dropdown" class="nav-link dropdown-toggle">Level 1</a>
-		<ul class="dropdown-menu">
-			<li><a href="#" class="dropdown-item">Level 2</a></li>
-			<li class="dropdown-submenu">
-				<a href="#" data-toggle="dropdown" class="dropdown-toggle">Level 2</a>
-				<ul class="dropdown-menu">
-					<li><a tabindex="-1" href="#" class="dropdown-item">Level 3</a></li>
-					<li class="dropdown-submenu">
-						<a href="#" data-toggle="dropdown" class="dropdown-toggle">Level 3</a>
-						<ul class="dropdown-menu">
-							<li><a href="#" class="dropdown-item">Level 4</a></li>
-						</ul><!--/.dropdown-menu (level 4) -->
-					</li>
-				</ul><!--/.dropdown-menu (level 3) -->
-			</li>
-		</ul><!--/.dropdown-menu (level 2) -->
-	</li>
-</ul><!--/.navbar-nav (level 1) -->
+<nav class="navbar navbar-light">
+	<ul class="navbar-nav">
+		<li class="nav-item dropdown">
+			<a  href="#" data-toggle="dropdown" class="nav-link dropdown-toggle">Level 1</a>
+			<ul class="dropdown-menu">
+				<li><a href="#" class="dropdown-item">Level 2</a></li>
+				<li class="dropdown-submenu">
+					<a href="#" data-toggle="dropdown" class="dropdown-toggle">Level 2</a>
+					<ul class="dropdown-menu">
+						<li><a tabindex="-1" href="#" class="dropdown-item">Level 3</a></li>
+						<li class="dropdown-submenu">
+							<a href="#" data-toggle="dropdown" class="dropdown-toggle">Level 3</a>
+							<ul class="dropdown-menu">
+								<li><a href="#" class="dropdown-item">Level 4</a></li>
+							</ul><!--/.dropdown-menu (level 4) -->
+						</li>
+					</ul><!--/.dropdown-menu (level 3) -->
+				</li>
+			</ul><!--/.dropdown-menu (level 2) -->
+		</li>
+	</ul><!--/.navbar-nav (level 1) -->
+</nav>
 */
 
 .dropdown-submenu { position: relative; }
