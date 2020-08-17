@@ -69,42 +69,60 @@ https://bootstrapious.com/p/bootstrap-multilevel-dropdown
 https://bootstrapious.com/p/bootstrap-multilevel-dropdown
 
 [Example]
-<nav class="navbar navbar-light">
+<nav class="navbar navbar-expand-lg navbar-light">
 	<ul class="navbar-nav">
 		<li class="nav-item dropdown">
-			<a  href="#" data-toggle="dropdown" class="nav-link dropdown-toggle">Level 1</a>
+			<a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Level 1</a>
 			<ul class="dropdown-menu">
 				<li><a href="#" class="dropdown-item">Level 2</a></li>
 				<li class="dropdown-submenu">
-					<a href="#" data-toggle="dropdown" class="dropdown-toggle">Level 2</a>
+					<a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Level 2</a>
 					<ul class="dropdown-menu">
-						<li><a tabindex="-1" href="#" class="dropdown-item">Level 3</a></li>
+						<li><a href="#" class="dropdown-item">level 3</a></li>
 						<li class="dropdown-submenu">
-							<a href="#" data-toggle="dropdown" class="dropdown-toggle">Level 3</a>
+							<a href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Level 3</a>
 							<ul class="dropdown-menu">
 								<li><a href="#" class="dropdown-item">Level 4</a></li>
-							</ul><!--/.dropdown-menu (level 4) -->
+								<li><a href="#" class="dropdown-item">Level 4</a></li>
+							</ul><!--/.dropdown-menu-lv4-->
 						</li>
-					</ul><!--/.dropdown-menu (level 3) -->
+					</ul><!--/.dropdown-menu-lv3-->
 				</li>
-			</ul><!--/.dropdown-menu (level 2) -->
+			</ul><!--/.dropdown-menu-lv2-->
 		</li>
-	</ul><!--/.navbar-nav (level 1) -->
+	</ul><!--/.navbar-nav-lv1-->
 </nav>
 */
 
 .dropdown-submenu { position: relative; }
-.dropdown-submenu > a:after {
-	border: none;
-	content: '\f0da';
+.dropdown-submenu:hover > .dropdown-menu { display: block; }
+/* left-aligned menu */
+.dropdown-submenu > .dropdown-toggle::after {
+	border-bottom: .3em solid transparent;
+	border-left: .3em solid;
+	border-right: 0;
+	border-top: .3em solid transparent;
+	content: '';
+	display: inline-block;
 	float: right;
-	font-family: 'FontAwesome';
+	margin: .5em -1em 0 0;
 }
 .dropdown-submenu > .dropdown-menu {
 	left: 100%;
-	margin-left: 0px;
-	margin-top: 0px;
+	margin-left: 0;
+	margin-top: 0;
 	top: 0;
+}
+/* right-aligned menu */
+.dropdown-menu-right > .dropdown-submenu > .dropdown-toggle::after {
+	border-left: 0;
+	border-right: .3em solid;
+	float: left;
+	margin: .5em 0 0 -1em;
+}
+.dropdown-menu-right > .dropdown-submenu > .dropdown-menu {
+	left: auto;
+	right: 100%;
 }
 
 
@@ -222,3 +240,6 @@ https://codepen.io/jasongardner/pen/gxprVQ
 .w-0  { width:  0%; }
 /* height */
 .h-0  { height: 0%; }
+
+
+
