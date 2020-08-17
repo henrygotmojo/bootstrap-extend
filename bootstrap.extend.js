@@ -101,6 +101,9 @@ $(document).on('show.bs.modal', '.modal', function (event) {
 
 [Usage]
 Auto-load remote content into modal
+===> data-toggle = {ajax-modal}
+===> data-target = ~selectorForDocument~
+===> data-(toggle-)selector = ~selectorForResponse~
 
 [Example]
 <a href="foo.html" data-toggle="ajax-modal" data-target="#my-modal">...</div>
@@ -114,8 +117,8 @@ $(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href]
 	var url = $btn.attr( $btn.is('[href]') ? 'href' : 'data-href' );
 	// options
 	var toggleSelector = function(){
-		if      ( $btn.is('[data-toggle-selector]') ) return $btn.attr('data-toggle-selector');
-		else if ( $btn.is('[data-selector]'       ) ) return $btn.attr('data-selector');
+		if ( $btn.is('[data-toggle-selector]') ) return $btn.attr('data-toggle-selector');
+		else if ( $btn.is('[data-selector]'  ) ) return $btn.attr('data-selector');
 		else return '';
 	}();
 	// validation
@@ -173,6 +176,10 @@ $(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href]
 
 [Usage]
 Auto-load remote content into dropdown (load-once-and-keep)
+===> data-toggle = {ajax-dropdown}
+===> data-target = ~selectorForDocument~
+===> data-(toggle-)align = {left*|right}
+===> data-(toggle-)selector = ~selectorForResponse~
 
 [Example]
 <div class="dropdown">
@@ -185,11 +192,44 @@ $(document).on('click', '[href][data-toggle=ajax-dropdown],[data-href][data-togg
 	var $btn = $(this);
 	var $parent = $btn.closest('.dropdown,.dropup,.dropleft,.dropright');
 	var $target = $parent.find('.dropdown-menu').length ? $parent.find('.dropdown-menu:first') : $('<div class="dropdown-menu"></div>').insertAfter($btn);
+	// options
+	var toggleAlign = function(){
+		if ( $btn.is('[data-toggle-align]') ) return $btn.attr('data-toggle-align');
+		else if ( $btn.is('[data-align]'  ) ) return $btn.attr('data-align');
+		else return 'left';
+	}();
+	var toggleSelector = function(){
+		if ( $btn.is('[data-toggle-selector]') ) return $btn.attr('data-toggle-selector');
+		else if ( $btn.is('[data-selector]'  ) ) return $btn.attr('data-selector');
+		else return '';
+	}();
+	// apply alignment
+	if ( toggleAlign == 'right' ) $target.addClass('dropdown-menu-right');
 	// show loading message
 	$target.html('<div class="dropdown-item text-muted"><i class="fa fa-spinner fa-pulse"></i><em class="ml-2">Loading</em></div>');
 	// load content remotely
 	var url = $btn.attr( $btn.is('[href]') ? 'href' : 'data-href' );
-	$target.load(url, function(data){ $btn.dropdown('update'); });
+	$.ajax({
+		'url' : url,
+		'cache' : false,
+		'method' : 'get',
+		'error' : function(jqXHR, textStatus, errorThrown) {
+			window.setTimeout(function(){
+				ajaxErrorHandler(null, jqXHR, { url : url }, errorThrown);
+			}, 1000);
+		},
+		'success' : function(data, textStatus, jqXHR){
+			// wrap by dummy element (when necessary)
+			// ===> avoid multiple elements
+			// ===> avoid response is plain text
+			// ===> avoid selector find against base element
+			if ( $(data).length != 1 || toggleSelector ) data = '<div>'+data+'</div>';
+			// show full response or specific element only
+			$target.html( toggleSelector ? $(data).find(toggleSelector) : data );
+			// refresh
+			$btn.dropdown('update');
+		},
+	});
 	// transform to standard bootstrap-dropdown
 	$btn.attr('data-toggle', 'dropdown');
 	// show dropdown (after dropdown constructed)
@@ -205,8 +245,8 @@ $(document).on('click', '[href][data-toggle=ajax-dropdown],[data-href][data-togg
 
 [Usage]
 I allow ajax-load/ajax-submit content to specific element by defining data attributes
-===> data-target = ~selectorForDocument~
 ===> data-toggle = {ajax-load|ajax-submit}
+===> data-target = ~selectorForDocument~
 ===> data-(toggle-)mode = {replace*|prepend|append|before|after}
 ===> data-(toggle-)loading = {progress*|spinner|spinner-large|overlay|none}
 ===> data-(toggle-)transition = {slide*|fade|none}
@@ -256,28 +296,28 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 	// options
 	var toggleTarget = $triggerElement.attr('data-target');
 	var toggleMode = function(){
-		if      ( $triggerElement.is('[data-toggle-mode]') ) return $triggerElement.attr('data-toggle-mode');
-		else if ( $triggerElement.is('[data-mode]'       ) ) return $triggerElement.attr('data-mode');
+		if ( $triggerElement.is('[data-toggle-mode]') ) return $triggerElement.attr('data-toggle-mode');
+		else if ( $triggerElement.is('[data-mode]'  ) ) return $triggerElement.attr('data-mode');
 		else return 'replace';
 	}();
 	var toggleTransition = function(){
-		if      ( $triggerElement.is('[data-toggle-transition]') ) return $triggerElement.attr('data-toggle-transition');
-		else if ( $triggerElement.is('[data-transition]'       ) ) return $triggerElement.attr('data-transition');
+		if ( $triggerElement.is('[data-toggle-transition]') ) return $triggerElement.attr('data-toggle-transition');
+		else if ( $triggerElement.is('[data-transition]'  ) ) return $triggerElement.attr('data-transition');
 		else return 'slide';
 	}();
 	var toggleCallback = function(){
-		if      ( $triggerElement.is('[data-toggle-callback]') ) return $triggerElement.attr('data-toggle-callback');
-		else if ( $triggerElement.is('[data-callback]'       ) ) return $triggerElement.attr('data-callback');
+		if ( $triggerElement.is('[data-toggle-callback]') ) return $triggerElement.attr('data-toggle-callback');
+		else if ( $triggerElement.is('[data-callback]'  ) ) return $triggerElement.attr('data-callback');
 		else return '';
 	}();
 	var toggleLoading = function(){
-		if      ( $triggerElement.is('[data-toggle-loading]') ) return $triggerElement.attr('data-toggle-loading');
-		else if ( $triggerElement.is('[data-loading]'       ) ) return $triggerElement.attr('data-loading');
+		if ( $triggerElement.is('[data-toggle-loading]') ) return $triggerElement.attr('data-toggle-loading');
+		else if ( $triggerElement.is('[data-loading]'  ) ) return $triggerElement.attr('data-loading');
 		else return 'progress';
 	}();
 	var toggleSelector = function(){
-		if      ( $triggerElement.is('[data-toggle-selector]') ) return $triggerElement.attr('data-toggle-selector');
-		else if ( $triggerElement.is('[data-selector]'       ) ) return $triggerElement.attr('data-selector');
+		if ( $triggerElement.is('[data-toggle-selector]') ) return $triggerElement.attr('data-toggle-selector');
+		else if ( $triggerElement.is('[data-selector]'  ) ) return $triggerElement.attr('data-selector');
 		else return '';
 	}();
 	// apply block-ui when ajax load (if any)
