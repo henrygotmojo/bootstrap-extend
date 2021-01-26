@@ -343,8 +343,8 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 		// loading style : progress (default)
 		} else {
 			configBlockUI['overlayCSS'] = {
-				'-webkit-animation' : 'progress-bar-stripes 2s linear infinite',
-				'animation'         : 'progress-bar-stripes 2s linear infinite',
+				'-webkit-animation' : 'progress-bar-stripes 1s linear infinite',
+				'animation'         : 'progress-bar-stripes 1s linear infinite',
 				'background-color'  : '#bbb',
 				'background-image'  : '-webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent)',
 				'background-image'  : 'linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent)',
