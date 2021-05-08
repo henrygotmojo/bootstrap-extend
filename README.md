@@ -1,11 +1,7 @@
-Bootstrap-Extend
-================
+Bootstrap-Extend (v4.x)
+=======================
 
 Extend CSS & JS Features of Twitter Bootstrap 4.x
-
-
-### Version
-- 4.0.3
 
 
 ### Dependencies
