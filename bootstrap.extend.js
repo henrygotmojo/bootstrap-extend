@@ -19,6 +19,81 @@ $(document).on('show.bs.modal', '.modal', function (event) {
 
 
 
+/*-----------------------------+
+| DATA-BSX-TOGGLE : AJAX-MODAL |
++------------------------------+
+
+[Usage]
+Auto-load remote content into modal
+===> data-bsx-toggle = {ajax-modal}
+===> data-bsx-target = ~selectorForDocument~
+===> data-bsx-(toggle-)selector = ~selectorForResponse~
+
+[Example]
+<a href="foo.html" data-bsx-toggle="ajax-modal" data-bsx-target="#my-modal">...</div>
+<button data-bsx-href="bar.html" data-bsx-toggle="ajax-modal" data-bsx-target="#my-modal">...</button>
+*/
+$(document).on('click', '[href][data-bsx-target][data-bsx-toggle=ajax-modal],[data-bsx-href][data-bsx-target][data-bsx-toggle=ajax-modal]', function(evt){
+	evt.preventDefault();
+	// useful variables
+	var $btn = $(this);
+	var $modal = $( $btn.attr('data-bsx-target') );
+	var url = $btn.attr( $btn.is('[href]') ? 'href' : 'data-bsx-href' );
+	// options
+	var toggleSelector = function(){
+		if ( $btn.is('[data-bsx-toggle-selector]') ) return $btn.attr('data-bsx-toggle-selector');
+		else if ( $btn.is('[data-bsx-selector]'  ) ) return $btn.attr('data-bsx-selector');
+		else return '';
+	}();
+	// validation
+	if ( !$modal.length ) {
+		console.log('[ERROR] Target modal not found ('+$btn.attr('data-bsx-target')+')');
+		return false;
+	} else if ( !$modal.find('.modal-dialog').length ) {
+		console.log('[ERROR] Target modal has no <DIV.modal-dialog> element ('+$btn.attr('data-bsx-target')+')');
+	}
+	// create essential modal structure (when necessary)
+	if ( !$modal.find('.modal-content').length ) {
+		$modal.find('.modal-dialog').append('<div class="modal-content"></div>');
+	}
+	// clear modal content first (when necessary)
+	$modal.find('.modal-content').html(`
+		<div class="modal-header">
+			<div class="modal-title text-muted"><i class="fa fa-spinner fa-pulse"></i><span class="ml-2">Loading...</span></div>
+		</div>
+		<div class="modal-body">
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+		</div>
+	`);
+	// show modal
+	$modal.modal('show');
+	// load content remotely
+	$.ajax({
+		'url' : url,
+		'cache' : false,
+		'method' : 'get',
+		'error' : function(jqXHR, textStatus, errorThrown) {
+			window.setTimeout(function(){
+				ajaxErrorHandler(null, jqXHR, { url : url }, errorThrown);
+			}, 1000);
+		},
+		'success' : function(data, textStatus, jqXHR){
+			// wrap by dummy element (when necessary)
+			// ===> avoid multiple elements
+			// ===> avoid response is plain text
+			// ===> avoid selector find against base element
+			if ( $(data).length != 1 || toggleSelector ) data = '<div>'+data+'</div>';
+			// show full response or specific element only
+			$modal.find('.modal-content').html( toggleSelector ? $(data).find(toggleSelector) : data );
+		},
+	});
+});
+
+
+
+
 /*!
  * jQuery blockUI plugin
  * Version 2.70.0-2014.11.23
