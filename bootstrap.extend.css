@@ -22,6 +22,7 @@
 */
 
 .modal-dialog { max-width: 800px; }
+.modal-fullscreen { max-width: none; }
 @media (min-width: 576px) {
 	.modal-xs { max-width: 300px; }
 	.modal-sm { max-width: 500px; }
