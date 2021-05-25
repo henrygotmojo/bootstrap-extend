@@ -10,19 +10,22 @@
 |  Small         |  .modal-sm   |  500px  (originally 300px) |
 |  Default       |  (None)      |  800px  (originally 500px) |
 |  Large         |  .modal-lg   |  960px  (originally 800px) |
-|  Extra large   |  .modal-xl   |  1140px (no change)        |
+|  Extra Large   |  .modal-xl   |  1140px (no change)        |
+|  XX-Large      |  .modal-xxl  |  ~100%  (new)              |
 +----------------+--------------+----------------------------+
 
 [Example]
 <div class="modal fade">
-  <div class="modal-dialog [modal-xl|modal-lg|modal-sm|modal-xs]">
+  <div class="modal-dialog [modal-xxl|modal-xl|modal-lg|modal-sm|modal-xs]">
     <div class="modal-content"> ... </div>
   </div>
 </div>
 */
 
 .modal-dialog { max-width: 800px; }
+.modal-xxl,
 .modal-fullscreen { max-width: none; }
+.modal-xxl { width: calc(100% - 30px); }
 @media (min-width: 576px) {
 	.modal-xs { max-width: 300px; }
 	.modal-sm { max-width: 500px; }
