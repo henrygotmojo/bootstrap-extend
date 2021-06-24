@@ -38,3 +38,33 @@
 	.modal-lg { max-width: 960px; }
 	.modal-xl { max-width: 1140px; }
 }
+
+
+
+
+/*-----------------+
+| BUTTON NEW SIZES |
++------------------+
+
+[Example]
+<!-- button -->
+<button type="button" class="btn btn-primary btn-xs">Extra small button</button>
+<!-- button group -->
+<div class="btn-group btn-group-xs" role="group" aria-label="Extra small button group example">
+    <button type="button" class="btn btn-primary">Left</button>
+    <button type="button" class="btn btn-primary">Middle</button>
+    <button type="button" class="btn btn-primary">Right</button>
+</div>
+*/
+
+.btn-xs,
+.btn-group-xs > .btn {
+	padding: 0 0.25rem;
+	font-size: 0.875rem;
+	border-radius: 0.2rem;
+}
+.btn-xs + .dropdown-toggle-split,
+.btn-group-xs > .btn + .dropdown-toggle-split {
+	padding-right: 0.125rem;
+	padding-left: 0.125rem;
+}
