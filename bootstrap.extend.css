@@ -1,44 +1,22 @@
-/*----------+
-| MODAL MAX |
-+-----------+
-
-[Reference]
-https://bootstrapious.com/p/bootstrap-multilevel-dropdown
-
-[Example]
-<div class="modal fade">
-	<div class="modal-dialog modal-max">
-		<div class="modal-content"> ... </div>
-	</div>
-</div>
-*/
-
-.modal .modal-dialog.modal-max {
-	max-width: none;
-	width: calc(100% - 30px);
-}
-
-
-
-
 /*----------------+
 | MODAL NEW SIZES |
 +-----------------+
 
 [Details]
-+----------------+--------------+----------------------------+
-|  Size          |  Class       |  Modal max-width           |
-+----------------+--------------+----------------------------+
-|  Extra Small   |  .modal-xs   |  300px                     |
-|  Small         |  .modal-sm   |  500px (originally 300px)  |
-|  Default       |  (None)      |  800px (originally 500px)  |
-|  Large         |  .modal-lg   |  960px (originally 800px)  |
-|  Extra large   |  .modal-xl   |  1140px                    |
-+----------------+--------------+----------------------------+
++--------------+--------------------+----------------------------+
+|  Size        |  Class             |  Modal max-width           |
++--------------+--------------------+----------------------------+
+|  Extra Small |  .modal-xs         |  300px                     |
+|  Small       |  .modal-sm         |  500px (originally 300px)  |
+|  Default     |  (None)            |  800px (originally 500px)  |
+|  Large       |  .modal-lg         |  960px (originally 800px)  |
+|  Extra Large |  .modal-xl         |  1140px                    |
+|  XXL / Max   |  .modal-{xxl|max}  |  (almost fullscreen)       |
++--------------+--------------------+----------------------------+
 
 [Example]
 <div class="modal fade">
-	<div class="modal-dialog [modal-xl|modal-lg|modal-sm|modal-xs]">
+	<div class="modal-dialog {modal-xs|modal-sm|modal-lg|modal-xl|modal-xxl|modal-max}">
 		<div class="modal-content"> ... </div>
 	</div>
 </div>
@@ -56,6 +34,11 @@ https://bootstrapious.com/p/bootstrap-multilevel-dropdown
 @media (min-width: 1200px) {
 	.modal-lg { max-width: 960px; }
 	.modal-xl { max-width: 1140px; }
+}
+.modal .modal-dialog.modal-max,
+.modal .modal-dialog.modal-xxl {
+	max-width: none;
+	width: calc(100% - 2rem);
 }
 
 
