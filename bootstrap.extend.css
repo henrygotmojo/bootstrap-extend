@@ -216,6 +216,9 @@ https://codepen.io/jasongardner/pen/gxprVQ
 .em { font-style: italic; }
 .del { text-decoration: line-through; }
 .strong { font-weight: bolder; }
+.sub, .sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+.sub { bottom: -.25em; }
+.sup { top: -.5em; }
 /* border 1 (additive) */
 .b-1         { border:        1px solid #dee2e6 !important; }
 .bt-1, .by-1 { border-top:    1px solid #dee2e6 !important; }
