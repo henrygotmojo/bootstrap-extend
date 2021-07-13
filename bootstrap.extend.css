@@ -306,9 +306,7 @@ https://codepen.io/jasongardner/pen/gxprVQ
 .w-15 { width: 15% !important; }
 .w-10 { width: 10% !important; }
 .w-5  { width:  5% !important; }
-.w-0  { width:  0% !important; }
+.w-0  { width:   0 !important; }
 /* height */
-.h-0  { height: 0%; }
-
-
+.h-0  { height: 0 !important; }
 
