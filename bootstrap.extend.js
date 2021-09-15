@@ -13,6 +13,7 @@ I show error dialog whenever there is an ajax error
 
 [Example]
 <body data-ajax-error="{modal|alert|console}"> ... </body>
+
 */
 var ajaxErrorHandler = function(evt, jqXHR, ajaxSettings, errorThrown){
 	// set default mode
@@ -83,6 +84,7 @@ Fix overlay order when multiple modals launched
 
 [Reference]
 https://stackoverflow.com/questions/19305821/multiple-modals-overlay
+
 */
 $(document).on('show.bs.modal', '.modal', function (event) {
 	var zIndex = 1040 + (10 * $('.modal:visible').length);
@@ -108,25 +110,63 @@ Auto-load remote content into modal
 [Example]
 <a href="foo.html" data-toggle="ajax-modal" data-target="#my-modal">...</div>
 <button data-href="bar.html" data-toggle="ajax-modal" data-target="#my-modal">...</button>
+
 */
-$(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href][data-target][data-toggle=ajax-modal]', function(evt){
+// load content to modal
+$(document).on('click', ':not(form)[data-toggle=ajax-modal]', function(evt){
 	evt.preventDefault();
-	// useful variables
-	var $btn = $(this);
-	var $modal = $( $btn.attr('data-target') );
-	var url = $btn.attr( $btn.is('[href]') ? 'href' : 'data-href' );
-	// options
+	ajaxModal(this);
+});
+// submit form & show content in modal
+$(document).on('submit', 'form[data-toggle=ajax-modal]', function(evt){
+	evt.preventDefault();
+	ajaxModal(this);
+});
+// actual behavior of [ajax-modal]
+var ajaxModal = function(triggerElement) {
+	var $triggerElement = $(triggerElement);
+	// validation
+	if ( !$triggerElement.attr('data-target') ) {
+		console.log('[ERROR] ajaxModal.bsx - Attribute [data-target] was not specified');
+		return false;
+	}
+	// determine options
 	var toggleSelector = function(){
-		if ( $btn.is('[data-toggle-selector]') ) return $btn.attr('data-toggle-selector');
-		else if ( $btn.is('[data-selector]'  ) ) return $btn.attr('data-selector');
+		if ( $triggerElement.is('[data-toggle-selector]') ) return $btn.attr('data-toggle-selector');
+		else if ( $triggerElement.is('[data-selector]'  ) ) return $btn.attr('data-selector');
 		else return '';
 	}();
-	// validation
+	// determine target element
+	var $modal = $( $triggerElement.attr('data-target') );
 	if ( !$modal.length ) {
-		console.log('[ERROR] Target modal not found ('+$btn.attr('data-target')+')');
+		console.log('[ERROR] ajaxModal.bsx - Target modal not found ('+$triggerElement.attr('data-target')+')');
+		return false;
+	} else if ( !$modal.is('.modal') ) {
+		console.log('[ERROR] ajaxModal.bsx - Target modal does not has <.modal> class ('+$triggerElement.attr('data-target')+')');
 		return false;
 	} else if ( !$modal.find('.modal-dialog').length ) {
-		console.log('[ERROR] Target modal has no <DIV.modal-dialog> element ('+$btn.attr('data-target')+')');
+		console.log('[ERROR] ajaxModal.bsx - Target modal does not has <.modal-dialog> child element ('+$triggerElement.attr('data-target')+')');
+		return false;
+	}
+	// determine target url
+	var url;
+	if ( $triggerElement.is('form') ) {
+		url = $triggerElement.attr('action');
+	} else if ( $triggerElement.is('[type=button]') ) {
+		url = $triggerElement.is('[href]') ? $triggerElement.attr('href') : $triggerElement.attr('data-href');
+	} else if ( $triggerElement.is('a') ) {
+		url = $triggerElement.attr('href');
+	} else {
+		console.log('[Error] ajaxModal.bsx - Type of trigger element not support');
+	}
+	// serialize form data (when necessary)
+	var formData;
+	if ( $triggerElement.is('form') && $triggerElement.attr('enctype') == 'multipart/form-data' ) {
+		formData = new FormData( $triggerElement[0] );
+	} else if ( $triggerElement.is('form') ) {
+		formData = $triggerElement.serialize();
+	} else {
+		formData = {};
 	}
 	// create essential modal structure (when necessary)
 	if ( !$modal.find('.modal-content').length ) {
@@ -145,11 +185,14 @@ $(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href]
 	`);
 	// show modal
 	$modal.modal('show');
-	// load content remotely
+	// load or submit
 	$.ajax({
 		'url' : url,
+		'data' : formData,
 		'cache' : false,
-		'method' : 'get',
+		'processData' : ( $triggerElement.attr('enctype') != 'multipart/form-data' ),
+		'contentType' : ( $triggerElement.attr('enctype') != 'multipart/form-data' ) ? 'application/x-www-form-urlencoded; charset=UTF-8' : false,
+		'method' : $triggerElement.is('form[method]') ? $triggerElement.attr('method') : 'get',
 		'error' : function(jqXHR, textStatus, errorThrown) {
 			window.setTimeout(function(){
 				ajaxErrorHandler(null, jqXHR, { url : url }, errorThrown);
@@ -165,7 +208,7 @@ $(document).on('click', '[href][data-target][data-toggle=ajax-modal],[data-href]
 			$modal.find('.modal-content').html( toggleSelector ? $(data).find(toggleSelector) : data );
 		},
 	});
-});
+}; // function-ajaxModal
 
 
 
@@ -186,6 +229,7 @@ Auto-load remote content into dropdown (load-once-and-keep)
 	<a href="my/dropdown/menu.php" class="dropdown-toggle" data-toggle="ajax-dropdown">...</a>
 	<div class="dropdown-menu"></div>
 </div>
+
 */
 $(document).on('click', '[href][data-toggle=ajax-dropdown],[data-href][data-toggle=ajax-dropdown]', function(evt){
 	evt.preventDefault();
@@ -212,7 +256,9 @@ $(document).on('click', '[href][data-toggle=ajax-dropdown],[data-href][data-togg
 	$.ajax({
 		'url' : url,
 		'cache' : false,
-		'method' : 'get',
+		'method' : $triggerElement.is('form') ? 'post' : 'get',
+
+
 		'error' : function(jqXHR, textStatus, errorThrown) {
 			window.setTimeout(function(){
 				ajaxErrorHandler(null, jqXHR, { url : url }, errorThrown);
@@ -261,24 +307,22 @@ I use jquery-blockui plugin (if available)
 <a href="/url/to/go" class="btn btn-default" data-toggle="ajax-load" data-target="#element"> ... </a>
 <!-- ajax submit -->
 <form method="post" action="/url/to/go" data-toggle="ajax-submit" data-target="#element"> ... </form>
-*/
 
+*/
 // remote load
 $(document).on('click', '[data-toggle=ajax-load]', function(evt){
 	evt.preventDefault();
 	ajaxLoadOrSubmit(this);
 });
 // remote submit
+// ===> [BUG] when pass to custom event
+// ===> element becomes BUTTON (instead of FORM)
+// ===> use closest() as dirty fix
 $(document).on('submit', '[data-toggle=ajax-submit]', function(evt){
 	evt.preventDefault();
-	// BUG : when pass to custom event
-	// ===> element becomes BUTTON (instead of FORM)
-	// ===> use closest() as dirty fix
 	ajaxLoadOrSubmit( $(this).closest('form') );
 });
-
-
-// actual behavior of ajax load or submit
+// actual behavior of [ajax-load|ajax-submit]
 var ajaxLoadOrSubmit = function(triggerElement) {
 	var $triggerElement = $(triggerElement);
 	// determine event type (by camelize [data-toggle] attribute)
@@ -354,9 +398,9 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 	}
 	// check target
 	if ( !toggleTarget ) {
-		console.log('[Error] '+eventType+'.bsx - attribute [data-target] was not specified');
+		console.log('[Error] '+eventType+'.bsx - Attribute [data-target] was not specified');
 	} else if ( !$(toggleTarget).length ) {
-		console.log('[Error] '+eventType+'.bsx - target not found ('+toggleTarget+')');
+		console.log('[Error] '+eventType+'.bsx - Target not found ('+toggleTarget+')');
 	}
 	// normal redirect or submit when target element was not properly specified
 	if ( !toggleTarget || !$(toggleTarget).length ) {
@@ -377,7 +421,7 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 		} else if ( $triggerElement.is('a') ) {
 			url = $triggerElement.attr('href');
 		} else {
-			console.log('[Error] '+eventType+'.bsx - type of trigger element not support');
+			console.log('[Error] '+eventType+'.bsx - Type of trigger element not support');
 		}
 		// serialize form data (when necessary)
 		var formData;
@@ -424,6 +468,7 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 				} else if ( toggleMode == 'before' ) {
 					$newElement.insertBefore( $targetElement );
 				} else {
+					// current element will be hidden later (when [replace] mode)
 					$newElement.insertAfter( $targetElement );
 				}
 				// turn [toggle-callback] attribute to function
@@ -484,10 +529,10 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 			}
 		});
 	}
-}; // ajaxLoadOrSubmit
+}; // function-ajaxLoadOrSubmit
 
 
-}); // $-function
+}); // function-$
 
 
 
