@@ -142,10 +142,10 @@ var ajaxModal = function(triggerElement) {
 		console.log('[ERROR] ajaxModal.bsx - Target modal not found ('+$triggerElement.attr('data-target')+')');
 		return false;
 	} else if ( !$modal.is('.modal') ) {
-		console.log('[ERROR] ajaxModal.bsx - Target modal does not has <.modal> class ('+$triggerElement.attr('data-target')+')');
+		console.log('[ERROR] ajaxModal.bsx - Target modal does not have <.modal> class ('+$triggerElement.attr('data-target')+')');
 		return false;
 	} else if ( !$modal.find('.modal-dialog').length ) {
-		console.log('[ERROR] ajaxModal.bsx - Target modal does not has <.modal-dialog> child element ('+$triggerElement.attr('data-target')+')');
+		console.log('[ERROR] ajaxModal.bsx - Target modal does not have <.modal-dialog> child element ('+$triggerElement.attr('data-target')+')');
 		return false;
 	}
 	// determine target url
