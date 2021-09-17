@@ -256,9 +256,7 @@ $(document).on('click', '[href][data-toggle=ajax-dropdown],[data-href][data-togg
 	$.ajax({
 		'url' : url,
 		'cache' : false,
-		'method' : $triggerElement.is('form') ? 'post' : 'get',
-
-
+		'method' : 'get',
 		'error' : function(jqXHR, textStatus, errorThrown) {
 			window.setTimeout(function(){
 				ajaxErrorHandler(null, jqXHR, { url : url }, errorThrown);
