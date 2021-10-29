@@ -266,6 +266,12 @@ https://codepen.io/jasongardner/pen/gxprVQ
 .b-dark,        .border-dark        { border-color: #343a40 !important; }
 .b-white,       .border-white       { border-color: #ffffff !important; }
 .b-transparent, .border-transparent { border-color: transparent !important; }
+/* shadow */
+.shadow-xs { box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important; }
+.shadow-sm { box-shadow: 0 0.250rem 0.50rem rgba(0, 0, 0, 0.100) !important; }
+.shadow    { box-shadow: 0 0.375rem 0.75rem rgba(0, 0, 0, 0.125) !important; }
+.shadow-lg { box-shadow: 0 0.500rem 1.00rem rgba(0, 0, 0, 0.150) !important; }
+.shadow-xl { box-shadow: 0 1.000rem 3.00rem rgba(0, 0, 0, 0.175) !important; }
 /* opacity */
 .op-100 { opacity:   1 !important; }
 .op-95  { opacity: .95 !important; }
