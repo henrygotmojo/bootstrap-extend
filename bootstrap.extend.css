@@ -315,3 +315,5 @@ https://codepen.io/jasongardner/pen/gxprVQ
 .w-0  { width:   0 !important; }
 /* height */
 .h-0  { height: 0 !important; }
+/* cursor */
+.cursor-pointer { cursor: pointer !important; }
