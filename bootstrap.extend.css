@@ -213,6 +213,7 @@ https://codepen.io/jasongardner/pen/gxprVQ
 | UTILITY CLASSES FOR STYLING |
 +----------------------------*/
 
+/* styling */
 .em { font-style: italic; }
 .del { text-decoration: line-through; }
 .strong { font-weight: bolder; }
@@ -352,3 +353,5 @@ https://codepen.io/jasongardner/pen/gxprVQ
 .cursor-wait         { cursor: wait !important; }
 .cursor-zoom-in      { cursor: zoom-in !important; }
 .cursor-zoom-out     { cursor: zoom-out !important; }
+/* others */
+.transition-none { transition: none !important; }
