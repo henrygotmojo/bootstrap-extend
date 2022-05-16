@@ -320,6 +320,12 @@ $(document).on('submit', '[data-toggle=ajax-submit]', function(evt){
 	evt.preventDefault();
 	ajaxLoadOrSubmit( $(this).closest('form') );
 });
+// when form is [ajax-submit]
+// ===> update form [action] with button [formaction]
+// ===> because [ajax-submit] relies on the form [action] attribute
+$(document).on('click', ':submit[formaction]', function(evt){
+	$(this.form).filter('[data-toggle=ajax-submit]').attr('action', $(this).attr('formaction'));
+});
 // actual behavior of [ajax-load|ajax-submit]
 var ajaxLoadOrSubmit = function(triggerElement) {
 	var $triggerElement = $(triggerElement);
