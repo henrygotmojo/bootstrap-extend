@@ -292,7 +292,7 @@ I allow ajax-load/ajax-submit content to specific element by defining data attri
 ===> data-toggle = {ajax-load|ajax-submit}
 ===> data-target = ~selectorForDocument~
 ===> data-(toggle-)mode = {replace*|prepend|append|before|after}
-===> data-(toggle-)loading = {progress*|spinner|spinner-large|overlay|none}
+===> data-(toggle-)overlay = {progress*|loading|loading-large|spinner|spinner-large|overlay|gray|grayer|dim|dimmer|white|whiter|light|lighter|none}
 ===> data-(toggle-)transition = {slide*|fade|none}
 ===> data-(toggle-)callback = ~function|function-name~
 ===> data-(toggle-)selector = ~selectorForResponse~
@@ -345,27 +345,29 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 	var toggleTarget = $triggerElement.attr('data-target');
 	var toggleMode = function(){
 		if ( $triggerElement.is('[data-toggle-mode]') ) return $triggerElement.attr('data-toggle-mode');
-		else if ( $triggerElement.is('[data-mode]'  ) ) return $triggerElement.attr('data-mode');
+		else if ( $triggerElement.is('[data-mode]')   ) return $triggerElement.attr('data-mode');
 		else return 'replace';
 	}();
 	var toggleTransition = function(){
 		if ( $triggerElement.is('[data-toggle-transition]') ) return $triggerElement.attr('data-toggle-transition');
-		else if ( $triggerElement.is('[data-transition]'  ) ) return $triggerElement.attr('data-transition');
+		else if ( $triggerElement.is('[data-transition]')   ) return $triggerElement.attr('data-transition');
 		else return 'slide';
 	}();
 	var toggleCallback = function(){
 		if ( $triggerElement.is('[data-toggle-callback]') ) return $triggerElement.attr('data-toggle-callback');
-		else if ( $triggerElement.is('[data-callback]'  ) ) return $triggerElement.attr('data-callback');
+		else if ( $triggerElement.is('[data-callback]')   ) return $triggerElement.attr('data-callback');
 		else return '';
 	}();
-	var toggleLoading = function(){
-		if ( $triggerElement.is('[data-toggle-loading]') ) return $triggerElement.attr('data-toggle-loading');
-		else if ( $triggerElement.is('[data-loading]'  ) ) return $triggerElement.attr('data-loading');
+	var toggleOverlay = function(){
+		if ( $triggerElement.is('[data-toggle-loading]')      ) return $triggerElement.attr('data-toggle-loading');
+		else if ( $triggerElement.is('[data-toggle-overlay]') ) return $triggerElement.attr('data-toggle-overlay');
+		else if ( $triggerElement.is('[data-loading]')        ) return $triggerElement.attr('data-loading');
+		else if ( $triggerElement.is('[data-overlay]')        ) return $triggerElement.attr('data-overlay');
 		else return 'progress';
 	}();
 	var toggleSelector = function(){
 		if ( $triggerElement.is('[data-toggle-selector]') ) return $triggerElement.attr('data-toggle-selector');
-		else if ( $triggerElement.is('[data-selector]'  ) ) return $triggerElement.attr('data-selector');
+		else if ( $triggerElement.is('[data-selector]')   ) return $triggerElement.attr('data-selector');
 		else return '';
 	}();
 	// apply block-ui when ajax load (if any)
@@ -378,17 +380,27 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 			'fadeIn'      : 0,
 			'showOverlay' : true
 		};
-		// loading style : none
-		if ( toggleLoading == 'none' ) {
+		// overlay style : none
+		if ( toggleOverlay == 'none' ) {
 			configBlockUI['overlayCSS'] = { 'background-color' : 'white', 'opacity' : 0 };
-		// loading style : spinner
-		} else if ( toggleLoading == 'spinner' || toggleLoading == 'spinner-large' ) {
-			configBlockUI['message'] = ( toggleLoading == 'spinner-large' ) ? '<i class="fa fa-spin fa-spinner fa-4x text-muted"></i>' : '<i class="fa fa-spin fa-spinner text-muted"></i>';
+		// overlay style : loading
+		} else if ( toggleOverlay == 'loading' || toggleOverlay == 'spinner' ) {
+			configBlockUI['message'] = '<i class="fa fa-spin fa-spinner text-muted"></i>';
 			configBlockUI['overlayCSS'] = { 'background-color'  : 'gray', 'opacity' : .1 };
-		// loading style : overlay
-		} else if ( toggleLoading == 'overlay' ) {
+		} else if ( toggleOverlay == 'loading-large' || toggleOverlay == 'spinner-large' ) {
+			configBlockUI['message'] = '<i class="fa fa-spin fa-spinner fa-4x text-muted"></i>';
 			configBlockUI['overlayCSS'] = { 'background-color'  : 'gray', 'opacity' : .1 };
-		// loading style : progress (default)
+		// overlay style : dim
+		} else if ( toggleOverlay == 'gray' || toggleOverlay == 'dim' || toggleOverlay == 'overlay' ) {
+			configBlockUI['overlayCSS'] = { 'background-color'  : 'gray', 'opacity' : .1 };
+		} else if ( toggleOverlay == 'grayer' || toggleOverlay == 'dimmer' ) {
+			configBlockUI['overlayCSS'] = { 'background-color'  : 'gray', 'opacity' : .4 };
+		// overlay style : light
+		} else if ( toggleOverlay == 'white' || toggleOverlay == 'light' ) {
+			configBlockUI['overlayCSS'] = { 'background-color'  : 'white', 'opacity' : .3 };
+		} else if ( toggleOverlay == 'whiter' || toggleOverlay == 'lighter' ) {
+			configBlockUI['overlayCSS'] = { 'background-color'  : 'white', 'opacity' : .6 };
+		// overlay style : progress (default)
 		} else {
 			configBlockUI['overlayCSS'] = {
 				'-webkit-animation' : 'progress-bar-stripes 1s linear infinite',
