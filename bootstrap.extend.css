@@ -317,7 +317,6 @@ https://codepen.io/jasongardner/pen/gxprVQ
 /* height */
 .h-0  { height: 0 !important; }
 /* cursor */
-.cursor-pointer      { cursor: pointer !important; }
 .cursor-alias        { cursor: alias !important; }
 .cursor-all-scroll   { cursor: all-scroll !important; }
 .cursor-auto         { cursor: auto !important; }
