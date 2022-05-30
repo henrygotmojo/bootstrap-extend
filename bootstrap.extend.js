@@ -105,8 +105,13 @@ $(document).on('show.bs.modal', '.modal', function (event) {
 Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progress)
 ===> data-toggle = {submit-all}
 ===> data-target = ~buttonsToClick~
+===> data-confirm = ~confirmationMessage~
 ===> data-(toggle-)mode = {one-by-one*|all-at-once}
 ===> data-(toggle-)pause = ~pauseButton~
+===> data-(toggle-)progress = ~progressElement~
+
+[Event]
+===> submitAll.bsx
 
 [Example]
 <div id="row-1"><a href="foo.php?id=1" class="btn-submit" data-toggle="ajax-load" data-target="#row-1">...</a></div>
@@ -117,6 +122,37 @@ Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progres
 
 */
 $(document).on('click', '[data-toggle=submit-all]', function(evt){
+	evt.preventDefault();
+	var $triggerElement = $(this);
+	// fire event
+	$triggerElement.trigger('submitAll.bsx');
+	// confirmation
+	if ( $triggerElement.is('[data-confirm]') ) {
+		var msg = $triggerElement.attr('data-confirm').length ? $triggerElement.attr('data-confirm') : 'Are you sure?';
+		if ( !confirm(msg) ) return false;
+	}
+	// options
+	var toggleTarget = $triggerElement.attr('data-target');
+	var toggleMode = function(){
+		if ( $triggerElement.is('[data-toggle-mode]') ) return $triggerElement.attr('data-toggle-mode');
+		if ( $triggerElement.is('[data-mode]')        ) return $triggerElement.attr('data-mode');
+		return 'one-by-one';
+	}();
+	var togglePause = function(){
+		if ( $triggerElement.is('[data-toggle-pause]') ) return $triggerElement.attr('data-toggle-pause');
+		if ( $triggerElement.is('[data-pause]')        ) return $triggerElement.attr('data-pause');
+		return null;
+	}();
+	var toggleProgress = function(){
+		if ( $triggerElement.is('[data-toggle-progress]') ) return $triggerElement.attr('data-toggle-progress');
+		if ( $triggerElement.is('[data-progress]')        ) return $triggerElement.attr('data-progress');
+		return null;
+	}();
+	// elements
+	var $btnSubmitAll = $triggerElement;
+	var $btnPause = $(togglePause);
+	var $progress = $(toggleProgress);
+
 
 
 });
@@ -318,14 +354,22 @@ $(document).on('click', '[href][data-toggle=ajax-dropdown],[data-href][data-togg
 I allow ajax-load/ajax-submit content to specific element by defining data attributes
 ===> data-toggle = {ajax-load|ajax-submit}
 ===> data-target = ~targetElement|targetForm~
+===> data-confirm = ~confirmationMessage~
 ===> data-(toggle-)mode = {replace*|prepend|append|before|after}
 ===> data-(toggle-)overlay = {progress*|loading|loading-large|spinner|spinner-large|overlay|gray|grayer|dim|dimmer|white|whiter|light|lighter|none}
 ===> data-(toggle-)transition = {slide*|fade|none}
 ===> data-(toggle-)callback = ~function|functionName~
 ===> data-(toggle-)selector = ~partialResponseToShow~
 
+[Dependency]
 I use jquery-blockui plugin (if available)
 ===> when ajax-load or ajax-submit
+
+[Event]
+===> ajaxLoad.bsx
+===> ajaxLoadCallback.bsx
+===> ajaxSubmit.bsx
+===> ajaxSubmitCallback.bsx
 
 [Example]
 <!-- ajax load -->
