@@ -97,35 +97,37 @@ $(document).on('show.bs.modal', '.modal', function (event) {
 
 
 
-/*-------------------------+
-| DATA-TOGGLE : SUBMIT-ALL |
-+--------------------------+
+/*--------------------------+
+| DATA-TOGGLE : AUTO-SUBMIT |
++---------------------------+
 
 [Usage]
 Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progress)
-===> data-toggle = {submit-all}
+===> data-toggle = {auto-submit}
 ===> data-target = ~buttonsToClick~
 ===> data-confirm = ~confirmationMessage~
 ===> data-(toggle-)mode = {one-by-one*|all-at-once}
-===> data-(toggle-)pause = ~pauseButton~
+===> data-(toggle-)pause = ~pauseButton~  (for [one-by-one] only)
 ===> data-(toggle-)progress = ~progressElement~
 
 [Event]
-===> submitAll.bsx
+===> autoSubmit.bsx
 
 [Example]
 <div id="row-1"><a href="foo.php?id=1" class="btn-submit" data-toggle="ajax-load" data-target="#row-1">...</a></div>
 <div id="row-2"><a href="foo.php?id=2" class="btn-submit" data-toggle="ajax-load" data-target="#row-2">...</a></div>
 <div id="row-3"><a href="foo.php?id=3" class="btn-submit" data-toggle="ajax-load" data-target="#row-3">...</a></div>
 ...
-<button type="button" data-toggle="submit-all" data-target=".btn-submit">...</button>
+<button type="button" data-toggle="auto-submit" data-target=".btn-submit">...</button>
 
 */
-$(document).on('click', '[data-toggle=submit-all]', function(evt){
+$(document).on('click', '[data-toggle=auto-submit]', function(evt){
 	evt.preventDefault();
+	// core elements
 	var $triggerElement = $(this);
+	var $targetElements = $( $triggerElement.attr('data-target') );
 	// fire event
-	$triggerElement.trigger('submitAll.bsx');
+	$triggerElement.trigger('autoSubmit.bsx');
 	// confirmation
 	if ( $triggerElement.is('[data-confirm]') ) {
 		var msg = $triggerElement.attr('data-confirm').length ? $triggerElement.attr('data-confirm') : 'Are you sure?';
@@ -148,10 +150,10 @@ $(document).on('click', '[data-toggle=submit-all]', function(evt){
 		if ( $triggerElement.is('[data-progress]')        ) return $triggerElement.attr('data-progress');
 		return null;
 	}();
-	// elements
-	var $btnSubmitAll = $triggerElement;
+	// other elements
 	var $btnPause = $(togglePause);
 	var $progress = $(toggleProgress);
+	var $metaTitle = $('html > head > title');
 
 
 
