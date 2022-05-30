@@ -98,6 +98,31 @@ $(document).on('show.bs.modal', '.modal', function (event) {
 
 
 /*-------------------------+
+| DATA-TOGGLE : SUBMIT-ALL |
++--------------------------+
+
+[Usage]
+Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progress)
+===> data-toggle = {submit-all}
+===> data-target = ~selectorForDocument~
+===> data-(toggle-)mode = {one-by-one*|all-at-once}
+
+[Example]
+<div id="row-1"><a href="foo.php?id=1" class="btn-submit" data-toggle="ajax-load" data-target="#row-1">...</a></div>
+<div id="row-2"><a href="foo.php?id=2" class="btn-submit" data-toggle="ajax-load" data-target="#row-2">...</a></div>
+<div id="row-3"><a href="foo.php?id=3" class="btn-submit" data-toggle="ajax-load" data-target="#row-3">...</a></div>
+...
+<button type="button" data-toggle="submit-all" data-target=".btn-submit">...</button>
+
+*/
+$(document).on('click', '[data-toggle=submit-all]', function(evt){
+
+});
+
+
+
+
+/*-------------------------+
 | DATA-TOGGLE : AJAX-MODAL |
 +--------------------------+
 
