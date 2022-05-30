@@ -104,8 +104,9 @@ $(document).on('show.bs.modal', '.modal', function (event) {
 [Usage]
 Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progress)
 ===> data-toggle = {submit-all}
-===> data-target = ~selectorForDocument~
+===> data-target = ~buttonsToClick~
 ===> data-(toggle-)mode = {one-by-one*|all-at-once}
+===> data-(toggle-)pause = ~pauseButton~
 
 [Example]
 <div id="row-1"><a href="foo.php?id=1" class="btn-submit" data-toggle="ajax-load" data-target="#row-1">...</a></div>
@@ -116,6 +117,7 @@ Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progres
 
 */
 $(document).on('click', '[data-toggle=submit-all]', function(evt){
+
 
 });
 
@@ -129,8 +131,8 @@ $(document).on('click', '[data-toggle=submit-all]', function(evt){
 [Usage]
 Auto-load remote content into modal
 ===> data-toggle = {ajax-modal}
-===> data-target = ~selectorForDocument~
-===> data-(toggle-)selector = ~selectorForResponse~
+===> data-target = ~targetModal~
+===> data-(toggle-)selector = ~partialResponseToShow~
 
 [Example]
 <a href="foo.html" data-toggle="ajax-modal" data-target="#my-modal">...</div>
@@ -245,9 +247,9 @@ var ajaxModal = function(triggerElement) {
 [Usage]
 Auto-load remote content into dropdown (load-once-and-keep)
 ===> data-toggle = {ajax-dropdown}
-===> data-target = ~selectorForDocument~
+===> data-target = ~targetDropdown~
 ===> data-(toggle-)align = {left*|right}
-===> data-(toggle-)selector = ~selectorForResponse~
+===> data-(toggle-)selector = ~partialResponseToShow~
 
 [Example]
 <div class="dropdown">
@@ -315,12 +317,12 @@ $(document).on('click', '[href][data-toggle=ajax-dropdown],[data-href][data-togg
 [Usage]
 I allow ajax-load/ajax-submit content to specific element by defining data attributes
 ===> data-toggle = {ajax-load|ajax-submit}
-===> data-target = ~selectorForDocument~
+===> data-target = ~targetElement|targetForm~
 ===> data-(toggle-)mode = {replace*|prepend|append|before|after}
 ===> data-(toggle-)overlay = {progress*|loading|loading-large|spinner|spinner-large|overlay|gray|grayer|dim|dimmer|white|whiter|light|lighter|none}
 ===> data-(toggle-)transition = {slide*|fade|none}
-===> data-(toggle-)callback = ~function|function-name~
-===> data-(toggle-)selector = ~selectorForResponse~
+===> data-(toggle-)callback = ~function|functionName~
+===> data-(toggle-)selector = ~partialResponseToShow~
 
 I use jquery-blockui plugin (if available)
 ===> when ajax-load or ajax-submit
