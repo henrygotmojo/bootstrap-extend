@@ -108,9 +108,11 @@ Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progres
 ===> data-confirm = ~confirmationMessage~
 ===> data-(toggle-)pause = ~pauseButton~
 ===> data-(toggle-)progress = ~progressElement~
+===> data-(toggle-)callback = ~function|functionName~
 
 [Event]
 ===> autoSubmit.bsx
+===> autoSubmitCallback.bsx
 
 [Example]
 <div id="row-1"><a href="foo.php?id=1" class="btn-submit" data-toggle="ajax-load" data-target="#row-1">...</a></div>
@@ -142,6 +144,11 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 		if ( $btnAutoSubmit.is('[data-toggle-progress]') ) return $btnAutoSubmit.attr('data-toggle-progress');
 		if ( $btnAutoSubmit.is('[data-progress]')        ) return $btnAutoSubmit.attr('data-progress');
 		return null;
+	}();
+	var toggleCallback = function(){
+		if ( $triggerElement.is('[data-toggle-callback]') ) return $triggerElement.attr('data-toggle-callback');
+		if ( $triggerElement.is('[data-callback]')        ) return $triggerElement.attr('data-callback');
+		return '';
 	}();
 	// other elements
 	var $btnPause = $(togglePause);
@@ -452,30 +459,30 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 	var toggleTarget = $triggerElement.attr('data-target');
 	var toggleMode = function(){
 		if ( $triggerElement.is('[data-toggle-mode]') ) return $triggerElement.attr('data-toggle-mode');
-		else if ( $triggerElement.is('[data-mode]')   ) return $triggerElement.attr('data-mode');
-		else return 'replace';
+		if ( $triggerElement.is('[data-mode]')        ) return $triggerElement.attr('data-mode');
+		return 'replace';
 	}();
 	var toggleTransition = function(){
 		if ( $triggerElement.is('[data-toggle-transition]') ) return $triggerElement.attr('data-toggle-transition');
-		else if ( $triggerElement.is('[data-transition]')   ) return $triggerElement.attr('data-transition');
-		else return 'slide';
+		if ( $triggerElement.is('[data-transition]')        ) return $triggerElement.attr('data-transition');
+		return 'slide';
 	}();
 	var toggleCallback = function(){
 		if ( $triggerElement.is('[data-toggle-callback]') ) return $triggerElement.attr('data-toggle-callback');
-		else if ( $triggerElement.is('[data-callback]')   ) return $triggerElement.attr('data-callback');
-		else return '';
+		if ( $triggerElement.is('[data-callback]')        ) return $triggerElement.attr('data-callback');
+		return '';
 	}();
 	var toggleOverlay = function(){
 		if ( $triggerElement.is('[data-toggle-loading]')      ) return $triggerElement.attr('data-toggle-loading');
-		else if ( $triggerElement.is('[data-toggle-overlay]') ) return $triggerElement.attr('data-toggle-overlay');
-		else if ( $triggerElement.is('[data-loading]')        ) return $triggerElement.attr('data-loading');
-		else if ( $triggerElement.is('[data-overlay]')        ) return $triggerElement.attr('data-overlay');
-		else return 'progress';
+		if ( $triggerElement.is('[data-toggle-overlay]')      ) return $triggerElement.attr('data-toggle-overlay');
+		if ( $triggerElement.is('[data-loading]')             ) return $triggerElement.attr('data-loading');
+		if ( $triggerElement.is('[data-overlay]')             ) return $triggerElement.attr('data-overlay');
+		return 'progress';
 	}();
 	var toggleSelector = function(){
 		if ( $triggerElement.is('[data-toggle-selector]') ) return $triggerElement.attr('data-toggle-selector');
-		else if ( $triggerElement.is('[data-selector]')   ) return $triggerElement.attr('data-selector');
-		else return '';
+		if ( $triggerElement.is('[data-selector]')        ) return $triggerElement.attr('data-selector');
+		return '';
 	}();
 	// apply block-ui when ajax load (if any)
 	var configBlockUI;
