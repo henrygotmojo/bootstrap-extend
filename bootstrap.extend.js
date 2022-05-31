@@ -151,8 +151,14 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 	$metaTitle.attr('data-original', $metaTitle.text());
 	// assign tag to all target elements
 	$targetElements.addClass('auto-submit-pending');
-	// block auto-submit button
-	$btnAutoSubmit.prop('disabled', true).addClass('disabled');
+	// pause button behavior
+	// ===> mark flag to avoid assign the same behavior again (when pause & restart)
+	// ===> clear all tags to trick the timer to kill itself
+	$btnPause.filter(':not(.behavior-ready)').on('click', function(evt){
+		evt.preventDefault();
+		$btnPause.addClass('behavior-ready');
+		$targetElements.removeClass('auto-submit-pending auto-submit-active');
+	});
 	// create timer
 	// ===> monitor each target element
 	// ===> keep repeating until all done
@@ -167,18 +173,22 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 		// ===> stop repeating
 		// ===> restore to original meta title
 		// ===> unblock auto-submit button
+		// ===> block pause button
 		if ( !unfinished ) {
 			window.clearInterval(timer);
 			$metaTitle.html( $metaTitle.attr('data-original') ).removeAttr('data-original');
 			$btnAutoSubmit.prop('disabled', false).removeClass('disabled');
+			$btnPause.prop('disabled', true).addClass('disabled');
 		// when no active element
-		// ===> invoke first pending element
-		// ===> mark the element as active
+		// ===> invoke first pending element & mark active
+		// ===> block auto-submit button
+		// ===> unblock pause button
 		} else if ( !$targetElements.filter('.auto-submit-active').length ) {
 			var $firstPending = $targetElement.filter('.auto-submit-pending:first');
 			$firstPending.removeClass('auto-submit-pending').addClass('auto-submit-active');
-			// invoke according to element type
 			$firstPending.trigger( $firstPending.is('form') ? 'submit' : 'click' );
+			$btnAutoSubmit.prop('disabled', true).addClass('disabled');
+			$btnPause.prop('disabled', false).removeClass('disabled');
 		}
 	}, 100);
 });
