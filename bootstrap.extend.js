@@ -147,8 +147,8 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 		return null;
 	}();
 	var toggleCallback = function(){
-		if ( $triggerElement.is('[data-toggle-callback]') ) return $triggerElement.attr('data-toggle-callback');
-		if ( $triggerElement.is('[data-callback]')        ) return $triggerElement.attr('data-callback');
+		if ( $btnStart.is('[data-toggle-callback]') ) return $btnStart.attr('data-toggle-callback');
+		if ( $btnStart.is('[data-callback]')        ) return $btnStart.attr('data-callback');
 		return '';
 	}();
 	// convert [toggle-callback] to function
@@ -220,7 +220,7 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 		// when no active item
 		// ===> still in progress
 		} else if ( !$targetElements.filter('.auto-submit-active').length ) {
-			var $firstPending = $targetElement.filter('.auto-submit-pending:first');
+			var $firstPending = $targetElements.filter('.auto-submit-pending:first');
 			// invoke first pending element & mark active
 			$firstPending.removeClass('auto-submit-pending').addClass('auto-submit-active');
 			$firstPending.trigger( $firstPending.is('form') ? 'submit' : 'click' );
