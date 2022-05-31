@@ -150,6 +150,20 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 		if ( $triggerElement.is('[data-callback]')        ) return $triggerElement.attr('data-callback');
 		return '';
 	}();
+	// convert [toggle-callback] to function
+	if ( toggleCallback.trim() == '' ) {
+		// attribute is empty...
+		var callbackFunc = function(){};
+	} else if ( toggleCallback.trim().replace(/[\W_]+/g, '') == '' ) {
+		// attribute is function name...
+		eval('var callbackFunc = '+toggleCallback+'();');
+	} else if ( toggleCallback.replace(/\s/g, '').indexOf('function(') == 0 ) {
+		// attribute is anonymous function...
+		eval('var callbackFunc = '+toggleCallback+';');
+	} else {
+		// attribute is function content...
+		eval('var callbackFunc = function(){ '+toggleCallback+' };');
+	}
 	// other elements
 	var $btnPause = $(togglePause);
 	var $progress = $(toggleProgress);
@@ -177,24 +191,27 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 		$progress.html(completed+' / '+total);
 		$metaTitle.html(completed+' / '+total);
 		// when no more active & pending element
-		// ===> stop repeating
-		// ===> restore to original meta title
-		// ===> unblock auto-submit button
-		// ===> block pause button
 		if ( !unfinished ) {
+			// stop repeating
 			window.clearInterval(timer);
+			// restore to original meta title
 			$metaTitle.html( $metaTitle.attr('data-original') ).removeAttr('data-original');
+			// unblock auto-submit button
 			$btnAutoSubmit.prop('disabled', false).removeClass('disabled');
+			// block pause button
 			$btnPause.prop('disabled', true).addClass('disabled');
+			// trigger callback (when finished)
+			callbackFunc();
+			$btnAutoSubmit.trigger('autoSubmitCallback.bsx');
 		// when no active element
-		// ===> invoke first pending element & mark active
-		// ===> block auto-submit button
-		// ===> unblock pause button
 		} else if ( !$targetElements.filter('.auto-submit-active').length ) {
 			var $firstPending = $targetElement.filter('.auto-submit-pending:first');
+			// invoke first pending element & mark active
 			$firstPending.removeClass('auto-submit-pending').addClass('auto-submit-active');
 			$firstPending.trigger( $firstPending.is('form') ? 'submit' : 'click' );
+			// block auto-submit button
 			$btnAutoSubmit.prop('disabled', true).addClass('disabled');
+			// unblock pause button
 			$btnPause.prop('disabled', false).removeClass('disabled');
 		}
 	}, 100);
