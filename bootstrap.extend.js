@@ -106,8 +106,7 @@ Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progres
 ===> data-toggle = {auto-submit}
 ===> data-target = ~buttonsToClick~
 ===> data-confirm = ~confirmationMessage~
-===> data-(toggle-)mode = {one-by-one*|all-at-once}
-===> data-(toggle-)pause = ~pauseButton~  (for [one-by-one] only)
+===> data-(toggle-)pause = ~pauseButton~
 ===> data-(toggle-)progress = ~progressElement~
 
 [Event]
@@ -134,12 +133,6 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 		if ( !confirm(msg) ) return false;
 	}
 	// options
-	var toggleTarget = $triggerElement.attr('data-target');
-	var toggleMode = function(){
-		if ( $triggerElement.is('[data-toggle-mode]') ) return $triggerElement.attr('data-toggle-mode');
-		if ( $triggerElement.is('[data-mode]')        ) return $triggerElement.attr('data-mode');
-		return 'one-by-one';
-	}();
 	var togglePause = function(){
 		if ( $triggerElement.is('[data-toggle-pause]') ) return $triggerElement.attr('data-toggle-pause');
 		if ( $triggerElement.is('[data-pause]')        ) return $triggerElement.attr('data-pause');
@@ -154,9 +147,36 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 	var $btnPause = $(togglePause);
 	var $progress = $(toggleProgress);
 	var $metaTitle = $('html > head > title');
-
-
-
+	// remember original meta title
+	$metaTitle.attr('data-original', $metaTitle.text());
+	// assign tag to all target elements
+	$targetElements.addClass('auto-submit-pending');
+	// create timer
+	// ===> monitor each target element
+	// ===> keep repeating until all done
+	var timer = window.setInterval(function(){
+		// update progress
+		var total      = $targetElements.length;
+		var unfinished = $targetElements.filter('.auto-submit-pending,.auto-submit-active').length;
+		var finished   = total - unfinished;
+		$progress.html(completed+' / '+total);
+		$metaTitle.html(completed+' / '+total);
+		// when no more active & pending element
+		// ===> stop repeating
+		// ===> restore to original meta title
+		if ( !unfinished ) {
+			window.clearInterval(timer);
+			$metaTitle.html( $metaTitle.attr('data-original') ).removeAttr('data-original');
+		// when no active element
+		// ===> invoke first pending element
+		// ===> mark the element as active
+		} else if ( !$targetElements.filter('.auto-submit-active').length ) {
+			var $firstPending = $targetElement.filter('.auto-submit-pending:first');
+			$firstPending.removeClass('auto-submit-pending').addClass('auto-submit-active');
+			// invoke according to element type
+			$firstPending.trigger( $firstPending.is('form') ? 'submit' : 'click' );
+		}
+	}, 100);
 });
 
 
