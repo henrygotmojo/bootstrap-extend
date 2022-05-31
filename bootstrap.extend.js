@@ -112,6 +112,7 @@ Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progres
 
 [Event]
 ===> autoSubmit.bsx
+===> autoSubmitStopped.bsx
 ===> autoSubmitCallback.bsx
 
 [Example]
@@ -173,25 +174,39 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 	// assign tag to all target elements
 	$targetElements.addClass('auto-submit-pending');
 	// stop button behavior
-	// ===> mark flag to avoid assign the same behavior again (when stop & restart)
-	// ===> clear all tags to trick the timer to kill itself
-	$btnStop.filter(':not(.behavior-ready)').on('click', function(evt){
+	$btnStop.filter(':not(.stop-button-ready)').on('click', function(evt){
 		evt.preventDefault();
-		$btnStop.addClass('behavior-ready');
-		$targetElements.removeClass('auto-submit-pending auto-submit-active');
+		// mark flag to avoid assign the same behavior again (when stop & restart)
+		$btnStop.addClass('stop-button-ready');
+		// mark flag to instruct the timer to kill itself
+		$btnStart.addClass('stopped');
+		// restore to original meta title
+		$metaTitle.html( $metaTitle.attr('data-original') ).removeAttr('data-original');
+		// (un)block buttons
+		$btnStart.prop('disabled', false).removeClass('disabled');
+		$btnStop.prop('disabled', true).addClass('disabled');
+		// trigger event
+		$btnStart.trigger('autoSubmitStopped.bsx');
 	});
 	// create timer
 	// ===> monitor each target element
 	// ===> keep repeating until all done
 	var timer = window.setInterval(function(){
+		var countTotal  = $targetElements.length;
+		var countUndone = $targetElements.filter('.auto-submit-pending,.auto-submit-active').length;
+		var countDone   = countTotal - countUndone;
 		// update progress
-		var total      = $targetElements.length;
-		var unfinished = $targetElements.filter('.auto-submit-pending,.auto-submit-active').length;
-		var finished   = total - unfinished;
-		$progress.html(completed+' / '+total);
-		$metaTitle.html(completed+' / '+total);
-		// when no more active & pending element
-		if ( !unfinished ) {
+		$progress.html(countDone+' / '+countTotal);
+		$metaTitle.html(countDone+' / '+countTotal);
+		// when stopped
+		if ( $btnStart.is('.stopped') ) {
+			// kill the timer abruptly
+			window.clearInterval(timer);
+			// clear flag
+			$btnStart.removeClass('stopped');
+		// when no more outstanding item
+		// ===> considered as finished
+		} else if ( !countUndone ) {
 			// stop repeating
 			window.clearInterval(timer);
 			// restore to original meta title
@@ -199,10 +214,11 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 			// (un)block buttons
 			$btnStart.prop('disabled', false).removeClass('disabled');
 			$btnStop.prop('disabled', true).addClass('disabled');
-			// trigger callback (when finished)
+			// trigger callback & event
 			callbackFunc();
 			$btnStart.trigger('autoSubmitCallback.bsx');
-		// when no active element
+		// when no active item
+		// ===> still in progress
 		} else if ( !$targetElements.filter('.auto-submit-active').length ) {
 			var $firstPending = $targetElement.filter('.auto-submit-pending:first');
 			// invoke first pending element & mark active
