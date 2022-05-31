@@ -172,7 +172,7 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 	// remember original meta title
 	$metaTitle.attr('data-original', $metaTitle.text());
 	// assign tag to all target elements
-	$targetElements.addClass('auto-submit-pending');
+	$targetElements.addClass('pending-autosubmit');
 	// stop button behavior
 	$btnStop.filter(':not(.stop-button-ready)').on('click', function(evt){
 		evt.preventDefault();
@@ -192,8 +192,12 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 	// ===> monitor each target element
 	// ===> keep repeating until all done
 	var timer = window.setInterval(function(){
+		// NOTE : cannot remove (invisible) after-run-item 
+		// ===> below script didn't work (jQuery bug?)
+		// ===> $targetElements.filter('.active-autosubmit:not(:visible)'').remove();
+		// ===> apply [:visible] when counting undone items
 		var countTotal  = $targetElements.length;
-		var countUndone = $targetElements.filter('.auto-submit-pending,.auto-submit-active').length;
+		var countUndone = $targetElements.filter('.pending-autosubmit,.active-autosubmit:visible').length;
 		var countDone   = countTotal - countUndone;
 		// update progress
 		$progress.html(countDone+' / '+countTotal);
@@ -219,10 +223,10 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 			$btnStart.trigger('autoSubmitCallback.bsx');
 		// when no active item
 		// ===> still in progress
-		} else if ( !$targetElements.filter('.auto-submit-active').length ) {
-			var $firstPending = $targetElements.filter('.auto-submit-pending:first');
+		} else if ( !$targetElements.filter('.active-autosubmit:visible').length ) {
+			var $firstPending = $targetElements.filter('.pending-autosubmit:first');
 			// invoke first pending element & mark active
-			$firstPending.removeClass('auto-submit-pending').addClass('auto-submit-active');
+			$firstPending.removeClass('pending-autosubmit').addClass('active-autosubmit');
 			$firstPending.trigger( $firstPending.is('form') ? 'submit' : 'click' );
 			// (un)block buttons
 			$btnStart.prop('disabled', true).addClass('disabled');
