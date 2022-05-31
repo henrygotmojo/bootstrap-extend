@@ -123,24 +123,24 @@ Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progres
 $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 	evt.preventDefault();
 	// core elements
-	var $triggerElement = $(this);
-	var $targetElements = $( $triggerElement.attr('data-target') );
+	var $btnAutoSubmit = $(this);
+	var $targetElements = $( $btnAutoSubmit.attr('data-target') );
 	// fire event
-	$triggerElement.trigger('autoSubmit.bsx');
+	$btnAutoSubmit.trigger('autoSubmit.bsx');
 	// confirmation
-	if ( $triggerElement.is('[data-confirm]') ) {
-		var msg = $triggerElement.attr('data-confirm').length ? $triggerElement.attr('data-confirm') : 'Are you sure?';
+	if ( $btnAutoSubmit.is('[data-confirm]') ) {
+		var msg = $btnAutoSubmit.attr('data-confirm').length ? $btnAutoSubmit.attr('data-confirm') : 'Are you sure?';
 		if ( !confirm(msg) ) return false;
 	}
 	// options
 	var togglePause = function(){
-		if ( $triggerElement.is('[data-toggle-pause]') ) return $triggerElement.attr('data-toggle-pause');
-		if ( $triggerElement.is('[data-pause]')        ) return $triggerElement.attr('data-pause');
+		if ( $btnAutoSubmit.is('[data-toggle-pause]') ) return $btnAutoSubmit.attr('data-toggle-pause');
+		if ( $btnAutoSubmit.is('[data-pause]')        ) return $btnAutoSubmit.attr('data-pause');
 		return null;
 	}();
 	var toggleProgress = function(){
-		if ( $triggerElement.is('[data-toggle-progress]') ) return $triggerElement.attr('data-toggle-progress');
-		if ( $triggerElement.is('[data-progress]')        ) return $triggerElement.attr('data-progress');
+		if ( $btnAutoSubmit.is('[data-toggle-progress]') ) return $btnAutoSubmit.attr('data-toggle-progress');
+		if ( $btnAutoSubmit.is('[data-progress]')        ) return $btnAutoSubmit.attr('data-progress');
 		return null;
 	}();
 	// other elements
@@ -151,6 +151,8 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 	$metaTitle.attr('data-original', $metaTitle.text());
 	// assign tag to all target elements
 	$targetElements.addClass('auto-submit-pending');
+	// block auto-submit button
+	$btnAutoSubmit.prop('disabled', true).addClass('disabled');
 	// create timer
 	// ===> monitor each target element
 	// ===> keep repeating until all done
@@ -164,9 +166,11 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 		// when no more active & pending element
 		// ===> stop repeating
 		// ===> restore to original meta title
+		// ===> unblock auto-submit button
 		if ( !unfinished ) {
 			window.clearInterval(timer);
 			$metaTitle.html( $metaTitle.attr('data-original') ).removeAttr('data-original');
+			$btnAutoSubmit.prop('disabled', false).removeClass('disabled');
 		// when no active element
 		// ===> invoke first pending element
 		// ===> mark the element as active
