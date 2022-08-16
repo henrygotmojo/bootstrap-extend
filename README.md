@@ -36,6 +36,7 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 </div>
 ```
 
+
 ##### BUTTON NEW SIZES
 ```
 <!-- button -->
@@ -47,6 +48,7 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
     <button type="button" class="btn btn-primary">Right</button>
 </div>
 ```
+
 
 ##### FORM CONTROL & INPUT GROUP NEW SIZES
 ```
@@ -61,10 +63,12 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 </div>
 ```
 
-###### MULTILEVEL DROPDOWN
+
+##### MULTILEVEL DROPDOWN
 
 Reference
-- https://bootstrapious.com/p/bootstrap-multilevel-dropdown
+* https://bootstrapious.com/p/bootstrap-multilevel-dropdown
+
 ```
 <nav class="navbar navbar-expand-lg navbar-light">
     <ul class="navbar-nav">
@@ -91,9 +95,10 @@ Reference
 </nav>
 ```
 
+
 ##### TAB VERTICAL & BOTTOM
 Reference
-- https://codepen.io/jasongardner/pen/gxprVQ
+* https://codepen.io/jasongardner/pen/gxprVQ
 ```
 <!-- left / right -->
 <ul class="nav nav-tabs nav-tabs--{left|right} flex-column">
@@ -107,75 +112,77 @@ Reference
 </ul>
 ```
 
+
 ##### UTILITY CLASSES FOR STYLING
+
 styling
-- .em
-- .del
-- .strong
-- .sub
-- .sup
+* .em
+* .del
+* .strong
+* .sub
+* .sup
 
 border
-- .b-{0|1|2|3|4|5}
-- .bt-{0|1|2|3|4|5}
-- .bb-{0|1|2|3|4|5}
-- .bl-{0|1|2|3|4|5}
-- .br-{0|1|2|3|4|5}
-- .bx-{0|1|2|3|4|5}
-- .by-{0|1|2|3|4|5}
+* .b-{0|1|2|3|4|5}
+* .bt-{0|1|2|3|4|5}
+* .bb-{0|1|2|3|4|5}
+* .bl-{0|1|2|3|4|5}
+* .br-{0|1|2|3|4|5}
+* .bx-{0|1|2|3|4|5}
+* .by-{0|1|2|3|4|5}
 
 border color
-- .b-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
+* .b-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
 
 shadow
-- .shadow-{xs|sm|lg|xl}
+* .shadow-{xs|sm|lg|xl}
 
 opacity
-- .op-{100|95|90|..|10|5|0}
+* .op-{100|95|90|..|10|5|0}
 
 width
-- .w-{100|95|90|...|10|5|0}
+* .w-{100|95|90|...|10|5|0}
 
 cursor
-- .cursor-alias
-- .cursor-all-scroll
-- .cursor-auto
-- .cursor-cell
-- .cursor-context-menu
-- .cursor-col-resize
-- .cursor-copy
-- .cursor-crosshair
-- .cursor-default
-- .cursor-e-resize
-- .cursor-ew-resize
-- .cursor-grab
-- .cursor-grabbing
-- .cursor-help
-- .cursor-move
-- .cursor-n-resize
-- .cursor-ne-resize
-- .cursor-nesw-resize
-- .cursor-ns-resize
-- .cursor-nw-resize
-- .cursor-nwse-resize
-- .cursor-no-drop
-- .cursor-none
-- .cursor-not-allowed
-- .cursor-pointer
-- .cursor-progress
-- .cursor-row-resize
-- .cursor-s-resize
-- .cursor-se-resize
-- .cursor-sw-resize
-- .cursor-text
-- .cursor-w-resize
-- .cursor-wait
-- .cursor-zoom-in
-- .cursor-zoom-out
+* .cursor-alias
+* .cursor-all-scroll
+* .cursor-auto
+* .cursor-cell
+* .cursor-context-menu
+* .cursor-col-resize
+* .cursor-copy
+* .cursor-crosshair
+* .cursor-default
+* .cursor-e-resize
+* .cursor-ew-resize
+* .cursor-grab
+* .cursor-grabbing
+* .cursor-help
+* .cursor-move
+* .cursor-n-resize
+* .cursor-ne-resize
+* .cursor-nesw-resize
+* .cursor-ns-resize
+* .cursor-nw-resize
+* .cursor-nwse-resize
+* .cursor-no-drop
+* .cursor-none
+* .cursor-not-allowed
+* .cursor-pointer
+* .cursor-progress
+* .cursor-row-resize
+* .cursor-s-resize
+* .cursor-se-resize
+* .cursor-sw-resize
+* .cursor-text
+* .cursor-w-resize
+* .cursor-wait
+* .cursor-zoom-in
+* .cursor-zoom-out
 
 others
-- .transition-none
-&nbsp;
+* .transition-none
+
 
 --------------------------------------------------
 
