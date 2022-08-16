@@ -4,12 +4,12 @@ Bootstrap-Extend (v4.x)
 Extend CSS & JS Features of Twitter Bootstrap 4.x
 
 
-# Dependencies
+## Dependencies
 * Bootstrap 4.x
 * jQuery 1.9.x (or above)
 
 
-# CDN
+## CDN
 * https://cdn.statically.io/bb/henrygotmojo/bootstrap-extend/{VERSION}/bootstrap.extend.css
 * https://cdn.statically.io/bb/henrygotmojo/bootstrap-extend/{VERSION}/bootstrap.extend.js
 
@@ -17,11 +17,11 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 -----
 
 
-# CSS Features
+## CSS Features
 
 ### MODAL NEW SIZES
 
-##### Example
+#### Example
 
 ```
 <div class="modal fade">
@@ -43,7 +43,7 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 
 ### BUTTON NEW SIZES
 
-##### Example
+#### Example
 
 ```
 <!-- button -->
@@ -59,7 +59,7 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 
 ### FORM CONTROL & INPUT GROUP NEW SIZES
 
-##### Example
+#### Example
 
 ```
 <!-- form control -->
@@ -76,11 +76,11 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 
 ### MULTILEVEL DROPDOWN
 
-##### Reference
+#### Reference
 
 https://bootstrapious.com/p/bootstrap-multilevel-dropdown
 
-##### Example
+#### Example
 
 ```
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -111,11 +111,11 @@ https://bootstrapious.com/p/bootstrap-multilevel-dropdown
 
 ### TAB VERTICAL & BOTTOM
 
-##### Reference
+#### Reference
 
 https://codepen.io/jasongardner/pen/gxprVQ
 
-##### Example
+#### Example
 
 ```
 <!-- left / right -->
@@ -133,7 +133,7 @@ https://codepen.io/jasongardner/pen/gxprVQ
 
 ### UTILITY CLASSES FOR STYLING
 
-##### styling
+#### styling
 
 * .em
 * .del
@@ -141,7 +141,7 @@ https://codepen.io/jasongardner/pen/gxprVQ
 * .sub
 * .sup
 
-##### border
+#### border
 
 * .b-{0|1|2|3|4|5}
 * .bt-{0|1|2|3|4|5}
@@ -151,23 +151,23 @@ https://codepen.io/jasongardner/pen/gxprVQ
 * .bx-{0|1|2|3|4|5}
 * .by-{0|1|2|3|4|5}
 
-##### border color
+#### border color
 
 * .b-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
 
-##### shadow
+#### shadow
 
 * .shadow-{xs|sm|lg|xl}
 
-##### opacity
+#### opacity
 
 * .op-{100|95|90|..|10|5|0}
 
-##### width
+#### width
 
 * .w-{100|95|90|...|10|5|0}
 
-##### cursor
+#### cursor
 
 * .cursor-alias
 * .cursor-all-scroll
@@ -205,7 +205,7 @@ https://codepen.io/jasongardner/pen/gxprVQ
 * .cursor-zoom-in
 * .cursor-zoom-out
 
-##### others
+#### others
 
 * .transition-none
 
@@ -213,18 +213,18 @@ https://codepen.io/jasongardner/pen/gxprVQ
 -----
 
 
-# JS Features
+## JS Features
 
 ### AUTO AJAX-ERROR ALERT
 
-##### Usage
+#### Usage
 
 * show error dialog whenever there is an ajax error
 * default showing as modal
 * simply die() in server-script and error message will auto-show in modal
 * applicable to whole site
 
-##### Example
+#### Example
 
 ```
 <body data-ajax-error="{modal|alert|console}"> ... </body>
@@ -233,7 +233,7 @@ https://codepen.io/jasongardner/pen/gxprVQ
 
 ### MULTIPLE MODALS OVERLAY
 
-##### Usage
+#### Usage
 
 * Fix overlay order when multiple modals launched
 * [Reference] https://stackoverflow.com/questions/19305821/multiple-modals-overlay
@@ -241,11 +241,11 @@ https://codepen.io/jasongardner/pen/gxprVQ
 
 ### DATA-TOGGLE : AUTO-SUBMIT
 
-##### Usage
+#### Usage
 
 * Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progress)
 
-##### Attributes
+#### Attributes
 
 * data-toggle = {auto-submit}
 * data-target = ~buttonsToClick~
@@ -254,13 +254,13 @@ https://codepen.io/jasongardner/pen/gxprVQ
 * data-(toggle-)progress = ~progressElement~
 * data-(toggle-)callback = ~function|functionName~
 
-##### Events
+#### Events
 
 * autoSubmit.bsx
 * autoSubmitStopped.bsx
 * autoSubmitCallback.bsx
 
-##### Example
+#### Example
 
 ```
 <div id="row-1"><a href="foo.php?id=1" class="btn-submit" data-toggle="ajax-load" data-target="#row-1">...</a></div>
@@ -273,17 +273,17 @@ https://codepen.io/jasongardner/pen/gxprVQ
 
 ### DATA-TOGGLE : AJAX-MODAL
 
-##### Usage
+#### Usage
 
 * Auto-load remote content into modal
 
-##### Attributes
+#### Attributes
 
 * data-toggle = {ajax-modal}
 * data-target = ~targetModal~
 * data-(toggle-)selector = ~partialResponseToShow~
 
-Example
+#### Example
 
 ```
 <a href="foo.html" data-toggle="ajax-modal" data-target="#my-modal">...</div>
@@ -293,18 +293,18 @@ Example
 
 ### DATA-TOGGLE : AJAX-DROPDOWN
 
-##### Usage
+#### Usage
 
 * Auto-load remote content into dropdown (load-once-and-keep)
 
-##### Attributes
+#### Attributes
 
 * data-toggle = {ajax-dropdown}
 * data-target = ~targetDropdown~
 * data-(toggle-)align = {left*|right}
 * data-(toggle-)selector = ~partialResponseToShow~
 
-##### Example
+#### Example
 
 ```
 <div class="dropdown">
@@ -316,11 +316,11 @@ Example
 
 ### DATA-TOGGLE : AJAX-LOAD / AJAX-SUBMIT
 
-##### Usage
+#### Usage
 
 * I allow ajax-load/ajax-submit content to specific element by defining data attributes
 
-##### Attributes
+#### Attributes
 
 * data-toggle = {ajax-load|ajax-submit}
 * data-target = ~targetElement|targetForm~
@@ -331,14 +331,14 @@ Example
 * data-(toggle-)callback = ~function|functionName~
 * data-(toggle-)selector = ~partialResponseToShow~
 
-##### Events
+#### Events
 
 * ajaxLoad.bsx
 * ajaxLoadCallback.bsx
 * ajaxSubmit.bsx
 * ajaxSubmitCallback.bsx
 
-##### Example
+#### Example
 
 ```
 <!-- ajax load -->
