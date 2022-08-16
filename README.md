@@ -115,73 +115,73 @@ Reference
 
 ##### UTILITY CLASSES FOR STYLING
 
-styling
-* .em
-* .del
-* .strong
-* .sub
-* .sup
+__styling__
+*  .em
+*  .del
+*  .strong
+*  .sub
+*  .sup
 
-border
-* .b-{0|1|2|3|4|5}
-* .bt-{0|1|2|3|4|5}
-* .bb-{0|1|2|3|4|5}
-* .bl-{0|1|2|3|4|5}
-* .br-{0|1|2|3|4|5}
-* .bx-{0|1|2|3|4|5}
-* .by-{0|1|2|3|4|5}
+__border__
+*  .b-{0|1|2|3|4|5}
+*  .bt-{0|1|2|3|4|5}
+*  .bb-{0|1|2|3|4|5}
+*  .bl-{0|1|2|3|4|5}
+*  .br-{0|1|2|3|4|5}
+*  .bx-{0|1|2|3|4|5}
+*  .by-{0|1|2|3|4|5}
 
-border color
-* .b-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
+__border color__
+*  .b-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
 
-shadow
-* .shadow-{xs|sm|lg|xl}
+__shadow__
+*  .shadow-{xs|sm|lg|xl}
 
-opacity
-* .op-{100|95|90|..|10|5|0}
+__opacity__
+*  .op-{100|95|90|..|10|5|0}
 
-width
-* .w-{100|95|90|...|10|5|0}
+__width__
+*  .w-{100|95|90|...|10|5|0}
 
-cursor
-* .cursor-alias
-* .cursor-all-scroll
-* .cursor-auto
-* .cursor-cell
-* .cursor-context-menu
-* .cursor-col-resize
-* .cursor-copy
-* .cursor-crosshair
-* .cursor-default
-* .cursor-e-resize
-* .cursor-ew-resize
-* .cursor-grab
-* .cursor-grabbing
-* .cursor-help
-* .cursor-move
-* .cursor-n-resize
-* .cursor-ne-resize
-* .cursor-nesw-resize
-* .cursor-ns-resize
-* .cursor-nw-resize
-* .cursor-nwse-resize
-* .cursor-no-drop
-* .cursor-none
-* .cursor-not-allowed
-* .cursor-pointer
-* .cursor-progress
-* .cursor-row-resize
-* .cursor-s-resize
-* .cursor-se-resize
-* .cursor-sw-resize
-* .cursor-text
-* .cursor-w-resize
-* .cursor-wait
-* .cursor-zoom-in
-* .cursor-zoom-out
+__cursor__
+*  .cursor-alias
+*  .cursor-all-scroll
+*  .cursor-auto
+*  .cursor-cell
+*  .cursor-context-menu
+*  .cursor-col-resize
+*  .cursor-copy
+*  .cursor-crosshair
+*  .cursor-default
+*  .cursor-e-resize
+*  .cursor-ew-resize
+*  .cursor-grab
+*  .cursor-grabbing
+*  .cursor-help
+*  .cursor-move
+*  .cursor-n-resize
+*  .cursor-ne-resize
+*  .cursor-nesw-resize
+*  .cursor-ns-resize
+*  .cursor-nw-resize
+*  .cursor-nwse-resize
+*  .cursor-no-drop
+*  .cursor-none
+*  .cursor-not-allowed
+*  .cursor-pointer
+*  .cursor-progress
+*  .cursor-row-resize
+*  .cursor-s-resize
+*  .cursor-se-resize
+*  .cursor-sw-resize
+*  .cursor-text
+*  .cursor-w-resize
+*  .cursor-wait
+*  .cursor-zoom-in
+*  .cursor-zoom-out
 
-others
-* .transition-none
+__others__
+*  .transition-none
 
 
 --------------------------------------------------
