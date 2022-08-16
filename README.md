@@ -4,21 +4,24 @@ Bootstrap-Extend (v4.x)
 Extend CSS & JS Features of Twitter Bootstrap 4.x
 
 
-### Dependencies
+# Dependencies
 * Bootstrap 4.x
 * jQuery 1.9.x (or above)
 
 
-### CDN
+# CDN
 * https://cdn.statically.io/bb/henrygotmojo/bootstrap-extend/{VERSION}/bootstrap.extend.css
 * https://cdn.statically.io/bb/henrygotmojo/bootstrap-extend/{VERSION}/bootstrap.extend.js
 
 
---------------------------------------------------
+-----
 
-### CSS Features
 
-##### MODAL NEW SIZES
+# CSS Features
+
+### MODAL NEW SIZES
+
+##### Example
 
 ```
 <div class="modal fade">
@@ -38,7 +41,10 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 |  XXL / Max   |  .modal-{xxl/max}  |  (almost fullscreen)       |
 
 
-##### BUTTON NEW SIZES
+### BUTTON NEW SIZES
+
+##### Example
+
 ```
 <!-- button -->
 <button type="button" class="btn btn-primary btn-xs">Extra small button</button>
@@ -51,7 +57,10 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 ```
 
 
-##### FORM CONTROL & INPUT GROUP NEW SIZES
+### FORM CONTROL & INPUT GROUP NEW SIZES
+
+##### Example
+
 ```
 <!-- form control -->
 <input type="text" class="form-control form-control-xs" value="small" />
@@ -65,9 +74,13 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 ```
 
 
-##### MULTILEVEL DROPDOWN
+### MULTILEVEL DROPDOWN
 
-* [Reference] https://bootstrapious.com/p/bootstrap-multilevel-dropdown
+##### Reference
+
+https://bootstrapious.com/p/bootstrap-multilevel-dropdown
+
+##### Example
 
 ```
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -96,9 +109,13 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 ```
 
 
-##### TAB VERTICAL & BOTTOM
+### TAB VERTICAL & BOTTOM
 
-* [Reference] https://codepen.io/jasongardner/pen/gxprVQ
+##### Reference
+
+https://codepen.io/jasongardner/pen/gxprVQ
+
+##### Example
 
 ```
 <!-- left / right -->
@@ -114,9 +131,9 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 ```
 
 
-##### UTILITY CLASSES FOR STYLING
+### UTILITY CLASSES FOR STYLING
 
-__styling__
+##### styling
 
 * .em
 * .del
@@ -124,7 +141,7 @@ __styling__
 * .sub
 * .sup
 
-__border__
+##### border
 
 * .b-{0|1|2|3|4|5}
 * .bt-{0|1|2|3|4|5}
@@ -134,23 +151,23 @@ __border__
 * .bx-{0|1|2|3|4|5}
 * .by-{0|1|2|3|4|5}
 
-__border color__
+##### border color
 
 * .b-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
 
-__shadow__
+##### shadow
 
 * .shadow-{xs|sm|lg|xl}
 
-__opacity__
+##### opacity
 
 * .op-{100|95|90|..|10|5|0}
 
-__width__
+##### width
 
 * .w-{100|95|90|...|10|5|0}
 
-__cursor__
+##### cursor
 
 * .cursor-alias
 * .cursor-all-scroll
@@ -188,46 +205,47 @@ __cursor__
 * .cursor-zoom-in
 * .cursor-zoom-out
 
-__others__
+##### others
 
 * .transition-none
 
 
---------------------------------------------------
+-----
 
-### JS Features
 
-##### AUTO AJAX-ERROR ALERT
+# JS Features
 
-Usage
+### AUTO AJAX-ERROR ALERT
+
+##### Usage
 
 * show error dialog whenever there is an ajax error
 * default showing as modal
 * simply die() in server-script and error message will auto-show in modal
 * applicable to whole site
 
-Example
+##### Example
 
 ```
 <body data-ajax-error="{modal|alert|console}"> ... </body>
 ```
 
 
-##### MULTIPLE MODALS OVERLAY
+### MULTIPLE MODALS OVERLAY
 
-Usage
+##### Usage
 
 * Fix overlay order when multiple modals launched
 * [Reference] https://stackoverflow.com/questions/19305821/multiple-modals-overlay
 
 
-##### DATA-TOGGLE : AUTO-SUBMIT
+### DATA-TOGGLE : AUTO-SUBMIT
 
-Usage
+##### Usage
 
 * Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progress)
 
-Attributes
+##### Attributes
 
 * data-toggle = {auto-submit}
 * data-target = ~buttonsToClick~
@@ -236,13 +254,13 @@ Attributes
 * data-(toggle-)progress = ~progressElement~
 * data-(toggle-)callback = ~function|functionName~
 
-Events
+##### Events
 
 * autoSubmit.bsx
 * autoSubmitStopped.bsx
 * autoSubmitCallback.bsx
 
-Example
+##### Example
 
 ```
 <div id="row-1"><a href="foo.php?id=1" class="btn-submit" data-toggle="ajax-load" data-target="#row-1">...</a></div>
@@ -253,13 +271,14 @@ Example
 ```
 
 
-##### DATA-TOGGLE : AJAX-MODAL
+### DATA-TOGGLE : AJAX-MODAL
 
-Usage
+##### Usage
 
 * Auto-load remote content into modal
 
-Attributes
+##### Attributes
+
 * data-toggle = {ajax-modal}
 * data-target = ~targetModal~
 * data-(toggle-)selector = ~partialResponseToShow~
@@ -272,20 +291,20 @@ Example
 ```
 
 
-##### DATA-TOGGLE : AJAX-DROPDOWN
+### DATA-TOGGLE : AJAX-DROPDOWN
 
-Usage
+##### Usage
 
 * Auto-load remote content into dropdown (load-once-and-keep)
 
-Attributes
+##### Attributes
 
 * data-toggle = {ajax-dropdown}
 * data-target = ~targetDropdown~
 * data-(toggle-)align = {left*|right}
 * data-(toggle-)selector = ~partialResponseToShow~
 
-Example
+##### Example
 
 ```
 <div class="dropdown">
@@ -295,13 +314,13 @@ Example
 ```
 
 
-##### DATA-TOGGLE : AJAX-LOAD / AJAX-SUBMIT
+### DATA-TOGGLE : AJAX-LOAD / AJAX-SUBMIT
 
-Usage
+##### Usage
 
 * I allow ajax-load/ajax-submit content to specific element by defining data attributes
 
-Attributes
+##### Attributes
 
 * data-toggle = {ajax-load|ajax-submit}
 * data-target = ~targetElement|targetForm~
@@ -312,14 +331,14 @@ Attributes
 * data-(toggle-)callback = ~function|functionName~
 * data-(toggle-)selector = ~partialResponseToShow~
 
-Events
+##### Events
 
 * ajaxLoad.bsx
 * ajaxLoadCallback.bsx
 * ajaxSubmit.bsx
 * ajaxSubmitCallback.bsx
 
-Example
+##### Example
 
 ```
 <!-- ajax load -->
