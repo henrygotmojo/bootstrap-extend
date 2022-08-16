@@ -12,7 +12,7 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 ### CDN
 * https://cdn.statically.io/bb/henrygotmojo/bootstrap-extend/{VERSION}/bootstrap.extend.css
 * https://cdn.statically.io/bb/henrygotmojo/bootstrap-extend/{VERSION}/bootstrap.extend.js
-<br>
+
 
 --------------------------------------------------
 
@@ -198,3 +198,57 @@ __others__
 --------------------------------------------------
 
 ### JS Features
+
+##### AUTO AJAX-ERROR ALERT
+
+Usage
+
+*  show error dialog whenever there is an ajax error
+*  default showing as modal
+*  simply die() in server-script and error message will auto-show in modal
+*  applicable to whole site
+
+Example
+
+```
+<body data-ajax-error="{modal|alert|console}"> ... </body>
+```
+
+
+##### MULTIPLE MODALS OVERLAY
+
+Usage
+
+*  Fix overlay order when multiple modals launched
+*  Reference
+  *  https://stackoverflow.com/questions/19305821/multiple-modals-overlay
+
+
+##### DATA-TOGGLE : AUTO-SUBMIT
+
+Usage
+
+*  Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progress)
+   *  data-toggle = {auto-submit}
+   *  data-target = ~buttonsToClick~
+   *  data-confirm = ~confirmationMessage~
+   *  data-(toggle-)stop = ~stopButton~
+   *  data-(toggle-)progress = ~progressElement~
+   *  data-(toggle-)callback = ~function|functionName~
+
+Event
+   *  autoSubmit.bsx
+   *  autoSubmitStopped.bsx
+   *  autoSubmitCallback.bsx
+
+Example
+
+```
+<div id="row-1"><a href="foo.php?id=1" class="btn-submit" data-toggle="ajax-load" data-target="#row-1">...</a></div>
+<div id="row-2"><a href="foo.php?id=2" class="btn-submit" data-toggle="ajax-load" data-target="#row-2">...</a></div>
+<div id="row-3"><a href="foo.php?id=3" class="btn-submit" data-toggle="ajax-load" data-target="#row-3">...</a></div>
+...
+<button type="button" data-toggle="auto-submit" data-target=".btn-submit">...</button>
+```
+
+
