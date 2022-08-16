@@ -226,14 +226,17 @@ Usage
 Usage
 
 * Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progress)
-  * data-toggle = {auto-submit}
-  * data-target = ~buttonsToClick~
-  * data-confirm = ~confirmationMessage~
-  * data-(toggle-)stop = ~stopButton~
-  * data-(toggle-)progress = ~progressElement~
-  * data-(toggle-)callback = ~function|functionName~
 
-Event
+Attributes
+
+* data-toggle = {auto-submit}
+* data-target = ~buttonsToClick~
+* data-confirm = ~confirmationMessage~
+* data-(toggle-)stop = ~stopButton~
+* data-(toggle-)progress = ~progressElement~
+* data-(toggle-)callback = ~function|functionName~
+
+Events
 
 * autoSubmit.bsx
 * autoSubmitStopped.bsx
@@ -255,9 +258,11 @@ Example
 Usage
 
 * Auto-load remote content into modal
-  * data-toggle = {ajax-modal}
-  * data-target = ~targetModal~
-  * data-(toggle-)selector = ~partialResponseToShow~
+
+Attributes
+* data-toggle = {ajax-modal}
+* data-target = ~targetModal~
+* data-(toggle-)selector = ~partialResponseToShow~
 
 Example
 
@@ -272,10 +277,13 @@ Example
 Usage
 
 * Auto-load remote content into dropdown (load-once-and-keep)
-  * data-toggle = {ajax-dropdown}
-  * data-target = ~targetDropdown~
-  * data-(toggle-)align = {left*|right}
-  * data-(toggle-)selector = ~partialResponseToShow~
+
+Attributes
+
+* data-toggle = {ajax-dropdown}
+* data-target = ~targetDropdown~
+* data-(toggle-)align = {left*|right}
+* data-(toggle-)selector = ~partialResponseToShow~
 
 Example
 
@@ -292,16 +300,19 @@ Example
 Usage
 
 * I allow ajax-load/ajax-submit content to specific element by defining data attributes
-  * data-toggle = {ajax-load|ajax-submit}
-  * data-target = ~targetElement|targetForm~
-  * data-confirm = ~confirmationMessage~
-  * data-(toggle-)mode = {replace*|prepend|append|before|after}
-  * data-(toggle-)overlay = {progress*|loading|loading-large|spinner|spinner-large|overlay|gray|grayer|dim|dimmer|white|whiter|light|lighter|none}
-  * data-(toggle-)transition = {slide*|fade|none}
-  * data-(toggle-)callback = ~function|functionName~
-  * data-(toggle-)selector = ~partialResponseToShow~
 
-Event
+Attributes
+
+* data-toggle = {ajax-load|ajax-submit}
+* data-target = ~targetElement|targetForm~
+* data-confirm = ~confirmationMessage~
+* data-(toggle-)mode = {replace*|prepend|append|before|after}
+* data-(toggle-)overlay = {progress*|loading|loading-large|spinner|spinner-large|overlay|gray|grayer|dim|dimmer|white|whiter|light|lighter|none}
+* data-(toggle-)transition = {slide*|fade|none}
+* data-(toggle-)callback = ~function|functionName~
+* data-(toggle-)selector = ~partialResponseToShow~
+
+Events
 
 * ajaxLoad.bsx
 * ajaxLoadCallback.bsx
