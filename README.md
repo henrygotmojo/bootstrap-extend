@@ -12,7 +12,7 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 ### CDN
 * https://cdn.statically.io/bb/henrygotmojo/bootstrap-extend/{VERSION}/bootstrap.extend.css
 * https://cdn.statically.io/bb/henrygotmojo/bootstrap-extend/{VERSION}/bootstrap.extend.js
-&nbsp;
+<br>
 
 --------------------------------------------------
 
@@ -67,6 +67,7 @@ Extend CSS & JS Features of Twitter Bootstrap 4.x
 ##### MULTILEVEL DROPDOWN
 
 Reference
+
 * https://bootstrapious.com/p/bootstrap-multilevel-dropdown
 
 ```
@@ -98,7 +99,9 @@ Reference
 
 ##### TAB VERTICAL & BOTTOM
 Reference
+
 * https://codepen.io/jasongardner/pen/gxprVQ
+
 ```
 <!-- left / right -->
 <ul class="nav nav-tabs nav-tabs--{left|right} flex-column">
@@ -116,6 +119,7 @@ Reference
 ##### UTILITY CLASSES FOR STYLING
 
 __styling__
+
 *  .em
 *  .del
 *  .strong
@@ -123,6 +127,7 @@ __styling__
 *  .sup
 
 __border__
+
 *  .b-{0|1|2|3|4|5}
 *  .bt-{0|1|2|3|4|5}
 *  .bb-{0|1|2|3|4|5}
@@ -132,18 +137,23 @@ __border__
 *  .by-{0|1|2|3|4|5}
 
 __border color__
+
 *  .b-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
 
 __shadow__
+
 *  .shadow-{xs|sm|lg|xl}
 
 __opacity__
+
 *  .op-{100|95|90|..|10|5|0}
 
 __width__
+
 *  .w-{100|95|90|...|10|5|0}
 
 __cursor__
+
 *  .cursor-alias
 *  .cursor-all-scroll
 *  .cursor-auto
@@ -181,6 +191,7 @@ __cursor__
 *  .cursor-zoom-out
 
 __others__
+
 *  .transition-none
 
 
