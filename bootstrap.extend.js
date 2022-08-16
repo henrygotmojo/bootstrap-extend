@@ -439,10 +439,6 @@ I allow ajax-load/ajax-submit content to specific element by defining data attri
 ===> data-(toggle-)callback = ~function|functionName~
 ===> data-(toggle-)selector = ~partialResponseToShow~
 
-[Dependency]
-I use jquery-blockui plugin (if available)
-===> when ajax-load or ajax-submit
-
 [Event]
 ===> ajaxLoad.bsx
 ===> ajaxLoadCallback.bsx
