@@ -521,7 +521,7 @@ var ajaxLoadOrSubmit = function(triggerElement) {
 		// default loading style (progress)
 		configBlockUI = {
 			'message'     : false,
-			'css'         : { 'backgroundColor' : 'none', 'border' : 'none' },
+			'css'         : { 'background-color' : 'none', 'border' : 'none' },
 			'fadeIn'      : 0,
 			'showOverlay' : true
 		};
