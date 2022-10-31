@@ -34,8 +34,8 @@ var ajaxErrorHandler = function(evt, jqXHR, ajaxSettings, errorThrown){
 		$('#bsx-error-alert')
 			.html('')
 			.append('<h3 class="mt-0 text-danger">Error</h3>')
-			.append('<pre>'+jqXHR.responseText+'</pre>')
-			.append('<small><em class="text-danger">'+ajaxSettings.url+'</em></small>')
+			.append('<div class="small text-monospace">'+jqXHR.responseText+'</div>')
+			.append('<div class="small em text-danger">'+ajaxSettings.url+'</div>')
 			.filter(':visible').hide().fadeIn().end()
 			.filter(':hidden').slideDown();
 		// scroll to message
@@ -59,8 +59,8 @@ var ajaxErrorHandler = function(evt, jqXHR, ajaxSettings, errorThrown){
 			.modal('show')
 			.find('.modal-body').html('')
 			.append('<h3 class="mt-0 text-white">Error</h3>')
-			.append('<pre>'+jqXHR.responseText+'</pre>')
-			.append('<small><em class="text-warning">'+ajaxSettings.url+'</em></small>');
+			.append('<div class="small text-monospace">'+jqXHR.responseText+'</div>')
+			.append('<div class="small em text-warning">'+ajaxSettings.url+'</div>');
 	// display error as browser alert
 	} else if ( $('body').attr('data-ajax-error') == 'alert' ) {
 		alert('[Error]\n'+jqXHR.responseText+'\n\n'+ajaxSettings.url);
