@@ -94,6 +94,8 @@ $(document).on('show.bs.modal', '.modal', function (event) {
 	}, 0);
 });
 
+$(document).on('hidden.bs.modal', '.modal', () => $('.modal:visible').length && $(document.body).addClass('modal-open'));
+
 
 
 
