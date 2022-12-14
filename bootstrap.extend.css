@@ -60,15 +60,49 @@
 */
 
 .btn-xs,
-.btn-group-xs > .btn {
+.btn-group-xs > .btn { border-radius: 0.2rem; }
+.btn-xs,
+.btn-group-xs > .btn,
+.input-group-xs .input-group-append > .btn,
+.input-group-xs .input-group-prepend > .btn {
 	padding: 0 0.25rem;
 	font-size: 0.875rem;
-	border-radius: 0.2rem;
 }
 .btn-xs + .dropdown-toggle-split,
 .btn-group-xs > .btn + .dropdown-toggle-split {
 	padding-right: 0.125rem;
 	padding-left: 0.125rem;
+}
+
+
+
+
+/*-------------------------------------+
+| FORM CONTROL & INPUT GROUP NEW SIZES |
++--------------------------------------+
+
+[Example]
+<!-- form control -->
+<input type="text" class="form-control form-control-xs" value="small" />
+<!-- input-group -->
+<div class="input-group input-group-xs">
+	<div class="input-group-prepend">
+		<span class="input-group-text">Label</span>
+	</div>
+	<input type="text" class="form-control" value="Extra small field" />
+</div>
+*/
+
+.form-control-xs,
+.input-group-xs .form-control,
+.input-group-xs .custom-select {
+	font-size: .875rem;
+	height: 1.6rem;
+	padding: 0 4px;
+}
+.input-group-xs .input-group-text {
+	font-size: .75rem;
+	padding: 0 4px;
 }
 
 
