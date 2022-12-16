@@ -140,23 +140,29 @@ https://codepen.io/jasongardner/pen/gxprVQ
 
 * .em
 * .del
-* .strong
 * .sub
 * .sup
+* .strong
 
 #### border
 
 * .b-{0|1|2|3|4|5}
+* .bx-{0|1|2|3|4|5}
+* .by-{0|1|2|3|4|5}
 * .bt-{0|1|2|3|4|5}
 * .bb-{0|1|2|3|4|5}
 * .bl-{0|1|2|3|4|5}
 * .br-{0|1|2|3|4|5}
-* .bx-{0|1|2|3|4|5}
-* .by-{0|1|2|3|4|5}
 
 #### border color
 
 * .b-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
+* .bx-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
+* .by-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
+* .bt-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
+* .bb-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
+* .bl-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
+* .br-{primary|secondary|success|info|warning|danger|light|dark|white|transparent}
 
 #### shadow
 
