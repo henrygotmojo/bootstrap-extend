@@ -108,6 +108,7 @@ Auto-click corresponding buttons one-by-one (by monitoring the AJAX call progres
 ===> data-toggle = {auto-submit}
 ===> data-target = ~buttonsToClick~
 ===> data-confirm = ~confirmationMessage~
+===> data-meta-title = ~metaTitleMessage~
 ===> data-(toggle-)stop = ~stopButton~
 ===> data-(toggle-)progress = ~progressElement~
 ===> data-(toggle-)callback = ~function|functionName~
@@ -198,12 +199,13 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 		// ===> below script didn't work (jQuery bug?)
 		// ===> $targetElements.filter('.active-autosubmit:not(:visible)'').remove();
 		// ===> apply [:visible] when counting undone items
-		var countTotal  = $targetElements.length;
-		var countUndone = $targetElements.filter('.pending-autosubmit,.active-autosubmit:visible').length;
-		var countDone   = countTotal - countUndone;
-		// update progress
-		$progress.html(countDone+' / '+countTotal);
-		$metaTitle.html(countDone+' / '+countTotal);
+		var countTotal   = $targetElements.length;
+		var countUndone  = $targetElements.filter('.pending-autosubmit,.active-autosubmit:visible').length;
+		var countDone    = countTotal - countUndone;
+		var progressText = countDone+'/'+countTotal;
+		// update progress & meta title (when necessary)
+		$progress.html(progressText);
+		if ( $btnStart.attr('data-meta-title') ) $metaTitle.html($btnStart.attr('data-meta-title')+' ('+progressText+')');
 		// when stopped
 		if ( $btnStart.is('.stopped') ) {
 			// kill the timer abruptly
@@ -215,8 +217,8 @@ $(document).on('click', '[data-toggle=auto-submit]', function(evt){
 		} else if ( !countUndone ) {
 			// stop repeating
 			window.clearInterval(timer);
-			// restore to original meta title
-			$metaTitle.html( $metaTitle.attr('data-original') ).removeAttr('data-original');
+			// restore to original meta title (when necessary)
+			if ( $metaTitle.attr('data-original') ) $metaTitle.html( $metaTitle.attr('data-original') ).removeAttr('data-original');
 			// (un)block buttons
 			$btnStart.prop('disabled', false).removeClass('disabled');
 			$btnStop.prop('disabled', true).addClass('disabled');
