@@ -16,32 +16,33 @@ I show error dialog whenever there is an ajax error
 
 */
 var ajaxErrorHandler = function(evt, jqXHR, ajaxSettings, errorThrown){
-	// set default mode
-	if ( !$('body[data-ajax-error]').length || !$('body').attr('data-ajax-error').length ) {
-		$('body').attr('data-ajax-error', 'modal');
-	}
-	// display error as modal
-	if ( $('body').attr('data-ajax-error') == 'modal' && $('body.modal-open').length ) {
+	var $body = $('body');
+	// options
+	var ajaxErrorMode  = $body.attr('data-ajax-error')       || 'modal';
+	var ajaxErrorTitle = $body.attr('data-ajax-error-title') || 'Error';
+	var ajaxErrorUrl   = $body.attr('data-ajax-error-url')   || true;
+	// display error as flash in an opened modal
+	if ( ajaxErrorMode == 'modal' && $('body.modal-open').length ) {
 		var $modalVisible = $('.modal.show');
 		// create alert box (when necessary)
 		if ( !$('#bsx-error-alert').length ) {
-			$('<div id="bsx-error-alert" class="alert alert-danger" role="alert"></div>')
+			$('<div id="bsx-error-alert" class="alert" role="alert"></div>')
 				.prependTo( $modalVisible.find('.modal-body') )
 				.on('click', function(){ $(this).slideUp(); })
+				.addClass(ajaxErrorModalClass)
 				.hide();
 		}
 		// show message
-		$('#bsx-error-alert')
-			.html('')
-			.append('<h3 class="mt-0 text-danger">Error</h3>')
-			.append('<div class="small text-monospace">'+jqXHR.responseText+'</div>')
-			.append('<div class="small em text-danger">'+ajaxSettings.url+'</div>')
-			.filter(':visible').hide().fadeIn().end()
-			.filter(':hidden').slideDown();
+		var $errAlert = $('#bsx-error-alert');
+		$errAlert.html('');
+		if ( ajaxErrorTitle != 'none' ) $errAlert.append('<h3 class="mt-0 text-danger">'+ajaxErrorTitle+'</h3>')
+		$errAlert.append('<div class="small text-monospace">'+jqXHR.responseText+'</div>');
+		if ( ajaxErrorUrl != 'none' ) $errAlert.append('<div class="small em text-danger">'+ajaxSettings.url+'</div>')
+		$errAlert.filter(':visible').hide().fadeIn().end().filter(':hidden').slideDown();
 		// scroll to message
 		$modalVisible.animate({ scrollTop : 0 });
-	// display error as alert box in modal
-	} else if ( $('body').attr('data-ajax-error') == 'modal' ) {
+	// display error in modal
+	} else if ( ajaxErrorMode == 'modal' ) {
 		// create modal (when necessary)
 		if ( !$('#bsx-error-modal').length ) {
 			$('body').append(`
@@ -55,18 +56,27 @@ var ajaxErrorHandler = function(evt, jqXHR, ajaxSettings, errorThrown){
 			`);
 		}
 		// show message
-		$('#bsx-error-modal')
-			.modal('show')
-			.find('.modal-body').html('')
-			.append('<h3 class="mt-0 text-white">Error</h3>')
-			.append('<div class="small text-monospace">'+jqXHR.responseText+'</div>')
-			.append('<div class="small em text-warning">'+ajaxSettings.url+'</div>');
-	// display error as browser alert
-	} else if ( $('body').attr('data-ajax-error') == 'alert' ) {
-		alert('[Error]\n'+jqXHR.responseText+'\n\n'+ajaxSettings.url);
-	// display error as console log
+		var $errModal = $('#bsx-error-modal');
+		var $errModalBody = $errModal.find('.modal-body');
+		$errModal.modal('show');
+		$errModalBody.html('');
+		if ( ajaxErrorTitle != 'none' ) $errModalBody.append('<h3 class="mt-0 text-white">'+ajaxErrorTitle+'</h3>');
+		$errModalBody.append('<div class="small text-monospace">'+jqXHR.responseText+'</div>')
+		if ( ajaxErrorUrl != 'none' ) $errModalBody.append('<div class="small em text-warning">'+ajaxSettings.url+'</div>');
+	// display error as javascript console log
+	} else if ( ajaxErrorMode == 'console' ) {
+		var errMsg = '';
+		if ( ajaxErrorTitle != 'none' ) errMsg += '['+ajaxErrorTitle+'] ';
+		errMsg += jqXHR.responseText;
+		if ( ajaxErrorUrl != 'none' ) errMsg += ' ('+ajaxSettings.url+')';
+		console.log(errMsg);
+	// display error as javascript alert
 	} else {
-		console.log('[Error] '+jqXHR.responseText+' ('+ajaxSettings.url+')');
+		var errMsg = '';
+		if ( ajaxErrorTitle != 'none' ) errMsg += '['+ajaxErrorTitle+']\n';
+		errMsg += jqXHR.responseText;
+		if ( ajaxErrorUrl != 'none' ) errMsg += '\n\n'+ajaxSettings.url;
+		alert(errMsg);
 	}
 };
 // apply to document

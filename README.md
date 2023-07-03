@@ -230,13 +230,20 @@ https://codepen.io/jasongardner/pen/gxprVQ
 
 * show error dialog whenever there is an ajax error
 * default showing as modal
+* provide attribute to control show/hide of title and URL
 * simply die() in server-script and error message will auto-show in modal
 * applicable to whole site
+
+#### Attributes
+
+* data-ajax-error = {modal|alert|console}
+* data-ajax-error-url = {none}
+* data-ajax-error-title = {~titleText~|none} (default="Error")
 
 #### Example
 
 ```
-<body data-ajax-error="{modal|alert|console}"> ... </body>
+<body data-ajax-error="alert" data-ajax-error-title="Caution" data-ajax-error-url="none"> ... </body>
 ```
 
 
@@ -355,3 +362,12 @@ https://codepen.io/jasongardner/pen/gxprVQ
 <!-- ajax submit -->
 <form method="post" action="/url/to/go" data-toggle="ajax-submit" data-target="#element"> ... </form>
 ```
+
+
+
+
+
+
+
+Off-Canvas
+https://as-tx.github.io/bootstrap-off-canvas-sidebar/
